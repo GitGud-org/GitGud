@@ -1,12 +1,16 @@
 'use strict';
-const React = require('react');
-const {Text, Box} = require('ink');
+const {React, useEffect} = require('react');
+const {Text, Box, render} = require('ink');
+const {exitFullScreen, FullScreen} = require('./components/fullscreen')
 
-const App = () => (
-
+const App = () => {
+	useEffect(() => {
+    return FullScreen();
+	}, [])
+	return (
 	<Box borderStyle="round" borderColor="green" className="full-app">
 
-		<Box borderStyle="round" borderColor="green" className="left-box" width="50%" flexDirection="column">
+		<Box className="left-box" width="50%" flexDirection="column">
 			<Box className="changed-files" borderStyle="round" borderColor="green" height="50%">
 
 			</Box>
@@ -14,11 +18,11 @@ const App = () => (
 
 			</Box>
 		</Box>
-		<Box borderStyle="round" borderColor="green" className="left-box" width="50%">
+		<Box borderStyle="round" borderColor="green" className="left-box" width="50%" margin={-1}>
 
 		</Box>
 
-	</Box>
-);
+	</Box>)
+};
 
 module.exports = App;
