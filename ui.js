@@ -3,6 +3,7 @@ const React = require('react');
 const {useEffect, useState} = require('react');
 const {Text, Box, Spacer} = require('ink');
 const statusOutput = require('./testChildProcess')
+const Renderer = require('./components/divider')
 
 const App = () => {
 	const [status, setStatus] = useState('');
@@ -12,19 +13,20 @@ const App = () => {
 	}, [])
 
 	return(
-	<Box borderStyle="classic" borderColor="green" className="full-app" height='100%' >
+	<Box borderStyle="round" borderColor="red" className="full-app" height='100%' >
 
-		<Box borderStyle="round" borderColor="red" className="left-box" width="50%" flexDirection="column">
-			<Box className="changed-files" borderStyle="round" borderColor="white" height="50%">
+		<Box className="left-box" width="50%" flexDirection="column">
+			<Box className="changed-files" height="50%">
 				<Text >Here: {status}</Text>
 			</Box>
-			<Box className="stage-area" borderStyle="round" borderColor="white" height="50%">
+			<Renderer />
+			<Box className="stage-area" height="50%">
 				<Text>
 					Staged-Area
 				</Text>
 			</Box>
 		</Box>
-		<Box className='gitBranch' borderStyle="round" borderColor="red" className="left-box" width="50%">
+		<Box className='gitBranch' borderStyle="round" borderColor="red" className="left-box" width="50%" margin="-1">
 			<Text>Git Branch</Text>
 		</Box>
 
