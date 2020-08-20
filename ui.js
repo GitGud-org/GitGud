@@ -1,9 +1,8 @@
 'use strict';
 const React = require('react');
-const {Text, Box} = require('ink');
+const {Box} = require('ink');
 
-const App = () => (
-
+const App = ({name = 'Stranger'}) => (
 	<Box borderStyle="round" borderColor="green" className="full-app">
 
 		<Box borderStyle="round" borderColor="green" className="left-box" width="50%" flexDirection="column">
