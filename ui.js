@@ -15,10 +15,10 @@ const App = () => {
 	<Box borderStyle="classic" borderColor="green" className="full-app" height='100%' >
 
 		<Box borderStyle="round" borderColor="red" className="left-box" width="50%" flexDirection="column">
-			<Box className="changed-files" borderStyle="round" borderColor="white" height="50%">
+			<Box className="changed-files" borderStyle="round" borderColor="white" height="80%">
 				<Text >Here: {status}</Text>
 			</Box>
-			<Box className="stage-area" borderStyle="round" borderColor="white" height="50%">
+			<Box className="stage-area" borderStyle="round" borderColor="white" height="100%">
 				<Text>
 					Staged-Area
 				</Text>
