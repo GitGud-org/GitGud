@@ -1,23 +1,34 @@
 'use strict';
 const React = require('react');
-const {Box} = require('ink');
+const {useEffect, useState} = require('react');
+const {Text, Box, Spacer} = require('ink');
+const statusOutput = require('./testChildProcess')
 
-const App = ({name = 'Stranger'}) => (
-	<Box borderStyle="round" borderColor="green" className="full-app">
+const App = () => {
+	const [status, setStatus] = useState('');
 
-		<Box borderStyle="round" borderColor="green" className="left-box" width="50%" flexDirection="column">
-			<Box className="changed-files" borderStyle="round" borderColor="green" height="50%">
+	useEffect(() => {
+		setStatus(statusOutput())
+	}, [])
 
+	return(
+	<Box borderStyle="classic" borderColor="green" className="full-app" height='100%' >
+
+		<Box borderStyle="round" borderColor="red" className="left-box" width="50%" flexDirection="column">
+			<Box className="changed-files" borderStyle="round" borderColor="white" height="80%">
+				<Text >Here: {status}</Text>
 			</Box>
-			<Box className="stage-area" borderStyle="round" borderColor="green" height="50%">
-
+			<Box className="stage-area" borderStyle="round" borderColor="white" height="100%">
+				<Text>
+					Staged-Area
+				</Text>
 			</Box>
 		</Box>
-		<Box borderStyle="round" borderColor="green" className="left-box" width="50%">
-
+		<Box className='gitBranch' borderStyle="round" borderColor="red" className="left-box" width="50%">
+			<Text>Git Branch</Text>
 		</Box>
 
 	</Box>
-);
+)};
 
 module.exports = App;
