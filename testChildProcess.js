@@ -10,7 +10,8 @@ const statusOutput = () => {
         return stdout
       })
       .toString()
-      console.log('test', gitStatusOutput)
+			// console.log('test', gitStatusOutput)
+			return gitStatusOutput
 }
 
 module.exports = statusOutput;
