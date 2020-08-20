@@ -1,0 +1,53 @@
+{
+	"name": "GitGud",
+	"version": "0.0.0",
+	"license": "MIT",
+	"bin": "cli.js",
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"test": "xo && ava"
+	},
+	"files": [
+		"cli.js",
+		"ui.js"
+	],
+	"dependencies": {
+		"import-jsx": "^4.0.0",
+		"ink": "^3.0.4",
+		"meow": "^7.1.0",
+		"react": "^16.13.1"
+	},
+	"devDependencies": {
+		"@ava/babel": "^1.0.1",
+		"@babel/preset-env": "^7.11.0",
+		"@babel/preset-react": "^7.10.4",
+		"@babel/register": "^7.10.5",
+		"ava": "^3.11.1",
+		"chalk": "^4.1.0",
+		"eslint-config-xo-react": "^0.23.0",
+		"eslint-plugin-react": "^7.20.6",
+		"eslint-plugin-react-hooks": "^4.1.0",
+		"ink-testing-library": "^2.0.1",
+		"xo": "^0.33.0"
+	},
+	"ava": {
+		"babel": true,
+		"require": [
+			"@babel/register"
+		]
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-env",
+			"@babel/preset-react"
+		]
+	},
+	"xo": {
+		"extends": "xo-react",
+		"rules": {
+			"react/prop-types": "off"
+		}
+	}
+}
