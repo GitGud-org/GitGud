@@ -31,9 +31,13 @@ const App = () => {
 					borderColor="white"
 					height="100%"
 				>
-					<Box height="100%">
+					<Box height="100%" alignItems="center">
 						<Text>
-							Modified files: <Newline /> {status}
+							<Text color="red" bold underline>
+								Modified files:
+							</Text>
+							<Newline />
+							{status}
 						</Text>
 					</Box>
 				</Box>
@@ -57,6 +61,7 @@ const App = () => {
 			</Box>
 		</Box>
 	);
+	//hi
 };
 
 module.exports = App;
