@@ -1,5 +1,6 @@
 "use strict";
 const React = require("react");
+
 const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline } = require("ink");
 const statusOutput = require("./testChildProcess");
@@ -38,8 +39,15 @@ const App = () => {
 		>
 			<Box className="left-box" width="50%" flexDirection="column" ref={ref} flexGrow={1}>
 				<Box className="changed-files" height="50%" >
-					<Text>Here: {status}</Text>
-					<Newline />
+					<Box height="100%" alignItems="center">
+						<Text>
+							<Text color="red" bold underline>
+								Modified files:
+							</Text>
+							<Newline />
+							{status}
+						</Text>
+					</Box>
 				</Box>
 				<Text color="red">
 					<Newline />
