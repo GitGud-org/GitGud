@@ -4,8 +4,14 @@ const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline } = require("ink");
 const statusOutput = require("./testChildProcess");
 const Renderer = require("./components/divider");
-const {exitFullScreen, FullScreen} = require('./components/fullscreen');
-const fullscreen = require("./components/fullscreen");
+
+
+const enterAltScreenCommand = '\x1b[?1049h';
+const leaveAltScreenCommand = '\x1b[?1049l';
+
+const exitFullScreen = () => {
+  process.stdout.write(leaveAltScreenCommand);
+};
 
 const App = () => {
 	const [status, setStatus] = useState("");
@@ -15,6 +21,8 @@ const App = () => {
 
 	useEffect(() => {
 		setStatus(statusOutput());
+		exitFullScreen()
+		process.stdout.write(enterAltScreenCommand)
 		const { width, height } = measureElement(ref.current);
 		setWidth(width);
 	}, []);
@@ -27,7 +35,6 @@ const App = () => {
 		height="100%"
 		flexGrow={1}
 		>
-		<FullScreen />
 			<Box className="left-box" width="50%" flexDirection="column" ref={ref} flexGrow={1}>
 				<Box className="changed-files" height="50%" >
 					<Text>Here: {status}</Text>
