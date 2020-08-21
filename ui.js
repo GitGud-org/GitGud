@@ -1,28 +1,58 @@
-'use strict';
-const {React, useEffect} = require('react');
-const {Text, Box, render} = require('ink');
-const {exitFullScreen, FullScreen} = require('./components/fullscreen')
+"use strict";
+const React = require("react");
+const { useEffect, useState, useRef } = require("react");
+const { Text, Box, measureElement, Newline } = require("ink");
+const statusOutput = require("./testChildProcess");
+const Renderer = require("./components/divider");
+const {exitFullScreen, FullScreen} = require('./components/fullscreen');
+const fullscreen = require("./components/fullscreen");
 
 const App = () => {
+	const [status, setStatus] = useState("");
+	const [appWidth, setWidth] = useState(null);
+
+	const ref = useRef(null);
+
 	useEffect(() => {
-    return FullScreen();
-	}, [])
+		setStatus(statusOutput());
+		const { width, height } = measureElement(ref.current);
+		setWidth(width);
+	}, []);
+
 	return (
-	<Box borderStyle="round" borderColor="green" className="full-app">
-
-		<Box className="left-box" width="50%" flexDirection="column">
-			<Box className="changed-files" borderStyle="round" borderColor="green" height="50%">
-
+		<Box
+		borderStyle="round"
+		borderColor="red"
+		className="full-app"
+		height="100%"
+		flexGrow={1}
+		>
+		<FullScreen />
+			<Box className="left-box" width="50%" flexDirection="column" ref={ref} flexGrow={1}>
+				<Box className="changed-files" height="50%" >
+					<Text>Here: {status}</Text>
+					<Newline />
+				</Box>
+				<Text color="red">
+					<Newline />
+					<Renderer width={appWidth} />
+				</Text>
+				<Box className="stage-area" height="50%">
+					<Text>Staged-Area</Text>
+				</Box>
 			</Box>
-			<Box className="stage-area" borderStyle="round" borderColor="green" height="50%">
-
+			<Box
+				className="gitBranch"
+				borderStyle="round"
+				borderColor="red"
+				className="left-box"
+				width="50%"
+				margin="-1"
+			>
+				<Text>Git Branch</Text>
 			</Box>
 		</Box>
-		<Box borderStyle="round" borderColor="green" className="left-box" width="50%" margin={-1}>
-
-		</Box>
-
-	</Box>)
+	);
 };
 
 module.exports = App;

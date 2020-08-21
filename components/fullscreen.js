@@ -1,5 +1,5 @@
 const { useEffect } = require('react');
-
+const React = require("react");
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
 
@@ -8,16 +8,17 @@ const exitFullScreen = () => {
 };
 
 const FullScreen = ({ children }) => {
-  useEffect(() => {
-    // destroy alternate screen on unmount
-    return exitFullScreen;
-  }, []);
-  // trigger alternate screen
-  process.stdout.write(enterAltScreenCommand);
+  // useEffect(() => {
+  // //   // destroy alternate screen on unmount
+  //   return exitFullScreen;
+  // }, []);
+  // // trigger alternate screen
+	process.stdout.write(enterAltScreenCommand);
   return children;
 };
 
 module.exports = {
 	FullScreen,
-	exitFullScreen };
+	exitFullScreen
+}
 
