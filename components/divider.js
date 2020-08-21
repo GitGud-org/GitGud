@@ -1,9 +1,12 @@
 const React = require('react')
-const {render} = require('ink');
-const Divider = require('ink-divider');
+const {Text} = require('ink');
 
-const Renderer = () => (
-	render(<Divider title={'Title'} />)
-)
+
+const Renderer = (props) => {
+	// const {width} = props
+	let divider = '-'.repeat(props.width)
+	console.log('hello')
+	return divider
+}
 
 module.exports = Renderer

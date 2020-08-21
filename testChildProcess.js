@@ -7,10 +7,9 @@ const statusOutput = () => {
           console.error(`exec error: ${error}`);
           return;
         }
-        return stdout
+        return stdout.trim()
       })
       .toString()
-			// console.log('test', gitStatusOutput)
 			return gitStatusOutput
 }
 
