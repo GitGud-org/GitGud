@@ -1,36 +1,44 @@
 "use strict";
 const React = require("react");
-const { useEffect, useState } = require("react");
-const { Text, Box, Spacer, Newline } = require("ink");
+
+const { useEffect, useState, useRef } = require("react");
+const { Text, Box, measureElement, Newline } = require("ink");
 const statusOutput = require("./testChildProcess");
+const Renderer = require("./components/divider");
+
+
+const enterAltScreenCommand = '\x1b[?1049h';
+const leaveAltScreenCommand = '\x1b[?1049l';
+
+const exitFullScreen = () => {
+  process.stdout.write(leaveAltScreenCommand);
+};
 
 const App = () => {
 	const [status, setStatus] = useState("");
+	const [appWidth, setWidth] = useState(null);
+
+	const ref = useRef(null);
 
 	useEffect(() => {
 		setStatus(statusOutput());
+		exitFullScreen()
+		process.stdout.write(enterAltScreenCommand)
+		const { width, height } = measureElement(ref.current);
+		setWidth(width);
 	}, []);
+
 
 	return (
 		<Box
-			borderStyle="classic"
-			borderColor="green"
-			className="full-app"
-			height="100%"
+		borderStyle="round"
+		borderColor="red"
+		className="full-app"
+		height="100%"
+		flexGrow={1}
 		>
-			<Box
-				borderStyle="round"
-				borderColor="red"
-				className="left-box"
-				width="50%"
-				flexDirection="column"
-			>
-				<Box
-					className="changed-files"
-					borderStyle="round"
-					borderColor="white"
-					height="100%"
-				>
+			<Box className="left-box" width="50%" flexDirection="column" ref={ref} flexGrow={1}>
+				<Box className="changed-files" height="50%" >
 					<Box height="100%" alignItems="center">
 						<Text>
 							<Text color="red" bold underline>
@@ -41,12 +49,11 @@ const App = () => {
 						</Text>
 					</Box>
 				</Box>
-				<Box
-					className="stage-area"
-					borderStyle="round"
-					borderColor="white"
-					height="100%"
-				>
+				<Text color="red">
+					<Newline />
+					<Renderer width={appWidth} />
+				</Text>
+				<Box className="stage-area" height="50%">
 					<Text>Staged-Area</Text>
 				</Box>
 			</Box>
@@ -56,12 +63,12 @@ const App = () => {
 				borderColor="red"
 				className="left-box"
 				width="50%"
+				margin="-1"
 			>
 				<Text>Git Branch</Text>
 			</Box>
 		</Box>
 	);
-	//hi
 };
 
 module.exports = App;
