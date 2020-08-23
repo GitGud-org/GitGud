@@ -3,7 +3,7 @@ const React = require("react");
 
 const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline } = require("ink");
-const statusOutput = require("./testChildProcess");
+const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 
 
@@ -42,10 +42,10 @@ const App = () => {
 					<Box height="100%" alignItems="center">
 						<Text>
 							<Text color="red" bold underline>
-								Modified files:
+								Unstaged Changes
 							</Text>
 							<Newline />
-							{status}
+							{status.unstaged}
 						</Text>
 					</Box>
 				</Box>
@@ -54,7 +54,15 @@ const App = () => {
 					<Renderer width={appWidth} />
 				</Text>
 				<Box className="stage-area" height="50%">
-					<Text>Staged-Area</Text>
+					<Box height="100%" alignItems="center">
+						<Text>
+								<Text color="red" bold underline>
+									Staged Changes
+								</Text>
+								<Newline />
+								{status.staged}
+							</Text>
+					</Box>
 				</Box>
 			</Box>
 			<Box
