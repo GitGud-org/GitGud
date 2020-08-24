@@ -7,7 +7,7 @@ const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
 const branchVisual = require('./branchVisual')
-
+const branchVisualText = require('./branchVisualText')
 
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
@@ -20,6 +20,7 @@ const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState('')
 	const [visual, setVisual] = useState('')
+	const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -29,6 +30,7 @@ const App = () => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
 			setVisual(branchVisual())
+			setText(branchVisualText())
 		}, 1000)
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
@@ -46,7 +48,7 @@ const App = () => {
 		>
 			<Box
 				className="left-box"
-				width="50%" height='100%'
+				width="35%" height='100%'
 				flexDirection="column"
 				ref={ref}
 				// flexGrow={1}
@@ -86,12 +88,13 @@ const App = () => {
 				borderStyle="round"
 				borderColor="red"
 				className="left-box"
-				width="50%"
+				width="65%"
 				margin="-1"
 				flexDirection='column'
 			>
 				<Text color='red' bold underline>Git Branch --{'>'} {branch}</Text>
-				<Text color='yellow'>{visual.sorted}</Text>
+				<Text color='yellow'>{visual.sorted}</Text> 
+				<Text color='white'>{text.sorted}</Text>
 			</Box>
 		</Box>
 	);

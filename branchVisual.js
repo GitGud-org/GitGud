@@ -9,7 +9,7 @@ const branchVisual = () => {
             //git shortlog
             //git log --oneline -(to be used for bottom of git branch)
         // 'git log --all --decorate --oneline --graph',
-        'git log --pretty=format:"%h %s" --graph --decorate',
+        'git log --pretty=format:"%h" --graph --decorate',
         (error, stdout, stderr) => {
             if(error) {
                 console.error(`exec errorL ${error}`)
@@ -24,7 +24,7 @@ const branchVisual = () => {
     // sortedBranchVisual.sorted = gitBranchVisual.split('\n')[.map(line => {
     //     return `${line.slice(0,10)}`
     // }).join(`\n`)]
-    sortedBranchVisual.sorted = gitBranchVisual.split('\n', 15).join('\n')
+    sortedBranchVisual.sorted = gitBranchVisual.split('\n', 10).join('\n')
 
     return sortedBranchVisual
 }
