@@ -6,6 +6,7 @@ const { Text, Box, measureElement, Newline } = require("ink");
 const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
+const branchVisual = require('./branchVisual')
 
 
 const enterAltScreenCommand = '\x1b[?1049h';
@@ -18,6 +19,7 @@ const exitFullScreen = () => {
 const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState('')
+	const [visual, setVisual] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -26,6 +28,7 @@ const App = () => {
 		setInterval(() => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
+			setVisual(branchVisual())
 		}, 1000)
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
@@ -85,8 +88,10 @@ const App = () => {
 				className="left-box"
 				width="50%"
 				margin="-1"
+				flexDirection='column'
 			>
-				<Text>Git Branch --{'>'} {branch}</Text>
+				<Text color='red' bold underline>Git Branch --{'>'} {branch}</Text>
+				<Text color='yellow'>{visual.sorted}</Text>
 			</Box>
 		</Box>
 	);
