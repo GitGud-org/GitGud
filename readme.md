@@ -8,6 +8,8 @@
 $ npm install --global GitGud
 ```
 
+Have at least **git version 2.24.3**
+
 ## CLI
 
 ```
