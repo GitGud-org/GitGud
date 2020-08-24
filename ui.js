@@ -21,7 +21,9 @@ const App = () => {
 	const ref = useRef(null);
 
 	useEffect(() => {
-		setStatus(statusOutput());
+		setInterval(() => {
+			setStatus(statusOutput());
+		}, 1000)
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
 		const { width, height } = measureElement(ref.current);
@@ -34,12 +36,20 @@ const App = () => {
 		borderStyle="round"
 		borderColor="red"
 		className="full-app"
-		height="100%"
+		height= {20}
 		flexGrow={1}
 		>
-			<Box className="left-box" width="50%" flexDirection="column" ref={ref} flexGrow={1}>
+			<Box
+				className="left-box"
+				width="50%" height='100%'
+				flexDirection="column"
+				ref={ref}
+				// flexGrow={1}
+			>
 				<Box className="changed-files" height="50%" >
-					<Box height="100%" alignItems="center">
+					<Box
+						height="100%"
+					>
 						<Text>
 							<Text color="red" bold underline>
 								Unstaged Changes
@@ -53,8 +63,9 @@ const App = () => {
 					<Newline />
 					<Renderer width={appWidth} />
 				</Text>
+
 				<Box className="stage-area" height="50%">
-					<Box height="100%" alignItems="center">
+					<Box height="100%">
 						<Text>
 								<Text color="red" bold underline>
 									Staged Changes
