@@ -5,6 +5,7 @@ const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline } = require("ink");
 const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
+const gitBranchCall = require('./currentBranch')
 
 
 const enterAltScreenCommand = '\x1b[?1049h';
@@ -16,6 +17,7 @@ const exitFullScreen = () => {
 
 const App = () => {
 	const [status, setStatus] = useState("");
+	const [branch, setBranch] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -23,6 +25,7 @@ const App = () => {
 	useEffect(() => {
 		setInterval(() => {
 			setStatus(statusOutput());
+			setBranch(gitBranchCall())
 		}, 1000)
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
@@ -84,7 +87,7 @@ const App = () => {
 				width="50%"
 				margin="-1"
 			>
-				<Text>Git Branch</Text>
+				<Text>Git Branch --{'>'} {branch}</Text>
 			</Box>
 		</Box>
 	);
