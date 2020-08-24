@@ -8,7 +8,7 @@
 $ npm install --global GitGud
 ```
 
-## CLI
+## CLI (using INK)
 
 ```
 $ GitGud --help
