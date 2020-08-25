@@ -98,7 +98,7 @@ const App = () => {
 					<Text>Newest to Oldest </Text>
 				</Box>
 				<Box flexDirection='row'>
-					<Text color='green'> {visual.astrix}</Text>
+					{/* <Text color="green">{visual.astrix}</Text> */}
 					<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
 					{/* <Text color='white'>{text.sorted}</Text>  */}
 				</Box>

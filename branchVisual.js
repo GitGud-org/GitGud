@@ -27,8 +27,11 @@ const branchVisual = () => {
     // if(gitBranchVisual.includes('*')){
     //     sortedBranchVisual.astrix = gitBranchVisual.slice(0,1)
     // }//for loop
+    // for(let  i=0; i<gitBranchVisual; i++){
+    //     sortedBranchVisual.astrix = gitBranchVisual.slice(0,1)
+    // }
     sortedBranchVisual.astrix = gitBranchVisual.slice(0,1)
-    sortedBranchVisual.sorted = gitBranchVisual.slice(1).split('\n', 14).join('\n')
+    sortedBranchVisual.sorted = gitBranchVisual.slice(0).split('\n', 14).join('\n')
     return sortedBranchVisual
 }
 
