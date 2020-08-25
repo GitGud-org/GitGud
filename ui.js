@@ -23,14 +23,19 @@ const App = () => {
 	const ref = useRef(null);
 
 	useEffect(() => {
-		setInterval(() => {
+		const intervalStatusCheck = setInterval(() => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
 		}, 1000)
+
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
 		const { width, height } = measureElement(ref.current);
 		setWidth(width);
+
+		return () => {
+			clearInterval(intervalStatusCheck)
+		}
 	}, []);
 
 	return (
