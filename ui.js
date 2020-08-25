@@ -6,8 +6,15 @@ const { Text, Box, measureElement, Newline, Spacer } = require("ink");
 const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
+
 const branchVisual = require('./branchVisual')
 // const branchVisualText = require('./branchVisualText')
+
+
+const importJsx = require('import-jsx')
+const Selector = importJsx('./Selector.js')
+
+
 
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
@@ -26,63 +33,69 @@ const App = () => {
 	const ref = useRef(null);
 
 	useEffect(() => {
-		setInterval(() => {
+		const intervalStatusCheck = setInterval(() => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
 			setVisual(branchVisual())
 			// setText(branchVisualText())
 		}, 1000)
+
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
 		const { width, height } = measureElement(ref.current);
 		setWidth(width);
+
+		return () => {
+			clearInterval(intervalStatusCheck)
+		}
 	}, []);
 
 	return (
-		<Box
+		<Box flexDirection="column">
+			<Box
 			borderStyle="round"
 			borderColor="red"
 			className="full-app"
-			height={20}
+			height= {20}
 			flexGrow={1}
-		>
-			<Box
-				className="left-box"
-				width="35%" height='100%'
-				flexDirection="column"
-				ref={ref}
-			// flexGrow={1}
 			>
-				<Box className="changed-files" height="50%" >
-					<Box
-						height="100%"
-					>
-						<Text>
-							<Text color="red" bold underline>
-								Unstaged Changes
-							</Text>
-							<Newline />
-							{status.unstaged}
-						</Text>
-					</Box>
-				</Box>
-				<Text color="red">
-					<Newline />
-					<Renderer width={appWidth} />
-				</Text>
-
-				<Box className="stage-area" height="50%">
-					<Box height="100%">
-						<Text>
-							<Text color="red" bold underline>
-								Staged Changes
+				<Box
+					className="left-box"
+					width="50%" height='100%'
+					flexDirection="column"
+					ref={ref}
+					// flexGrow={1}
+				>
+					<Box className="changed-files" height="50%" >
+						<Box
+							height="100%"
+						>
+							<Text>
+								<Text color="red" bold underline>
+									Unstaged Changes
 								</Text>
-							<Newline />
-							{status.staged}
-						</Text>
+								<Newline />
+								{status.unstaged}
+							</Text>
+						</Box>
+					</Box>
+					<Text color="red">
+						<Newline />
+						<Renderer width={appWidth} />
+					</Text>
+
+					<Box className="stage-area" height="50%">
+						<Box height="100%">
+							<Text>
+									<Text color="red" bold underline>
+										Staged Changes
+									</Text>
+									<Newline />
+									{status.staged}
+								</Text>
+						</Box>
 					</Box>
 				</Box>
-			</Box>
 			<Box
 				className="gitBranch"
 				borderStyle="round"
@@ -103,6 +116,7 @@ const App = () => {
 					{/* <Text color='white'>{text.sorted}</Text>  */}
 				</Box>
 			</Box>
+			<Selector />
 		</Box>
 	);
 };
