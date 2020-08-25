@@ -42,60 +42,63 @@ const App = () => {
 	}, []);
 
 	return (
-		<Box
-		borderStyle="round"
-		borderColor="red"
-		className="full-app"
-		height= {20}
-		flexGrow={1}
-		>
+		<Box flexDirection="column">
 			<Box
-				className="left-box"
-				width="50%" height='100%'
-				flexDirection="column"
-				ref={ref}
-				// flexGrow={1}
+			borderStyle="round"
+			borderColor="red"
+			className="full-app"
+			height= {20}
+			flexGrow={1}
 			>
-				<Box className="changed-files" height="50%" >
-					<Box
-						height="100%"
-					>
-						<Text>
-							<Text color="red" bold underline>
-								Unstaged Changes
-							</Text>
-							<Newline />
-							{status.unstaged}
-						</Text>
-					</Box>
-				</Box>
-				<Text color="red">
-					<Newline />
-					<Renderer width={appWidth} />
-				</Text>
-
-				<Box className="stage-area" height="50%">
-					<Box height="100%">
-						<Text>
+				<Box
+					className="left-box"
+					width="50%" height='100%'
+					flexDirection="column"
+					ref={ref}
+					// flexGrow={1}
+				>
+					<Box className="changed-files" height="50%" >
+						<Box
+							height="100%"
+						>
+							<Text>
 								<Text color="red" bold underline>
-									Staged Changes
+									Unstaged Changes
 								</Text>
 								<Newline />
-								{status.staged}
+								{status.unstaged}
 							</Text>
+						</Box>
+					</Box>
+					<Text color="red">
+						<Newline />
+						<Renderer width={appWidth} />
+					</Text>
+
+					<Box className="stage-area" height="50%">
+						<Box height="100%">
+							<Text>
+									<Text color="red" bold underline>
+										Staged Changes
+									</Text>
+									<Newline />
+									{status.staged}
+								</Text>
+						</Box>
 					</Box>
 				</Box>
+				<Box
+					className="gitBranch"
+					borderStyle="round"
+					borderColor="red"
+					className="left-box"
+					width="50%"
+					margin="-1"
+				>
+					<Text>Git Branch --{'>'} {branch}</Text>
+				</Box>
 			</Box>
-			<Box
-				className="gitBranch"
-				borderStyle="round"
-				borderColor="red"
-				className="left-box"
-				width="50%"
-				margin="-1"
-			>
-				<Text>Git Branch --{'>'} {branch}</Text>
-			</Box>
+			<Selector />
 		</Box>
 	);
 };
