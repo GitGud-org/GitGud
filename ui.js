@@ -7,6 +7,9 @@ const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
 
+const importJsx = require('import-jsx')
+const Selector = importJsx('./Selector.js')
+
 
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
