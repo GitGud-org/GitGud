@@ -19,6 +19,7 @@
 		"ink-big-text": "^1.2.0",
 		"ink-gradient": "^2.0.0",
 		"ink-select-input": "^4.0.0",
+		"ink-select-input-horizontal": "^4.0.0",
 		"meow": "^7.1.0",
 		"react": "^16.13.1"
 	},
