@@ -118,6 +118,7 @@ const App = () => {
 			</Box>
 			<Selector />
 		</Box>
+		</Box>
 	);
 };
 
