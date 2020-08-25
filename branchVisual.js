@@ -24,8 +24,11 @@ const branchVisual = () => {
     // sortedBranchVisual.sorted = gitBranchVisual.split('\n')[.map(line => {
     //     return `${line.slice(0,10)}`
     // }).join(`\n`)]
-    sortedBranchVisual.sorted = gitBranchVisual.split('\n', 14).join('\n')
-
+    // if(gitBranchVisual.includes('*')){
+    //     sortedBranchVisual.astrix = gitBranchVisual.slice(0,1)
+    // }//for loop
+    sortedBranchVisual.astrix = gitBranchVisual.slice(0,1)
+    sortedBranchVisual.sorted = gitBranchVisual.slice(1).split('\n', 14).join('\n')
     return sortedBranchVisual
 }
 

@@ -1,3 +1,5 @@
+//Do not use unless specifically for just git log text
+
 const { execSync } = require('child_process')
 const { stat } = require('fs')
 

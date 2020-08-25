@@ -2,12 +2,12 @@
 const React = require("react");
 
 const { useEffect, useState, useRef } = require("react");
-const { Text, Box, measureElement, Newline } = require("ink");
+const { Text, Box, measureElement, Newline, Spacer } = require("ink");
 const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
 const branchVisual = require('./branchVisual')
-const branchVisualText = require('./branchVisualText')
+// const branchVisualText = require('./branchVisualText')
 
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
@@ -20,7 +20,7 @@ const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState('')
 	const [visual, setVisual] = useState('')
-	const [text, setText] = useState('')
+	// const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -30,7 +30,7 @@ const App = () => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
 			setVisual(branchVisual())
-			setText(branchVisualText())
+			// setText(branchVisualText())
 		}, 1000)
 		exitFullScreen()
 		process.stdout.write(enterAltScreenCommand)
@@ -94,9 +94,11 @@ const App = () => {
 			>
 				<Box flexDirection='row'>
 					<Text color='red' bold underline>Git Branch --{'>'}</Text><Text> {branch}</Text>
+					<Spacer />
+					<Text>Newest to Oldest </Text>
 				</Box>
-				<Text>Newest to Oldest</Text>
 				<Box flexDirection='row'>
+					<Text color='green'> {visual.astrix}</Text>
 					<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
 					{/* <Text color='white'>{text.sorted}</Text>  */}
 				</Box>
