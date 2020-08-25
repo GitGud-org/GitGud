@@ -13,7 +13,7 @@ const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
 
 const exitFullScreen = () => {
-  process.stdout.write(leaveAltScreenCommand);
+	process.stdout.write(leaveAltScreenCommand);
 };
 
 const App = () => {
@@ -40,18 +40,18 @@ const App = () => {
 
 	return (
 		<Box
-		borderStyle="round"
-		borderColor="red"
-		className="full-app"
-		height= {20}
-		flexGrow={1}
+			borderStyle="round"
+			borderColor="red"
+			className="full-app"
+			height={20}
+			flexGrow={1}
 		>
 			<Box
 				className="left-box"
 				width="35%" height='100%'
 				flexDirection="column"
 				ref={ref}
-				// flexGrow={1}
+			// flexGrow={1}
 			>
 				<Box className="changed-files" height="50%" >
 					<Box
@@ -74,12 +74,12 @@ const App = () => {
 				<Box className="stage-area" height="50%">
 					<Box height="100%">
 						<Text>
-								<Text color="red" bold underline>
-									Staged Changes
+							<Text color="red" bold underline>
+								Staged Changes
 								</Text>
-								<Newline />
-								{status.staged}
-							</Text>
+							<Newline />
+							{status.staged}
+						</Text>
 					</Box>
 				</Box>
 			</Box>
@@ -92,9 +92,14 @@ const App = () => {
 				margin="-1"
 				flexDirection='column'
 			>
-				<Text color='red' bold underline>Git Branch --{'>'} {branch}</Text>
-				<Text color='yellow'>{visual.sorted}</Text> 
-				<Text color='white'>{text.sorted}</Text>
+				<Box flexDirection='row'>
+					<Text color='red' bold underline>Git Branch --{'>'}</Text><Text> {branch}</Text>
+				</Box>
+				<Text>Newest to Oldest</Text>
+				<Box flexDirection='row'>
+					<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
+					{/* <Text color='white'>{text.sorted}</Text>  */}
+				</Box>
 			</Box>
 		</Box>
 	);

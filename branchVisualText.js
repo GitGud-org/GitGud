@@ -20,7 +20,7 @@ const branchVisualText = () => {
     // sortedBranchVisual.sorted = gitBranchVisual.split('\n')[.map(line => {
     //     return `${line.slice(0,10)}`
     // }).join(`\n`)]
-    sortedText.sorted = gitBranchText.split('\n', 10).join('\n')
+    sortedText.sorted = gitBranchText.split('\n', 14).join('\n')
 
     return sortedText
 }
