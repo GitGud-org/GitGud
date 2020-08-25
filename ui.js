@@ -2,25 +2,32 @@
 const React = require("react");
 
 const { useEffect, useState, useRef } = require("react");
-const { Text, Box, measureElement, Newline } = require("ink");
+const { Text, Box, measureElement, Newline, Spacer } = require("ink");
 const statusOutput = require("./gitStatusOutput");
 const Renderer = require("./components/divider");
 const gitBranchCall = require('./currentBranch')
 
+const branchVisual = require('./branchVisual')
+// const branchVisualText = require('./branchVisualText')
+
+
 const importJsx = require('import-jsx')
 const Selector = importJsx('./Selector.js')
+
 
 
 const enterAltScreenCommand = '\x1b[?1049h';
 const leaveAltScreenCommand = '\x1b[?1049l';
 
 const exitFullScreen = () => {
-  process.stdout.write(leaveAltScreenCommand);
+	process.stdout.write(leaveAltScreenCommand);
 };
 
 const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState('')
+	const [visual, setVisual] = useState('')
+	// const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -29,6 +36,8 @@ const App = () => {
 		const intervalStatusCheck = setInterval(() => {
 			setStatus(statusOutput());
 			setBranch(gitBranchCall())
+			setVisual(branchVisual())
+			// setText(branchVisualText())
 		}, 1000)
 
 		exitFullScreen()
@@ -87,15 +96,24 @@ const App = () => {
 						</Box>
 					</Box>
 				</Box>
-				<Box
-					className="gitBranch"
-					borderStyle="round"
-					borderColor="red"
-					className="left-box"
-					width="50%"
-					margin="-1"
-				>
-					<Text>Git Branch --{'>'} {branch}</Text>
+			<Box
+				className="gitBranch"
+				borderStyle="round"
+				borderColor="red"
+				className="left-box"
+				width="65%"
+				margin="-1"
+				flexDirection='column'
+			>
+				<Box flexDirection='row'>
+					<Text color='red' bold underline>Git Branch --{'>'}</Text><Text> {branch}</Text>
+					<Spacer />
+					<Text>Newest to Oldest </Text>
+				</Box>
+				<Box flexDirection='row'>
+					{/* <Text color="green">{visual.astrix}</Text> */}
+					<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
+					{/* <Text color='white'>{text.sorted}</Text>  */}
 				</Box>
 			</Box>
 			<Selector />
