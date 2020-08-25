@@ -53,18 +53,18 @@ const App = () => {
 	return (
 		<Box flexDirection="column">
 			<Box
-			borderStyle="round"
-			borderColor="red"
-			className="full-app"
-			height= {20}
-			flexGrow={1}
+				borderStyle="round"
+				borderColor="red"
+				className="full-app"
+				height={20}
+				flexGrow={1}
 			>
 				<Box
 					className="left-box"
 					width="50%" height='100%'
 					flexDirection="column"
 					ref={ref}
-					// flexGrow={1}
+				// flexGrow={1}
 				>
 					<Box className="changed-files" height="50%" >
 						<Box
@@ -87,36 +87,37 @@ const App = () => {
 					<Box className="stage-area" height="50%">
 						<Box height="100%">
 							<Text>
-									<Text color="red" bold underline>
-										Staged Changes
+								<Text color="red" bold underline>
+									Staged Changes
 									</Text>
-									<Newline />
-									{status.staged}
-								</Text>
+								<Newline />
+								{status.staged}
+							</Text>
 						</Box>
 					</Box>
 				</Box>
-			<Box
-				className="gitBranch"
-				borderStyle="round"
-				borderColor="red"
-				className="left-box"
-				width="65%"
-				margin="-1"
-				flexDirection='column'
-			>
-				<Box flexDirection='row'>
-					<Text color='red' bold underline>Git Branch --{'>'}</Text><Text> {branch}</Text>
-					<Spacer />
-					<Text>Newest to Oldest </Text>
-				</Box>
-				<Box flexDirection='row'>
-					{/* <Text color="green">{visual.astrix}</Text> */}
-					<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
-					{/* <Text color='white'>{text.sorted}</Text>  */}
+				<Box
+					className="gitBranch"
+					borderStyle="round"
+					borderColor="red"
+					className="left-box"
+					width="65%"
+					margin="-1"
+					flexDirection='column'
+				>
+					<Box flexDirection='row'>
+						<Text color='red' bold underline>Git Branch --{'>'}</Text><Text> {branch}</Text>
+						<Spacer />
+						<Text>Newest to Oldest </Text>
+					</Box>
+					<Box flexDirection='row'>
+						{/* <Text color="green">{visual.astrix}</Text> */}
+						<Text color='white' bold>{visual.sorted}</Text><Text>  </Text>
+						{/* <Text color='white'>{text.sorted}</Text>  */}
+					</Box>
 				</Box>
 			</Box>
-			<Selector />
+		<Selector />
 		</Box>
 	);
 };
