@@ -1,6 +1,6 @@
 const React = require('react');
 const {render} = require('ink');
-const SelectInput = require('ink-select-input').default;
+const SelectInput = require('ink-select-input-horizontal').default;
 
 const Selector = () => {
 	const handleSelect = item => {
@@ -9,7 +9,7 @@ const Selector = () => {
 
 	const items = [
 		{
-			label: 'First',
+			label: 'Push Staged Changes',
 			value: 'first'
 		},
 		{
