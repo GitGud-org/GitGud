@@ -6,21 +6,19 @@ const TextInput = require("ink-text-input").default;
 
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
-	// const handleSelect = props.handleSelect;
-	const logSomething = () => {
-		props.handleSelect(props.item);
-	};
+
 	const checkoutBranch = () => {
 		let branches = execSync(
 			"git for-each-ref --format='%(refname:short)' refs/heads/"
 		)
 			.toString()
 			.split("\n");
-		console.log(branches);
-		// let checkedOut = execSync(`git checkout -b ${query}`).catch(
-		// 	console.log("caught!")
-		// );
-		// console.log(checkedOut);
+		if (branches.includes(query)) {
+			execSync(`git checkout -f ${query}`);
+		} else {
+			execSync(`git -b checkout ${query}`);
+		}
+		props.handleSelect(props.item);
 	};
 	return (
 		<Box>
