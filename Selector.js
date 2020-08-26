@@ -25,7 +25,6 @@ const Selector = () => {
 			pullTab();
 		}
 		if (item === items[3]) {
-			console.log("inside handleSelect");
 			setCheckoutBranch(!branchCheckout);
 		}
 	};
