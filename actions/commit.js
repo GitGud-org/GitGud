@@ -7,9 +7,11 @@ const TextInput = require("ink-text-input").default;
 const CommitAction = (props) => {
 	const [message, setMessage] = useState("");
 
+	let {refreshTab} = props
+
 	const handleSubmit = () => {
-		// props.handleSelect(props.item);
 		execSync('git commit -m "' + message +'"')
+		refreshTab('')
 	};
 	return (
 		<Box>

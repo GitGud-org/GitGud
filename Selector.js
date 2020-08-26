@@ -13,10 +13,14 @@ const CheckoutBranch = importJsx("./actions/checkoutBranch");
 const CommitAction = importJsx("./actions/commit");
 
 const Selector = () => {
-	const [branchCheckout, setCheckoutBranch] = useState(false);
+	// const [branchCheckout, setCheckoutBranch] = useState(false);
+	const [currentTab, setCurrentTab] = useState('zzzzz');
+
 
 	const handleSelect = (item) => {
 		// `item` = { label: 'First', value: 'first' }
+		setCurrentTab(item.value)
+		// console.log("current tab ", currentTab)
 		if (item === items[0]) {
 			pushTab();
 		}
@@ -26,48 +30,63 @@ const Selector = () => {
 		if (item === items[2]) {
 			pullTab();
 		}
-		if (item === items[3]) {
-			console.log("inside handleSelect");
-			setCheckoutBranch(!branchCheckout);
-		}
-		if (item === items[4]) {
-			console.log("inside checkout");
-			setCheckoutBranch(!branchCheckout);
-		}
+		// if (item === items[3]) {
+		// 	// setCheckoutBranch(!branchCheckout);
+		// }
+		// if (item === items[4]) {
+		// 	// setCheckoutBranch(!branchCheckout);
+		// }
 	};
 
 	const items = [
 		{
 			label: "Push Staged Changes",
-			value: "first",
+			value: "pushStagedChanges",
 		},
 		{
 			label: "Revert Staged Changes",
-			value: "second",
+			value: "revertStagedChanges",
 		},
 		{
 			label: "Pull From Branch",
-			value: "third",
+			value: "pullFromBranch",
 		},
 		{
-			label: "Checkout branch",
-			value: "fourth",
+			label: "Checkout Branch",
+			value: "checkoutBranch",
 		},
 		{
 			label: "Commit Changes",
-			value: "fifth",
+			value: "commitChanges",
 		},
 	];
 
-	return !branchCheckout ? (
-		<SelectInput items={items} onSelect={handleSelect} />
-	) : (
-		<Box flexDirection="column">
-			{/* <SelectInput isFocused="false" items={items} /> */}
-			{/* <CheckoutBranch handleSelect={handleSelect} item={items[3]} /> */}
-			<CommitAction/>
-		</Box>
-	);
+	switch (currentTab) {
+		case 'checkoutBranch':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} onSelect={handleSelect} />
+					<CheckoutBranch refreshTab={setCurrentTab} item={items[3]} />
+				</Box>)
+		case 'commitChanges':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} onSelect={handleSelect} />
+					<CommitAction refreshTab={setCurrentTab}/>
+				</Box>)
+		default:
+			return <SelectInput items={items} onSelect={handleSelect} />
+	}
+
+	// return !branchCheckout ? (
+		// <SelectInput items={items} onSelect={handleSelect} />
+	// ) : (
+	// 	<Box flexDirection="column">
+	// 		{/* */}
+
+	// 		<CommitAction/>
+	// 	</Box>
+	// );
 };
 
 module.exports = Selector;
