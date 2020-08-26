@@ -16,6 +16,7 @@ const Selector = () => {
 
 	const items = [
 		{
+
 			label: "Push Staged Changes",
 			value: "first",
 		},
@@ -25,7 +26,7 @@ const Selector = () => {
 		},
 		{
 			label: "Pull From Branch",
-			value: "third",
+      value: "third",
 		},
 	];
 
