@@ -16,7 +16,7 @@ const CheckoutBranch = (props) => {
 		if (branches.includes(query)) {
 			execSync(`git checkout -f ${query}`);
 		} else {
-			execSync(`git -b checkout ${query}`);
+			execSync(`git checkout -b ${query}`);
 		}
 		props.handleSelect(props.item);
 	};
