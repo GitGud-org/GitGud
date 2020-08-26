@@ -4,19 +4,18 @@ const { render, Box, Text, Newline } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
-const CheckoutBranch = () => {
+const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
-
+	// const handleSelect = props.handleSelect;
+	const logSomething = () => {
+		props.handleSelect(props.item);
+	};
 	return (
 		<Box>
 			<Box marginRight={1}>
-				<Text>Enter your query:</Text>
+				<Text>Checkout branch name:</Text>
 			</Box>
-
-			<TextInput value={query} onChange={setQuery} />
-			<Box>
-				<Text>Your query is: {query}</Text>
-			</Box>
+			<TextInput value={query} onChange={setQuery} onSubmit={logSomething} />
 		</Box>
 	);
 };

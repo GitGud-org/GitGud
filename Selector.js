@@ -1,6 +1,6 @@
 const React = require("react");
 const { useEffect, useState, useRef } = require("react");
-const { render } = require("ink");
+const { render, Box } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const pushTab = require("./actions/pushTab");
 const revertTab = require("./actions/revertStaged");
@@ -11,7 +11,7 @@ const importJsx = require("import-jsx");
 const CheckoutBranch = importJsx("./actions/checkoutBranch");
 
 const Selector = () => {
-	const [branchCheckout, setCheckoutBranch] = useState(true);
+	const [branchCheckout, setCheckoutBranch] = useState(false);
 
 	const handleSelect = (item) => {
 		// `item` = { label: 'First', value: 'first' }
@@ -25,6 +25,8 @@ const Selector = () => {
 			pullTab();
 		}
 		if (item === items[3]) {
+			console.log("inside handleSelect");
+			setCheckoutBranch(!branchCheckout);
 		}
 	};
 
@@ -50,7 +52,10 @@ const Selector = () => {
 	return !branchCheckout ? (
 		<SelectInput items={items} onSelect={handleSelect} />
 	) : (
-		<CheckoutBranch />
+		<Box flexDirection="column">
+			{/* <SelectInput isFocused="false" items={items} /> */}
+			<CheckoutBranch handleSelect={handleSelect} item={items[3]} />
+		</Box>
 	);
 };
 
