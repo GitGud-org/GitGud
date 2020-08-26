@@ -10,12 +10,24 @@ const CheckoutBranch = (props) => {
 	const logSomething = () => {
 		props.handleSelect(props.item);
 	};
+	const checkoutBranch = () => {
+		let branches = execSync(
+			"git for-each-ref --format='%(refname:short)' refs/heads/"
+		)
+			.toString()
+			.split("\n");
+		console.log(branches);
+		// let checkedOut = execSync(`git checkout -b ${query}`).catch(
+		// 	console.log("caught!")
+		// );
+		// console.log(checkedOut);
+	};
 	return (
 		<Box>
 			<Box marginRight={1}>
 				<Text>Checkout branch name:</Text>
 			</Box>
-			<TextInput value={query} onChange={setQuery} onSubmit={logSomething} />
+			<TextInput value={query} onChange={setQuery} onSubmit={checkoutBranch} />
 		</Box>
 	);
 };
