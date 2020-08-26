@@ -7,8 +7,10 @@ const revertTab = require("./actions/revertStaged");
 const { propTypes } = require("ink-gradient");
 const pullTab = require("./actions/pullBranch");
 
+
 const importJsx = require("import-jsx");
 const CheckoutBranch = importJsx("./actions/checkoutBranch");
+const CommitAction = importJsx("./actions/commit");
 
 const Selector = () => {
 	const [branchCheckout, setCheckoutBranch] = useState(false);
@@ -26,6 +28,10 @@ const Selector = () => {
 		}
 		if (item === items[3]) {
 			console.log("inside handleSelect");
+			setCheckoutBranch(!branchCheckout);
+		}
+		if (item === items[4]) {
+			console.log("inside checkout");
 			setCheckoutBranch(!branchCheckout);
 		}
 	};
@@ -47,6 +53,10 @@ const Selector = () => {
 			label: "Checkout branch",
 			value: "fourth",
 		},
+		{
+			label: "Commit Changes",
+			value: "fifth",
+		},
 	];
 
 	return !branchCheckout ? (
@@ -54,7 +64,8 @@ const Selector = () => {
 	) : (
 		<Box flexDirection="column">
 			{/* <SelectInput isFocused="false" items={items} /> */}
-			<CheckoutBranch handleSelect={handleSelect} item={items[3]} />
+			{/* <CheckoutBranch handleSelect={handleSelect} item={items[3]} /> */}
+			<CommitAction/>
 		</Box>
 	);
 };
