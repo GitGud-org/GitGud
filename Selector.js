@@ -8,28 +8,28 @@ const importJsx = require("import-jsx");
 const pushTab = require("./actions/pushTab");
 const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
-const stageFiles = require('./actions/stageFiles')
-const DeleteTab = importJsx('./actions/deleteBranch')
+const stageFiles = require("./actions/stageFiles");
+const DeleteTab = importJsx("./actions/deleteBranch");
 
 const CheckoutBranch = importJsx("./actions/checkoutBranch");
 const CommitAction = importJsx("./actions/commit");
 
 const Selector = () => {
-	const [currentTab, setCurrentTab] = useState('');
+	const [currentTab, setCurrentTab] = useState("");
 
 	useInput((input, key) => {
 		if (key.escape) {
-			return setCurrentTab('')
+			return setCurrentTab("");
 		}
-	})
+	});
 
 	const handleSelect = (item) => {
-		setCurrentTab(item.value)
+		setCurrentTab(item.value);
 		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
 		if (item.value === "stageAll") {
-			stageFiles()
+			stageFiles();
 		}
 		if (item.value === "revertStagedChanges") {
 			revertTab();
@@ -67,30 +67,33 @@ const Selector = () => {
 		{
 			label: "Delete Branch",
 			value: "deleteBranch",
-		}
+		},
 	];
 
 	switch (currentTab) {
-		case 'checkoutBranch':
+		case "checkoutBranch":
+			return (
+				<Box flexDirection="column">
+					{/* <SelectInput items={items} onSelect={handleSelect} /> */}
+					<CheckoutBranch refreshTab={setCurrentTab} />
+				</Box>
+			);
+		case "commitChanges":
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
-					<CheckoutBranch refreshTab={setCurrentTab}/>
-				</Box>)
-		case 'commitChanges':
+					<CommitAction refreshTab={setCurrentTab} />
+				</Box>
+			);
+		case "deleteBranch":
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
-					<CommitAction refreshTab={setCurrentTab}/>
-				</Box>)
-    case 'deleteBranch':
-			return (
-				<Box flexDirection='column'>
-					<SelectInput items={items} onSelect={handleSelect} />
-					<DeleteTab refreshTab={setCurrentTab}/>
-				</Box>)
+					<DeleteTab refreshTab={setCurrentTab} />
+				</Box>
+			);
 		default:
-			return <SelectInput items={items} onSelect={handleSelect} />
+			return <SelectInput items={items} onSelect={handleSelect} />;
 	}
 };
 
