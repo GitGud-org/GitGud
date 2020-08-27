@@ -25,7 +25,14 @@ const StageChanges = ({refreshTab}) => {
 
 	gitStatus.split("\n").forEach((file, i) => {
 		if (file.length) {
-			filesList.push({label: file.slice(3), value: i})
+			if (file.includes(' -> ')) {
+				const files = file.slice(3).split(' -> ').forEach((innerfile, j) => {
+					filesList.push({label: innerfile, value: i + j * .1 })
+				})
+
+			} else {
+				filesList.push({label: file.slice(3), value: i})
+			}
 		}
 	})
 
