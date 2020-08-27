@@ -2,52 +2,91 @@ const React = require("react");
 const { useEffect, useState, useRef } = require("react");
 const { render, Box } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
-const pushTab = require('./actions/pushTab')
-const revertTab = require('./actions/revertStaged');
 const { propTypes } = require("ink-gradient");
-const pullTab = require('./actions/pullBranch')
-const importJsx = require('import-jsx')
+const importJsx = require("import-jsx");
+
+const pushTab = require("./actions/pushTab");
+const revertTab = require("./actions/revertStaged");
+const pullTab = require("./actions/pullBranch");
+const stageFiles = require('./actions/stageFiles')
 const DeleteTab = importJsx('./actions/deleteBranch')
 
+const CheckoutBranch = importJsx("./actions/checkoutBranch");
+const CommitAction = importJsx("./actions/commit");
+
 const Selector = () => {
-	const [currentTab, setCurrentTab] = useState('')
+	const [currentTab, setCurrentTab] = useState('');
+
+
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
-		if (item === items[0]) { pushTab() }
-		if (item === items[1]) { revertTab() }
-		if (item === items[2]) { pullTab() }
+		if (item.value === "pushStagedChanges") {
+			pushTab();
+		}
+		if (item.value === "stageAll") {
+			stageFiles()
+		}
+		if (item.value === "revertStagedChanges") {
+			revertTab();
+		}
+		if (item.value === "pullFromBranch") {
+			pullTab();
+		}
 	};
 
 	const items = [
 		{
-
-			label: "Push Staged Changes",
-			value: "first",
+			label: "Stage All",
+			value: "stageAll",
 		},
 		{
 			label: "Revert Staged Changes",
-			value: "second",
+			value: "revertStagedChanges",
+		},
+		{
+			label: "Commit Changes",
+			value: "commitChanges",
+		},
+		{
+			label: "Push Staged Changes",
+			value: "pushStagedChanges",
 		},
 		{
 			label: "Pull From Branch",
-			value: "third",
+			value: "pullFromBranch",
+		},
+		{
+			label: "Checkout Branch",
+			value: "checkoutBranch",
 		},
 		{
 			label: "Delete Branch",
-			value: "fourth",
+			value: "deleteBranch",
 		}
 	];
 
-	switch(currentTab) {
-		case 'fourth':
+	switch (currentTab) {
+		case 'checkoutBranch':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} onSelect={handleSelect} />
+					<CheckoutBranch refreshTab={setCurrentTab}/>
+				</Box>)
+		case 'commitChanges':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} onSelect={handleSelect} />
+					<CommitAction refreshTab={setCurrentTab}/>
+				</Box>)
+    case 'deleteBranch':
 			return (
 				<Box flexDirection='column'>
 					<SelectInput items={items} onSelect={handleSelect} />
-					<DeleteTab refreshTab={setCurrentTab} item = {items[3]}/>
-				</Box>
-			)
+					<DeleteTab refreshTab={setCurrentTab}/>
+				</Box>)
+		default:
+			return <SelectInput items={items} onSelect={handleSelect} />
 	}
-	return <SelectInput items={items} onSelect={handleSelect} />;
 };
 
 module.exports = Selector;
