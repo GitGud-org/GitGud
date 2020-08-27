@@ -13,11 +13,9 @@ const Selector = () => {
 	const [currentTab, setCurrentTab] = useState('')
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
-		// `item` = { label: 'First', value: 'first' }
 		if (item === items[0]) { pushTab() }
 		if (item === items[1]) { revertTab() }
 		if (item === items[2]) { pullTab() }
-		if (item === items[3]) { DeleteTab() }
 	};
 
 	const items = [
@@ -43,7 +41,8 @@ const Selector = () => {
 	switch(currentTab) {
 		case 'fourth':
 			return (
-				<Box>
+				<Box flexDirection='column'>
+					<SelectInput items={items} onSelect={handleSelect} />
 					<DeleteTab refreshTab={setCurrentTab} item = {items[3]}/>
 				</Box>
 			)
