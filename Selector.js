@@ -15,13 +15,11 @@ const CommitAction = importJsx("./actions/commit");
 
 const Selector = () => {
 	// const [branchCheckout, setCheckoutBranch] = useState(false);
-	const [currentTab, setCurrentTab] = useState('zzzzz');
+	const [currentTab, setCurrentTab] = useState('');
 
 
 	const handleSelect = (item) => {
-		// `item` = { label: 'First', value: 'first' }
 		setCurrentTab(item.value)
-		// console.log("current tab ", currentTab)
 		if (item === items[0]) {
 			pushTab();
 		}
@@ -79,16 +77,6 @@ const Selector = () => {
 		default:
 			return <SelectInput items={items} onSelect={handleSelect} />
 	}
-
-	// return !branchCheckout ? (
-		// <SelectInput items={items} onSelect={handleSelect} />
-	// ) : (
-	// 	<Box flexDirection="column">
-	// 		{/* */}
-
-	// 		<CommitAction/>
-	// 	</Box>
-	// );
 };
 
 module.exports = Selector;
