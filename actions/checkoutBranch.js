@@ -6,8 +6,18 @@ const TextInput = require("ink-text-input").default;
 
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
-	// const handleSelect = props.handleSelect;
-	const logSomething = () => {
+
+	const checkoutBranch = () => {
+		let branches = execSync(
+			"git for-each-ref --format='%(refname:short)' refs/heads/"
+		)
+			.toString()
+			.split("\n");
+		if (branches.includes(query)) {
+			execSync(`git checkout -f ${query}`);
+		} else {
+			execSync(`git checkout -b ${query}`);
+		}
 		props.handleSelect(props.item);
 	};
 	return (
@@ -15,7 +25,7 @@ const CheckoutBranch = (props) => {
 			<Box marginRight={1}>
 				<Text>Checkout branch name:</Text>
 			</Box>
-			<TextInput value={query} onChange={setQuery} onSubmit={logSomething} />
+			<TextInput value={query} onChange={setQuery} onSubmit={checkoutBranch} />
 		</Box>
 	);
 };

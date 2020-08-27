@@ -34,12 +34,6 @@ const Selector = () => {
 		if (item === items[3]) {
 			pullTab();
 		}
-		// if (item === items[3]) {
-		// 	// setCheckoutBranch(!branchCheckout);
-		// }
-		// if (item === items[4]) {
-		// 	// setCheckoutBranch(!branchCheckout);
-		// }
 	};
 
 	const items = [
