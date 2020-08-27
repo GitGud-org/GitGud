@@ -12,6 +12,7 @@ const stageFiles = require('./actions/stageFiles')
 
 const CheckoutBranch = importJsx("./actions/checkoutBranch");
 const CommitAction = importJsx("./actions/commit");
+const StageSomeFiles = importJsx('./components/StageSomeFiles')
 
 const Selector = () => {
 	// const [branchCheckout, setCheckoutBranch] = useState(false);
@@ -32,9 +33,16 @@ const Selector = () => {
 		if (item.value === "pullFromBranch") {
 			pullTab();
 		}
+		// if (item.value === "stageSome") {
+
+		// }
 	};
 
 	const items = [
+		{
+			label: "Stage Some",
+			value: "stageSome",
+		},
 		{
 			label: "Stage All",
 			value: "stageAll",
@@ -67,15 +75,24 @@ const Selector = () => {
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
 					<CheckoutBranch refreshTab={setCurrentTab} item={items[3]} />
-				</Box>)
+				</Box>
+				)
 		case 'commitChanges':
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
 					<CommitAction refreshTab={setCurrentTab}/>
-				</Box>)
+				</Box>
+				)
+		case 'stageSome':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} onSelect={handleSelect} />
+					<StageSomeFiles refreshTab={setCurrentTab}/>
+				</Box>
+			)
 		default:
-			return <SelectInput items={items} onSelect={handleSelect} />
+			return <SelectInput items={items} onSelect={handleSelect} setCurrentTab={setCurrentTab} />
 	}
 };
 
