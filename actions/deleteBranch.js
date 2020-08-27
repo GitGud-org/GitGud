@@ -11,6 +11,7 @@ const DeleteTab = (props) => {
     let pull = execSync(
         'git branch -D ${query}'
     )
+    
     // return (
     //     <Box>
     //         <Text>Branches: ${branches}</Text>
