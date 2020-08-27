@@ -20,25 +20,21 @@ const Selector = () => {
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
-		if (item === items[0]) {
+		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
-		if (item === items[1]) {
+		if (item.value === "stageAll") {
 			stageFiles()
 		}
-		if (item === items[2]) {
+		if (item.value === "revertStagedChanges") {
 			revertTab();
 		}
-		if (item === items[3]) {
+		if (item.value === "pullFromBranch") {
 			pullTab();
 		}
 	};
 
 	const items = [
-		{
-			label: "Push Staged Changes",
-			value: "pushStagedChanges",
-		},
 		{
 			label: "Stage All",
 			value: "stageAll",
@@ -48,16 +44,20 @@ const Selector = () => {
 			value: "revertStagedChanges",
 		},
 		{
+			label: "Commit Changes",
+			value: "commitChanges",
+		},
+		{
+			label: "Push Staged Changes",
+			value: "pushStagedChanges",
+		},
+		{
 			label: "Pull From Branch",
 			value: "pullFromBranch",
 		},
 		{
 			label: "Checkout Branch",
 			value: "checkoutBranch",
-		},
-		{
-			label: "Commit Changes",
-			value: "commitChanges",
 		},
 	];
 

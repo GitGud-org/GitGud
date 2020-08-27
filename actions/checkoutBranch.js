@@ -7,6 +7,8 @@ const TextInput = require("ink-text-input").default;
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
 
+	let {refreshTab} = props
+
 	const checkoutBranch = () => {
 		let branches = execSync(
 			"git for-each-ref --format='%(refname:short)' refs/heads/"
@@ -18,7 +20,7 @@ const CheckoutBranch = (props) => {
 		} else {
 			execSync(`git checkout -b ${query}`);
 		}
-		props.handleSelect(props.item);
+		refreshTab('')
 	};
 	return (
 		<Box>
