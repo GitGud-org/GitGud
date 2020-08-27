@@ -7,35 +7,40 @@ const TextInput = require("ink-text-input").default;
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
 
-	let { refreshTab } = props
+	let { refreshTab } = props;
 
-	let branchList = execSync('git branch').toString().split('\n')
+	let branches = execSync(
+		"git for-each-ref --format='%(refname:short)' refs/heads/"
+	)
+		.toString()
+		.split("\n");
 
 	const checkoutBranch = () => {
-		let branches = execSync(
-			"git for-each-ref --format='%(refname:short)' refs/heads/"
-		)
-			.toString()
-			.split("\n");
 		if (branches.includes(query)) {
 			execSync(`git checkout -f ${query}`);
 		} else {
 			execSync(`git checkout -b ${query}`);
 		}
-		refreshTab('')
-	}
+		refreshTab("");
+	};
 	return (
-		<Box flexDirection='column'>
-			<Box><Text> </Text></Box>
+		<Box flexDirection="column">
 			<Box>
-				<Text color='red'>	  Branches: </Text>
-				<Text>{branchList}</Text>
+				<Text> </Text>
+			</Box>
+			<Box>
+				<Text color="red"> Branches: </Text>
+				<Text>{branches.join("  ")}</Text>
 			</Box>
 			<Box>
 				<Box marginRight={1}>
-					<Text color='red'>	  Checkout branch name:</Text>
+					<Text color="red"> Checkout branch name:</Text>
 				</Box>
-				<TextInput value={query} onChange={setQuery} onSubmit={checkoutBranch} />
+				<TextInput
+					value={query}
+					onChange={setQuery}
+					onSubmit={checkoutBranch}
+				/>
 			</Box>
 		</Box>
 	);
