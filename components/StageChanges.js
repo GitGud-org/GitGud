@@ -4,7 +4,7 @@ const { Text, Box } = require("ink");
 const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
-const Selector = ({refreshTab}) => {
+const StageChanges = ({refreshTab}) => {
 	const [gitStatus, setStatus] = useState('')
 
 	useEffect(() => {
@@ -50,7 +50,7 @@ const Selector = ({refreshTab}) => {
 					}
 					).toString().slice(0,1);
 
-					if (gitFileStatus === 'M' || gitFileStatus === 'A') {
+					if (gitFileStatus === 'M' || gitFileStatus === 'A' || gitFileStatus === 'R' || gitFileStatus === 'D') {
 						execSync(`git restore --staged ${item.label}`)
 					} else {
 						execSync(`git add ${item.label}`)
@@ -62,4 +62,4 @@ const Selector = ({refreshTab}) => {
 	return <SelectInput items={filesList} onSelect={handleSelect} />
 };
 
-module.exports = Selector;
+module.exports = StageChanges;

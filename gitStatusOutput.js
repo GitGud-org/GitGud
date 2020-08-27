@@ -18,11 +18,12 @@ const statusOutput = () => {
 	let gitStatusOutputSorted = {}
 
 	gitStatusOutputSorted.staged = gitStatusOutput.split('\n').filter(line => {
-		let tag = line.slice(0,2)
+		let tag = line.slice(0,1)
 		return (
-			tag === 'M ' ||
-			tag === 'MD' ||
-			tag === 'A '
+			tag === 'M' ||
+			tag === 'A' ||
+			tag === 'R' ||
+			tag === 'D'
 		)
 	})
 	.map(line => {
@@ -31,11 +32,12 @@ const statusOutput = () => {
 	.join('\n')
 
 	gitStatusOutputSorted.unstaged = gitStatusOutput.split('\n').filter(line => {
-		let tag = line.slice(0,2)
+		let tag = line.slice(0,1)
 		return !((
-			tag === 'M ' ||
-			tag === 'MD' ||
-			tag === 'A '
+			tag === 'M' ||
+			tag === 'A' ||
+			tag === 'R' ||
+			tag === 'D'
 		) || line === '')
 	})
 	.map(line => {

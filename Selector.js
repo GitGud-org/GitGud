@@ -1,8 +1,7 @@
 const React = require("react");
-const { useEffect, useState, useRef } = require("react");
-const { render, Box } = require("ink");
+const { useState } = require("react");
+const { Box } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
-const { propTypes } = require("ink-gradient");
 const importJsx = require("import-jsx");
 
 const pushTab = require("./actions/pushTab");
@@ -10,14 +9,13 @@ const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
 const stageFiles = require('./actions/stageFiles')
 
-const CheckoutBranch = importJsx("./actions/checkoutBranch");
-const CommitAction = importJsx("./actions/commit");
-const StageSomeFiles = importJsx('./components/StageSomeFiles')
+const CheckoutBranch = importJsx("./components/CheckoutBranch");
+const CommitAction = importJsx("./components/Commit");
+const StageSomeFiles = importJsx('./components/StageChanges')
 
 const Selector = () => {
-	// const [branchCheckout, setCheckoutBranch] = useState(false);
-	const [currentTab, setCurrentTab] = useState('');
 
+	const [currentTab, setCurrentTab] = useState('');
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
@@ -33,23 +31,12 @@ const Selector = () => {
 		if (item.value === "pullFromBranch") {
 			pullTab();
 		}
-		// if (item.value === "stageSome") {
-
-		// }
 	};
 
 	const items = [
 		{
-			label: "Stage Some",
+			label: "Stage Changes",
 			value: "stageSome",
-		},
-		{
-			label: "Stage All",
-			value: "stageAll",
-		},
-		{
-			label: "Revert Staged Changes",
-			value: "revertStagedChanges",
 		},
 		{
 			label: "Commit Changes",
