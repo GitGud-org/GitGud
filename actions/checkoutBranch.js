@@ -7,7 +7,9 @@ const TextInput = require("ink-text-input").default;
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
 
-	let {refreshTab} = props
+	let { refreshTab } = props
+
+	let branchList = execSync('git branch').toString().split('\n')
 
 	const checkoutBranch = () => {
 		let branches = execSync(
@@ -21,13 +23,20 @@ const CheckoutBranch = (props) => {
 			execSync(`git checkout -b ${query}`);
 		}
 		refreshTab('')
-	};
+	}
 	return (
-		<Box>
-			<Box marginRight={1}>
-				<Text>Checkout branch name:</Text>
+		<Box flexDirection='column'>
+			<Box><Text> </Text></Box>
+			<Box>
+				<Text color='red'>	  Branches: </Text>
+				<Text>{branchList}</Text>
 			</Box>
-			<TextInput value={query} onChange={setQuery} onSubmit={checkoutBranch} />
+			<Box>
+				<Box marginRight={1}>
+					<Text color='red'>	  Checkout branch name:</Text>
+				</Box>
+				<TextInput value={query} onChange={setQuery} onSubmit={checkoutBranch} />
+			</Box>
 		</Box>
 	);
 };
