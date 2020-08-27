@@ -1,6 +1,6 @@
 const React = require("react");
 const { useEffect, useState, useRef } = require("react");
-const { Text, Box } = require("ink");
+const { Text, Box, Newline } = require("ink");
 const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
@@ -36,15 +36,11 @@ const StageChanges = ({refreshTab}) => {
 		}
 	})
 
-	filesList.push({label:'EXIT', value: 'EXIT'})
-
 	const handleSelect = (item) => {
 		if (item.label === 'ALL') {
 			execSync(`git add .`)
 		} else if (item.label === 'NONE') {
 			execSync('git restore --staged .')
-		} else if (item.label === 'EXIT') {
-			refreshTab('')
 		} else {
 				let gitFileStatus = execSync(
 					`git status -s ${item.label}`,
@@ -66,7 +62,13 @@ const StageChanges = ({refreshTab}) => {
 
 	};
 
-	return <SelectInput items={filesList} onSelect={handleSelect} />
+	return (
+		<Box flexDirection="column" >
+			<SelectInput items={filesList} onSelect={handleSelect} />
+			<Newline />
+			<Text color='gray'>Press ESC to go back</Text>
+		</Box>
+	)
 };
 
 module.exports = StageChanges;

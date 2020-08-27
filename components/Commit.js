@@ -1,6 +1,6 @@
 const React = require("react");
 const { useState } = require("react");
-const { Box, Text, useInput } = require("ink");
+const { Box, Text, useInput, Newline } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
@@ -19,7 +19,8 @@ const CommitAction = (props) => {
 				<Text>Commit Message: </Text>
 				<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
 			</Box>
-			<Text>Press ESC to go back </Text>
+			<Newline />
+			<Text color='gray'>Press ESC to go back </Text>
 		</Box>
 	);
 }
