@@ -25,7 +25,7 @@ const Selector = () => {
 		if (item === items[0]) {
 			pushTab();
 		}
-		if (item === item[1]) {
+		if (item === items[1]) {
 			stageFiles()
 		}
 		if (item === items[2]) {
