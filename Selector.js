@@ -1,6 +1,6 @@
 const React = require("react");
 const { useState } = require("react");
-const { Box } = require("ink");
+const { Box, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
@@ -8,14 +8,20 @@ const pushTab = require("./actions/pushTab");
 const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
 const stageFiles = require('./actions/stageFiles')
+const DeleteTab = importJsx('./actions/deleteBranch')
 
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
 
 const Selector = () => {
-
 	const [currentTab, setCurrentTab] = useState('');
+
+	useInput((input, key) => {
+		if (key.escape) {
+			return setCurrentTab('')
+		}
+	})
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
@@ -54,6 +60,10 @@ const Selector = () => {
 			label: "Checkout Branch",
 			value: "checkoutBranch",
 		},
+		{
+			label: "Delete Branch",
+			value: "deleteBranch",
+		}
 	];
 
 	switch (currentTab) {
@@ -61,21 +71,29 @@ const Selector = () => {
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
-					<CheckoutBranch refreshTab={setCurrentTab} item={items[3]} />
+					<CheckoutBranch refreshTab={setCurrentTab}/>
 				</Box>
-				)
+			)
 		case 'commitChanges':
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
-					<CommitAction refreshTab={setCurrentTab}/>
+					<CommitAction refreshTab={setCurrentTab} />
 				</Box>
-				)
+			)
 		case 'stageSome':
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
 					<StageSomeFiles refreshTab={setCurrentTab}/>
+				</Box>
+			)
+
+    case 'deleteBranch':
+			return (
+				<Box flexDirection='column'>
+					<SelectInput items={items} onSelect={handleSelect} />
+					<DeleteTab refreshTab={setCurrentTab}/>
 				</Box>
 			)
 		default:

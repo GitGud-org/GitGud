@@ -1,6 +1,6 @@
 const React = require("react");
 const { useState } = require("react");
-const { Box, Text } = require("ink");
+const { Box, Text, useInput } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
@@ -14,13 +14,17 @@ const CommitAction = (props) => {
 		refreshTab('')
 	};
 	return (
-		<Box>
+		<Box flexDirection="column">
 			<Box marginRight={1}>
 				<Text>Commit Message: </Text>
+				<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
 			</Box>
-			<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
+			<Text>Press ESC to go back </Text>
 		</Box>
 	);
-};
+}
+
+
 
 module.exports = CommitAction;
+
