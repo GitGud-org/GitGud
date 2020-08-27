@@ -1,6 +1,6 @@
 const React = require("react");
 const { useEffect, useState, useRef } = require("react");
-const { render, Box } = require("ink");
+const { Box, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const { propTypes } = require("ink-gradient");
 const importJsx = require("import-jsx");
@@ -17,6 +17,11 @@ const CommitAction = importJsx("./actions/commit");
 const Selector = () => {
 	const [currentTab, setCurrentTab] = useState('');
 
+	useInput((input, key) => {
+		if (key.escape) {
+			return setCurrentTab('')
+		}
+	})
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value)
