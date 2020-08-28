@@ -9,7 +9,7 @@ const gitBranchCall = require("./currentBranch");
 const Gradient = require("ink-gradient");
 const BigText = require("ink-big-text");
 
-const branchVisual = require("./branchVisual");
+// const branchVisual = require("./branchVisual");
 // const branchVisualText = require('./branchVisualText')
 
 const importJsx = require("import-jsx");
