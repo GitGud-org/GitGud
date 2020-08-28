@@ -5,12 +5,12 @@ const SelectInput = require("ink-select-input-horizontal").default;
 const { propTypes } = require("ink-gradient");
 const importJsx = require("import-jsx");
 
+const TreeTab = importJsx('./actions/treeTab')
 const pushTab = require("./actions/pushTab");
 const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
 const stageFiles = require("./actions/stageFiles");
 const DeleteTab = importJsx("./actions/deleteBranch");
-
 const CheckoutBranch = importJsx("./actions/checkoutBranch");
 const CommitAction = importJsx("./actions/commit");
 
@@ -68,9 +68,19 @@ const Selector = () => {
 			label: "Delete Branch",
 			value: "deleteBranch",
 		},
+		{
+			label: "Access Full Log Tree",
+			value: "logTree"
+		}
 	];
 
 	switch (currentTab) {
+		case 'logTree':
+			return (
+				<Box>
+					<TreeTab />
+				</Box>
+			)
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">

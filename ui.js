@@ -74,7 +74,7 @@ const App = () => {
 					height="100%"
 					flexDirection="column"
 					ref={ref}
-					// flexGrow={1}
+				// flexGrow={1}
 				>
 					<Box className="changed-files" height="50%">
 						<Box height="100%">
