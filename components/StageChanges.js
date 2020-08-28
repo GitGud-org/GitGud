@@ -52,8 +52,9 @@ const StageChanges = ({refreshTab}) => {
 				).toString().split("\n")
 
 				const someUnstagedFiles = gitAllFilesStatus.reduce((prev, status) => {
-					return (prev || status.slice(0,1) === ' ')
+					return (prev || (status.slice(0,1) === ' ' || status.slice(0,1) === '?'))
 				}, false)
+
 				if (someUnstagedFiles) {
 					execSync(`git add .`)
 				} else {
