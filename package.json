@@ -32,7 +32,7 @@
     }
 	],
 	"scripts": {
-		"test": "echo \"No test specified\"",
+		"test": "echo \"No test specified\""
 	},
 	"dependencies": {
 		"@types/react": "^16.9.48",
