@@ -2,7 +2,6 @@ const React = require("react");
 const { useState } = require("react");
 const { render, Box, Text, Newline } = require("ink");
 const { execSync } = require("child_process");
-const SelectInput = require("ink-select-input").default;
 const TextInput = require("ink-text-input").default;
 
 const CheckoutBranch = (props) => {
