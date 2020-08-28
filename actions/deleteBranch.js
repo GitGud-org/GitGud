@@ -18,13 +18,14 @@ const DeleteTab = (props) => {
     }
     return (
         <Box flexDirection='column'>
+            <Box><Text> </Text></Box>
             <Box>
-                <Text color='red'>Branches: </Text>
+                <Text color='red'>   Branches: </Text>
                 <Text>{branches}</Text>
             </Box>
             <Box >
                 <Box>
-                    <Text color='red'>Delete Branch: </Text>
+                    <Text color='red'>   Delete Branch: </Text>
                     <TextInput value={del} onChange={setDelete} onSubmit={handleSubmit} />
                 </Box>
             </Box>
