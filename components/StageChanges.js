@@ -21,7 +21,7 @@ const StageChanges = ({refreshTab}) => {
 
 		setStatus(gitStatusOutput)
 	})
-	const filesList = [{label:'ALL', value: 'ALL'}, {label:'NONE', value:'NONE'}]
+	const filesList = [{label:'STAGE ALL / NONE', value: 'STAGE ALL / NONE'}]
 
 	gitStatus.split("\n").forEach((file, i) => {
 		if (file.length) {
@@ -37,10 +37,28 @@ const StageChanges = ({refreshTab}) => {
 	})
 
 	const handleSelect = (item) => {
-		if (item.label === 'ALL') {
-			execSync(`git add .`)
-		} else if (item.label === 'NONE') {
-			execSync('git restore --staged .')
+
+
+		if (item.label === 'STAGE ALL / NONE') {
+			let gitAllFilesStatus = execSync(
+				`git status -s`,
+				(error, stdout, stderr) => {
+					if (error) {
+						console.error(`exec error: ${error}`);
+						return;
+					}
+					return stdout;
+				}
+				).toString().split("\n")
+
+				const someUnstagedFiles = gitAllFilesStatus.reduce((prev, status) => {
+					return (prev || status.slice(0,1) === ' ')
+				}, false)
+				if (someUnstagedFiles) {
+					execSync(`git add .`)
+				} else {
+					execSync('git restore --staged .')
+				}
 		} else {
 				let gitFileStatus = execSync(
 					`git status -s ${item.label}`,
