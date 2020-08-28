@@ -4,6 +4,7 @@ const { Box, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
+const TreeTab = importJsx('./actions/treeTab')
 const pushTab = require("./actions/pushTab");
 const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
@@ -64,9 +65,19 @@ const Selector = () => {
 			label: "Delete Branch",
 			value: "deleteBranch",
 		},
+		{
+			label: "Access Full Log Tree",
+			value: "logTree"
+		}
 	];
 
 	switch (currentTab) {
+		case 'logTree':
+			return (
+				<Box>
+					<TreeTab />
+				</Box>
+			)
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
