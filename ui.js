@@ -17,6 +17,8 @@ const Selector = importJsx("./Selector.js");
 
 const gitStatusPull = require('./actions/gitStatusPull')
 const gitStatusProcess = require('./actions/gitStatusProcess')
+const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
+const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
 const enterAltScreenCommand = "\x1b[?1049h";
 const leaveAltScreenCommand = "\x1b[?1049l";
@@ -38,7 +40,7 @@ const App = () => {
 		const intervalStatusCheck = setInterval(() => {
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
-			setVisual(branchVisual());
+			setVisual(gitBranchVisualPull());
 			// setText(branchVisualText())
 		}, 1000);
 
@@ -53,6 +55,7 @@ const App = () => {
 	}, []);
 
 	const statusProcessed = gitStatusProcess(status)
+	const visualProcessed = gitBranchVisualProcess(visual)
 
 	return (
 		<Box flexDirection="column">
@@ -124,7 +127,7 @@ const App = () => {
 					<Box flexDirection="row">
 						{/* <Text color="green">{visual.astrix}</Text> */}
 						<Text color="white" bold>
-							{visual.sorted}
+							{visualProcessed.sorted}
 						</Text>
 						<Text> </Text>
 						{/* <Text color='white'>{text.sorted}</Text>  */}
