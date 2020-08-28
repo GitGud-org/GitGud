@@ -15,6 +15,9 @@ const branchVisual = require("./branchVisual");
 const importJsx = require("import-jsx");
 const Selector = importJsx("./Selector.js");
 
+const gitStatusPull = require('./actions/gitStatusPull')
+const gitStatusProcess = require('./actions/gitStatusProcess')
+
 const enterAltScreenCommand = "\x1b[?1049h";
 const leaveAltScreenCommand = "\x1b[?1049l";
 
@@ -33,7 +36,7 @@ const App = () => {
 
 	useEffect(() => {
 		const intervalStatusCheck = setInterval(() => {
-			setStatus(statusOutput());
+			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(branchVisual());
 			// setText(branchVisualText())
@@ -48,6 +51,8 @@ const App = () => {
 			clearInterval(intervalStatusCheck);
 		};
 	}, []);
+
+	const statusProcessed = gitStatusProcess(status)
 
 	return (
 		<Box flexDirection="column">
@@ -78,7 +83,7 @@ const App = () => {
 									Unstaged Changes
 								</Text>
 								<Newline />
-								{status.unstaged}
+								{statusProcessed.unstaged}
 							</Text>
 						</Box>
 					</Box>
@@ -94,7 +99,7 @@ const App = () => {
 									Staged Changes
 								</Text>
 								<Newline />
-								{status.staged}
+								{statusProcessed.staged}
 							</Text>
 						</Box>
 					</Box>
