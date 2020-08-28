@@ -1,19 +1,42 @@
 {
-	"name": "GitGud",
+	"name": "gitgud",
 	"version": "0.0.0",
+	"description": "A CLI git tool",
 	"license": "MIT",
 	"bin": "cli.js",
+	"repository": "GitGud-org/gitgud",
 	"engines": {
 		"node": ">=10"
 	},
-	"scripts": {
-		"test": "xo && ava"
-	},
-	"files": [
-		"cli.js",
-		"ui.js"
+	"keywords": [
+		"git",
+		"cli",
+		"terminal"
 	],
+	"contributors": [
+		{
+      "name": "Robert Harkov",
+      "url": "https://whatever.com"
+		},
+		{
+      "name": "Yosef Herskovitz",
+      "url": "https://myresume.tech"
+		},
+		{
+      "name": "Joshua Pukin",
+      "url": "https://whatever.com"
+		},
+		{
+      "name": "ANgela Ratto",
+      "url": "https://whatever.com"
+    }
+	],
+	"scripts": {
+		"test": "echo \"No test specified\""
+	},
 	"dependencies": {
+		"@types/react": "^16.9.48",
+		"bufferutil": "^4.0.1",
 		"import-jsx": "^4.0.0",
 		"ink": "^3.0.4",
 		"ink-big-text": "^1.2.0",
@@ -21,7 +44,8 @@
 		"ink-select-input-horizontal": "^4.1.0",
 		"ink-text-input": "^4.0.0",
 		"meow": "^7.1.0",
-		"react": "^16.13.1"
+		"react": "^16.13.1",
+		"utf-8-validate": "^5.0.2"
 	},
 	"devDependencies": {
 		"@ava/babel": "^1.0.1",
