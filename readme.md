@@ -11,6 +11,8 @@
 
 A git tool for the command line!
 
+Gitgud allows you to easily visualize and fully utilize git throughout all your projects!
+
 ## Install
 
 ```bash
@@ -24,9 +26,11 @@ $ npm install --global gitgud
 
 
 ```
-$ GitGud --help
-
   Usage
     $ GitGud
 
 ```
+
+Navigate through the UI with either the Tab button or left/right arrows.
+
+You can hit escape to go back.
