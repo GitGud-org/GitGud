@@ -7,7 +7,6 @@ const TextInput = require("ink-text-input").default;
 
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
-	const [branchError, setBranchError] = useState(false);
 
 	let { refreshTab } = props;
 
@@ -22,28 +21,12 @@ const CheckoutBranch = (props) => {
 			try {
 				execSync(`git checkout ${query}`);
 				refreshTab("");
-			} catch (error) {
-				setBranchError(true);
-			}
+			} catch (error) {}
 		} else {
 			execSync(`git checkout -b ${query}`);
 			refreshTab("");
 		}
 	};
-	const items = [
-		{
-			label: "First",
-			value: "first",
-		},
-		{
-			label: "Second",
-			value: "second",
-		},
-		{
-			label: "Third",
-			value: "third",
-		},
-	];
 	return (
 		<Box flexDirection="column">
 			<Box>
