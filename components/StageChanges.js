@@ -21,7 +21,8 @@ const StageChanges = ({refreshTab}) => {
 
 		setStatus(gitStatusOutput)
 	})
-	const filesList = [{label:'STAGE ALL / NONE', value: 'STAGE ALL / NONE'}]
+
+	const filesList = [{label:'STAGE/UNSTAGE (all files)', value: 'STAGE/UNSTAGE (all files)'}]
 
 	gitStatus.split("\n").forEach((file, i) => {
 		if (file.length) {
@@ -39,7 +40,7 @@ const StageChanges = ({refreshTab}) => {
 	const handleSelect = (item) => {
 
 
-		if (item.label === 'STAGE ALL / NONE') {
+		if (item.label === 'STAGE/UNSTAGE (all files)') {
 			let gitAllFilesStatus = execSync(
 				`git status -s`,
 				(error, stdout, stderr) => {
