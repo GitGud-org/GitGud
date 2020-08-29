@@ -83,7 +83,7 @@ const StageChanges = ({refreshTab}) => {
 	};
 
 	return (
-		<Box flexDirection="column" >
+		<Box flexDirection="column" marginLeft='3' >
 			<SelectInput items={filesList} onSelect={handleSelect} />
 			<Newline />
 			<Text color='gray'>Press ESC to go back</Text>
