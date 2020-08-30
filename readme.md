@@ -1,8 +1,6 @@
 <h1 align="center">
 	<br>
-	<br>
-	<img width="200" alt="Ink" src="media/gitgud.png">
-	<br>
+	<img width="1000" alt="Ink" src="media/gitgud.jpg">
 	<br>
 	<br>
 </h1>
