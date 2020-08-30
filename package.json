@@ -12,7 +12,11 @@
 	"keywords": [
 		"git",
 		"cli",
-		"terminal"
+		"terminal",
+		"terminal-app",
+		"console",
+		"console-application",
+		"ink"
 	],
 	"contributors": [
 		{

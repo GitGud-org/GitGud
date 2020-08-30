@@ -9,9 +9,11 @@
 
 # GitGud
 
-A git tool for the command line!
+## A git tool for the command line!
 
-Gitgud allows you to easily visualize and fully utilize git throughout all your projects!
+### Gitgud allows you to easily visualize and fully utilize git throughout all your projects!
+
+Made with **[Ink](https://github.com/vadimdemedes/ink)**.
 
 ## Install
 
