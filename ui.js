@@ -3,7 +3,8 @@ const React = require("react");
 
 const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline, Spacer } = require("ink");
-const Renderer = require("./components/divider");
+
+const Renderer = require("./components/Divider");
 const gitBranchCall = require("./currentBranch");
 const Gradient = require("ink-gradient");
 const BigText = require("ink-big-text");
@@ -77,13 +78,15 @@ const App = () => {
 				>
 					<Box className="changed-files" height="50%">
 						<Box height="100%">
-							<Text>
+							<Box flexDirection="column" alignItems="flex-start">
 								<Text color="red" bold underline>
 									Unstaged Changes
 								</Text>
-								<Newline />
-								{statusProcessed.unstaged}
-							</Text>
+								{/* <Newline /> */}
+								{/* <Box flexDirection="column" alignItems="flex-start"> */}
+									{statusProcessed.unstaged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
+								{/* </Box> */}
+							</Box>
 						</Box>
 					</Box>
 					<Text color="red">
@@ -93,13 +96,13 @@ const App = () => {
 
 					<Box className="stage-area" height="50%">
 						<Box height="100%">
-							<Text>
+							<Box flexDirection="column" alignItems="flex-start">
 								<Text color="red" bold underline>
 									Staged Changes
 								</Text>
-								<Newline />
-								{statusProcessed.staged}
-							</Text>
+								{/* <Newline /> */}
+								{statusProcessed.staged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
+							</Box>
 						</Box>
 					</Box>
 				</Box>
