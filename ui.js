@@ -54,8 +54,6 @@ const App = () => {
 	const statusProcessed = gitStatusProcess(status)
 	const visualProcessed = gitBranchVisualProcess(visual)
 
-	console.log("statusProcess >>>> ",statusProcessed)
-
 	return (
 		<Box flexDirection="column">
 			<Box justifyContent="center">
@@ -84,7 +82,7 @@ const App = () => {
 								<Text color="red" bold underline>
 									Unstaged Changes
 								</Text>
-								<Newline />
+								{/* <Newline /> */}
 								{/* <Box flexDirection="column" alignItems="flex-start"> */}
 									{statusProcessed.unstaged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
 								{/* </Box> */}
@@ -98,14 +96,12 @@ const App = () => {
 
 					<Box className="stage-area" height="50%">
 						<Box height="100%">
-							<Box>
+							<Box flexDirection="column" alignItems="flex-start">
 								<Text color="red" bold underline>
 									Staged Changes
 								</Text>
-								<Newline />
-								<Box>
-									{statusProcessed.staged.map(file => <Text>{file}</Text>)}
-								</Box>
+								{/* <Newline /> */}
+								{statusProcessed.staged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
 							</Box>
 						</Box>
 					</Box>

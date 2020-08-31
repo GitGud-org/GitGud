@@ -16,6 +16,4 @@ const statusOutput = () => {
 	return gitStatusOutput
 }
 
-console.log(statusOutput())
-
 module.exports = statusOutput;
