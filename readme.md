@@ -1,17 +1,17 @@
 <h1 align="center">
 	<br>
-	<br>
-	<img width="200" alt="Ink" src="media/gitgud.png">
-	<br>
+	<img width="1000" alt="GitGud" src="media/GitGud.jpg">
 	<br>
 	<br>
 </h1>
 
 # GitGud
 
-A git tool for the command line!
+## A git tool for the command line!
 
-Gitgud allows you to easily visualize and fully utilize git throughout all your projects!
+### Gitgud allows you to easily visualize and fully utilize git throughout all your projects!
+
+Made with **[Ink](https://github.com/vadimdemedes/ink)**.
 
 ## Install
 
