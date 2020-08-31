@@ -1,6 +1,6 @@
 const React = require("react");
-const { useState } = require("react");
-const { Box, useInput } = require("ink");
+const { useState, useEffect } = require("react");
+const { Box, useInput, useFocus, useFocusManager  } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
@@ -17,6 +17,10 @@ const StageSomeFiles = importJsx('./components/StageChanges')
 
 const Selector = () => {
 	const [currentTab, setCurrentTab] = useState("");
+	let {isFocused} = useFocus();
+	const {disableFocus, enableFocus}  = useFocusManager();
+
+	// useEffect(() => disableFocus(), [])
 
 	useInput((input, key) => {
 		if (key.escape) {
@@ -24,8 +28,12 @@ const Selector = () => {
 		}
 	});
 
+	// console.log('isFocused 1>>>', isFocused)
+
+
 	const handleSelect = (item) => {
 		setCurrentTab(item.value);
+		// console.log('isFocused 2>>>', isFocused)
 		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
@@ -37,6 +45,10 @@ const Selector = () => {
 		}
 		if (item.value === "pullFromBranch") {
 			pullTab();
+		}
+		if (item.value === 'stageSome') {
+			isFocused = true;
+			// console.log('isFocused 3>>>', isFocused)
 		}
 	};
 
@@ -81,29 +93,29 @@ const Selector = () => {
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
-					{/* <SelectInput items={items} onSelect={handleSelect} /> */}
+					<SelectInput items={items} isFocused={false} />
 					<CheckoutBranch refreshTab={setCurrentTab} />
 				</Box>
 			);
 		case "commitChanges":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} onSelect={handleSelect} />
+					<SelectInput items={items} isFocused={false} />
 					<CommitAction refreshTab={setCurrentTab} />
 				</Box>
 			)
 		case 'stageSome':
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} onSelect={handleSelect} />
-					<StageSomeFiles refreshTab={setCurrentTab}/>
+					<SelectInput items={items} isFocused={false} />
+					<StageSomeFiles refreshTab={setCurrentTab} />
 				</Box>
 			)
 
     case 'deleteBranch':
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} onSelect={handleSelect} />
+					<SelectInput items={items} isFocused={false} />
 					<DeleteTab refreshTab={setCurrentTab} />
 				</Box>
 			);
