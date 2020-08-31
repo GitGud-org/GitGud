@@ -21,7 +21,8 @@ const StageChanges = ({refreshTab}) => {
 
 		setStatus(gitStatusOutput)
 	})
-	const filesList = [{label:'STAGE ALL / NONE', value: 'STAGE ALL / NONE'}]
+
+	const filesList = [{label:'STAGE/UNSTAGE (all files)', value: 'STAGE/UNSTAGE (all files)'}]
 
 	gitStatus.split("\n").forEach((file, i) => {
 		if (file.length) {
@@ -39,7 +40,7 @@ const StageChanges = ({refreshTab}) => {
 	const handleSelect = (item) => {
 
 
-		if (item.label === 'STAGE ALL / NONE') {
+		if (item.label === 'STAGE/UNSTAGE (all files)') {
 			let gitAllFilesStatus = execSync(
 				`git status -s`,
 				(error, stdout, stderr) => {
@@ -52,7 +53,7 @@ const StageChanges = ({refreshTab}) => {
 				).toString().split("\n")
 
 				const someUnstagedFiles = gitAllFilesStatus.reduce((prev, status) => {
-					return (prev || (status.slice(0,1) === ' ' || status.slice(0,1) === '?'))
+					return (prev || (status.length && status.slice(1,2) !== ' '))
 				}, false)
 
 				if (someUnstagedFiles) {
@@ -82,7 +83,7 @@ const StageChanges = ({refreshTab}) => {
 	};
 
 	return (
-		<Box flexDirection="column" >
+		<Box flexDirection="column" marginLeft='3' >
 			<SelectInput items={filesList} onSelect={handleSelect} />
 			<Newline />
 			<Text color='gray'>Press ESC to go back</Text>

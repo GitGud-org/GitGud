@@ -1,31 +1,20 @@
 const gitStatusProcess = (gitStatusOutput) => {
-	let gitStatusOutputSorted = {}
+	let gitStatusOutputSorted = {
+		staged: [],
+		unstaged: [],
+	}
 
-	gitStatusOutputSorted.staged = gitStatusOutput.split('\n').filter(line => {
-		let tag = line.slice(0,2)
-		return (
-			tag === 'M ' ||
-			tag === 'MD' ||
-			tag === 'A '
-			)
+	gitStatusOutput.split('\n').forEach(line => {
+		const tag1 = line.slice(0,1)
+		const tag2 = line.slice(1,2)
+
+		if (tag1 !== ' ' && tag1 !== '?' && line.length) {
+			gitStatusOutputSorted.staged.push(`- ${line.slice(3)} (${line.slice(0,2)})`)
+		}
+		if (tag2 !== ' ' && line.length) {
+			gitStatusOutputSorted.unstaged.push(`- ${line.slice(3)} (${line.slice(0,2)})`)
+		}
 		})
-		.map(line => {
-		return `- ${line.slice(3)} (${line.slice(0,2)})`
-	})
-	.join('\n')
-
-	gitStatusOutputSorted.unstaged = gitStatusOutput.split('\n').filter(line => {
-		let tag = line.slice(0,2)
-		return !((
-			tag === 'M ' ||
-			tag === 'MD' ||
-			tag === 'A '
-		) || line === '')
-	})
-	.map(line => {
-		return `- ${line.slice(3)} (${line.slice(0,2)})`
-	})
-	.join('\n')
 
 	return gitStatusOutputSorted
 }
