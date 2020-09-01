@@ -5,6 +5,9 @@ const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
 const DeleteTab = (props) => {
+    //Uses git branch and displays all local branches
+    //Takes in an input to for delete branch 
+
     const [del, setDelete] = useState('')
 
     let { refreshTab } = props
@@ -29,6 +32,8 @@ const DeleteTab = (props) => {
                     <TextInput value={del} onChange={setDelete} onSubmit={handleSubmit} />
                 </Box>
             </Box>
+            <Newline />
+			<Text color='gray'>   Press ESC to go back </Text>
         </Box>
     )
 }

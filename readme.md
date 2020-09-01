@@ -44,3 +44,6 @@ You can hit escape to go back.
 GitGud is a fully open source project and contributions are welcome!
 
 When submitting a pull request, please clearly explain the feature you added or the bug you fixed.
+---------------------------------------------------------------
+
+Thanks to [`Joseph Garrone`](#https://github.com/JosephGarrone) for giving us the NPM package name.
