@@ -4,6 +4,8 @@ const { Box, Text, useInput, Newline } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
+//Commit changes tab -- takes in a message to commit on the current branch
+
 const CommitAction = (props) => {
 	const [message, setMessage] = useState("");
 
