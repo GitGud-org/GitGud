@@ -4,6 +4,8 @@ const { Text, Box, Newline, useFocus, useFocusManager } = require("ink");
 const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
+//Stages/unstages changes 
+
 const StageChanges = ({refreshTab}) => {
 	const [gitStatus, setStatus] = useState('')
 	const {isFocused} = useFocus();

@@ -3,7 +3,8 @@ const gitStatusProcess = (gitStatusOutput) => {
 		staged: [],
 		unstaged: [],
 	}
-
+	//Checks and outputs what the status of a file is.
+	//Specifically, modified/deleted/added files
 	gitStatusOutput.split('\n').forEach(line => {
 		const tag1 = line.slice(0,1)
 		const tag2 = line.slice(1,2)

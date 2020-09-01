@@ -4,6 +4,10 @@ const { render, Box, Text, Newline } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
+//Uses git for-each-ref to display all available branches to checkout to
+//Also removes the astrix that displays the current branch you are on 
+	//since it is not necessary here.
+
 const CheckoutBranch = (props) => {
 	const [query, setQuery] = useState("");
 
@@ -18,10 +22,12 @@ const CheckoutBranch = (props) => {
 	const checkoutBranch = () => {
 		if (branches.includes(query)) {
 			try {
+				//checks out to an existing local branch
 				execSync(`git checkout ${query}`);
 				refreshTab("");
 			} catch (error) {}
 		} else {
+			//creates a new branch if the query isn't already local
 			execSync(`git checkout -b ${query}`);
 			refreshTab("");
 		}
