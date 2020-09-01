@@ -17,12 +17,13 @@ const CommitAction = (props) => {
 	};
 	return (
 		<Box flexDirection="column">
+			<Box><Text> </Text></Box>
 			<Box marginRight={1}>
-				<Text>Commit Message: </Text>
+				<Text color='red'>   Commit Message: </Text>
 				<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
 			</Box>
 			<Newline />
-			<Text color='gray'>Press ESC to go back </Text>
+			<Text color='gray'>   Press ESC to go back </Text>
 		</Box>
 	);
 }

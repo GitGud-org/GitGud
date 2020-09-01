@@ -13,6 +13,7 @@ const TreeTab = () => {
             <Box>
                 <Text color='#f09e8c'>{largeTree}</Text>
             </Box>
+            <Text color='gray'>   Press ESC to go back </Text>
         </Box>
     )
 }
