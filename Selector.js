@@ -15,7 +15,7 @@ const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
 
-const Selector = () => {
+const Selector = ({defaultColor, accentColor}) => {
 	const [currentTab, setCurrentTab] = useState("");
 	let {isFocused} = useFocus();
 	const {disableFocus, enableFocus}  = useFocusManager();
@@ -93,7 +93,7 @@ const Selector = () => {
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} isFocused={false} />
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
 					<CheckoutBranch refreshTab={setCurrentTab} />
 				</Box>
 			);
@@ -107,8 +107,8 @@ const Selector = () => {
 		case 'stageSome':
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} isFocused={false} />
-					<StageSomeFiles refreshTab={setCurrentTab} />
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
+					<StageSomeFiles refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor} />
 				</Box>
 			)
 
