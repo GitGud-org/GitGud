@@ -31,6 +31,16 @@ $ npm install --global gitgud
 
 ```
 
+Navigate to any project that has a git directory in it and run the 'gitgud' command. This will load the gitgud UI!
+
+
 Navigate through the UI with either the Tab button or left/right arrows.
 
 You can hit escape to go back.
+
+
+## Contributing
+
+GitGud is a fully open source project and contributions are welcome!
+
+When submitting a pull request, please clearly explain the feature you added or the bug you fixed.
