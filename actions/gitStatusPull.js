@@ -2,6 +2,8 @@ const { execSync } = require("child_process");
 
 const statusOutput = () => {
 
+	//returns modified files
+
 	let gitStatusOutput = execSync(
 		"git status -s",
 		(error, stdout, stderr) => {

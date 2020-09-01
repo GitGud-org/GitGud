@@ -2,6 +2,8 @@ const { execSync } = require('child_process')
 
 const gitBranchVisualProcess = (gitBranchVisualString) => {
 
+  //Splits text from the gitBranch section to format the astrix/commit symbol
+
     let sortedBranchVisual = {}
 
     sortedBranchVisual.astrix = gitBranchVisualString.slice(0,1)

@@ -5,7 +5,7 @@ const gitBranchCall = require('../currentBranch')
 const pullTab = () => {
     let branch = gitBranchCall()
     let pull = execSync(
-        //pushes staged files to whatever branch that you are on
+        //pulls the most recent commit/push from the branch you are currently on
         'git pull origin ' + branch + ''
     )
 
