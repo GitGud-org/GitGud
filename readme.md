@@ -34,3 +34,7 @@ $ npm install --global gitgud
 Navigate through the UI with either the Tab button or left/right arrows.
 
 You can hit escape to go back.
+
+---------------------------------------------------------------
+
+Thanks to [`Joseph Garrone`](#https://github.com/JosephGarrone) for giving us the NPM package name.
