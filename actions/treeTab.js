@@ -4,6 +4,7 @@ const { render, Box, Text, Newline } = require("ink")
 const { execSync } = require("child_process");
 
 const TreeTab = () => {
+    //displays full git log tree under access full log tree
     let tree = execSync('git log --all --decorate --oneline --graph').toString()
     let largeTree = tree
     return (
@@ -12,6 +13,7 @@ const TreeTab = () => {
             <Box>
                 <Text color='#f09e8c'>{largeTree}</Text>
             </Box>
+            <Text color='gray'>   Press ESC to go back </Text>
         </Box>
     )
 }

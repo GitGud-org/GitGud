@@ -5,6 +5,7 @@ const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
 const StageChanges = ({refreshTab, accentColor, defaultColor}) => {
+//Stages/unstages changes 
 	const [gitStatus, setStatus] = useState('')
 	const {isFocused} = useFocus();
 

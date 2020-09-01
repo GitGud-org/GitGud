@@ -31,7 +31,6 @@ const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
-	// const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -41,7 +40,6 @@ const App = () => {
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(gitBranchVisualPull());
-			// setText(branchVisualText())
 		}, 1000);
 
 		exitFullScreen();
@@ -96,7 +94,6 @@ const App = () => {
 								<Text color={accentColor} bold underline>
 									Staged Changes
 								</Text>
-								{/* <Newline /> */}
 								{statusProcessed.staged.map(file => <Box alignItems="flex-start" key={file}><Text color={defaultColor}>{file}</Text></Box>)}
 							</Box>
 						</Box>
