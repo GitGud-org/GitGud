@@ -14,6 +14,7 @@ const DeleteTab = importJsx("./actions/deleteBranch");
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
+const Stash = importJsx('./components/Other')
 
 const Selector = () => {
 	const [currentTab, setCurrentTab] = useState("");
@@ -68,7 +69,11 @@ const Selector = () => {
 		{
 			label: "Access Full Log Tree",
 			value: "logTree"
-		}
+		},
+		{
+			label: 'Other',
+			value: 'other'
+		},
 	];
 
 	switch (currentTab) {
@@ -106,7 +111,14 @@ const Selector = () => {
 					<SelectInput items={items} onSelect={handleSelect} />
 					<DeleteTab refreshTab={setCurrentTab} />
 				</Box>
-			);
+			)
+	case 'other':
+		return (
+			<Box>
+				<SelectInput items={items} onSelect={handleSelect} />
+				<Other refreshTab={setCurrentTab} />
+			</Box>
+		)
 		default:
 			return <SelectInput items={items} onSelect={handleSelect} />;
 	}
