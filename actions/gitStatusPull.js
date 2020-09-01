@@ -3,7 +3,6 @@ const { execSync } = require("child_process");
 const statusOutput = () => {
 
 	let gitStatusOutput = execSync(
-		// "git diff --name-only",
 		"git status -s",
 		(error, stdout, stderr) => {
 			if (error) {

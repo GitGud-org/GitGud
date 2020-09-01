@@ -4,6 +4,7 @@ const { render, Box, Text, Newline } = require("ink")
 const { execSync } = require("child_process");
 
 const TreeTab = () => {
+    //returns 
     let tree = execSync('git log --all --decorate --oneline --graph').toString()
     let largeTree = tree
     return (

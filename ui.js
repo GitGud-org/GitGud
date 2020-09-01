@@ -28,7 +28,6 @@ const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
-	// const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
 
 	const ref = useRef(null);
@@ -38,7 +37,6 @@ const App = () => {
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(gitBranchVisualPull());
-			// setText(branchVisualText())
 		}, 1000);
 
 		exitFullScreen();
@@ -82,10 +80,7 @@ const App = () => {
 								<Text color="red" bold underline>
 									Unstaged Changes
 								</Text>
-								{/* <Newline /> */}
-								{/* <Box flexDirection="column" alignItems="flex-start"> */}
 									{statusProcessed.unstaged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
-								{/* </Box> */}
 							</Box>
 						</Box>
 					</Box>
@@ -100,7 +95,6 @@ const App = () => {
 								<Text color="red" bold underline>
 									Staged Changes
 								</Text>
-								{/* <Newline /> */}
 								{statusProcessed.staged.map(file => <Box alignItems="flex-start" key={file}><Text>{file}</Text></Box>)}
 							</Box>
 						</Box>
@@ -124,12 +118,10 @@ const App = () => {
 						<Text>Newest to Oldest </Text>
 					</Box>
 					<Box flexDirection="row">
-						{/* <Text color="green">{visual.astrix}</Text> */}
 						<Text color="white" bold>
 							{visualProcessed.sorted}
 						</Text>
 						<Text> </Text>
-						{/* <Text color='white'>{text.sorted}</Text>  */}
 					</Box>
 				</Box>
 			</Box>
