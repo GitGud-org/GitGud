@@ -32,6 +32,8 @@ const DeleteTab = (props) => {
                     <TextInput value={del} onChange={setDelete} onSubmit={handleSubmit} />
                 </Box>
             </Box>
+            <Newline />
+			<Text color='gray'>   Press ESC to go back </Text>
         </Box>
     )
 }
