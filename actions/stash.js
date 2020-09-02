@@ -7,7 +7,6 @@ const { execSync, exec } = require('child_process')
 //stash functionality
 
 const stash = ({refreshTab}) => {
-    const [gitStash, setStash] = useState('')
 
     let output = execSync('git stash').toString()
 

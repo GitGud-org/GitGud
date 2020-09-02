@@ -7,16 +7,18 @@ const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./stash')
 
+//Creates the switch case for the 'Other' Tab. 
+
 const dropDown = ({ refreshTab }) => {
     const [currentDrop, setCurrentDrop] = useState('')
 
     const handleSelect = (item) => {
         setCurrentDrop(item.value)
         if (item.label === 'fullLogTree') {
-            TreeTab()
+            TreeTab() //Calls on ./actions/TreeTab for functionality
         }
-        if(item.label === 'stashChanges') {
-            Stash()
+        if (item.label === 'stashChanges') {
+            Stash() //Calls on ./actions/Stash for functionality
         }
     }
     const items = [
@@ -29,13 +31,13 @@ const dropDown = ({ refreshTab }) => {
             value: 'stashChanges'
         }
     ]
-    switch(currentDrop) {
+    switch (currentDrop) {
         case 'fullLogTree':
             return (
                 <Box flexDirection='column'>
-					<SelectInput items={items} isFocused={false} />
-					<TreeTab refreshTab={setCurrentDrop} />
-				</Box>
+                    <SelectInput items={items} isFocused={false} />
+                    <TreeTab refreshTab={setCurrentDrop} />
+                </Box>
             )
         case 'stashChanges':
             return (
@@ -45,9 +47,15 @@ const dropDown = ({ refreshTab }) => {
                 </Box>
             )
         default:
-            return <SelectInput items={items} onSelect={handleSelect} />
+            return (
+                // Replace "marginLeft='109'" for optimized solution later down the line. 
+                <Box flexDirection="column" marginLeft='109' > 
+                    <SelectInput items={items} onSelect={handleSelect} />
+                    <Newline />
+                    <Text color='gray'>Press ESC to go back</Text>
+                </Box>
+            )
     }
-    
 };
 
 module.exports = dropDown
