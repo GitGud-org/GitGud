@@ -21,7 +21,7 @@ const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 // const enterAltScreenCommand = "\x1b[?1049h";
 // const leaveAltScreenCommand = "\x1b[?1049l";
 
-const {showLogo, defaultColor, accentColor} = require('./styleFile')
+const {showLogo, defaultColor, accentColor, appResize} = require('./styleFile')
 
 // const exitFullScreen = () => {
 // 	process.stdout.write(leaveAltScreenCommand);
@@ -41,14 +41,11 @@ const App = () => {
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(gitBranchVisualPull());
-			setHeight(process.stdout.rows)
+			if (appResize) {setHeight(process.stdout.rows)}
 			const { width, height } = measureElement(ref.current);
 			setWidth(width);
 		}, 1000);
-
-		// exitFullScreen();
-		// process.stdout.write(enterAltScreenCommand);
-
+		if (!appResize) {setHeight(process.stdout.rows)}
 
 		return () => {
 			clearInterval(intervalStatusCheck);
@@ -57,6 +54,7 @@ const App = () => {
 
 	const statusProcessed = gitStatusProcess(status)
 	const visualProcessed = gitBranchVisualProcess(visual)
+
 
 	return (
 		<Box flexDirection="column" minHeight={appheight}>
