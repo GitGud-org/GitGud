@@ -89,7 +89,7 @@ const Selector = ({defaultColor, accentColor}) => {
 		case "commitChanges":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} isFocused={false} />
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
 					<CommitAction refreshTab={setCurrentTab} />
 				</Box>
 			)
@@ -111,8 +111,8 @@ const Selector = ({defaultColor, accentColor}) => {
 		case 'other':
 			return (
 				<Box flexDirection='column'>
-					<SelectInput items={items} isFocused={false} />
-					<Drop refreshTab={setCurrentTab}/>
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
+					<Drop refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor}/>
 				</Box>
 			)
 		default:
