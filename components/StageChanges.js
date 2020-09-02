@@ -1,11 +1,12 @@
 const React = require("react");
 const { useEffect, useState } = require("react");
 const { Text, Box, Newline, useFocus, useFocusManager } = require("ink");
-const SelectInput = require("ink-select-input").default;
+// const SelectInput = require("ink-select-input").default;
+const SelectInput = require("ink-select-input-horizontal").default;
 const { execSync, exec } = require("child_process");
 
 const StageChanges = ({refreshTab, accentColor, defaultColor}) => {
-//Stages/unstages changes 
+//Stages/unstages changes
 	const [gitStatus, setStatus] = useState('')
 	const {isFocused} = useFocus();
 
@@ -88,7 +89,7 @@ const StageChanges = ({refreshTab, accentColor, defaultColor}) => {
 
 	return (
 		<Box flexDirection="column" marginLeft='3' >
-			<SelectInput items={filesList} onSelect={handleSelect} defaultColor={defaultColor} accentColor={accentColor} />
+			<SelectInput displayDirection="column" items={filesList} onSelect={handleSelect} defaultColor={defaultColor} accentColor={accentColor} />
 			<Newline />
 			<Text color='gray'>Press ESC to go back</Text>
 		</Box>
