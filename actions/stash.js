@@ -6,7 +6,7 @@ const { execSync, exec } = require('child_process')
 
 //stash functionality
 
-const stash = ({refreshTab}) => {
+const stash = ({ refreshTab }) => {
 
     let output = execSync('git stash').toString()
 
@@ -18,7 +18,6 @@ const stash = ({refreshTab}) => {
             </Box>
         </Box>
     )
-
 }
 
 module.exports = stash;
