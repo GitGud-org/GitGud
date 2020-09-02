@@ -18,14 +18,7 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-// const enterAltScreenCommand = "\x1b[?1049h";
-// const leaveAltScreenCommand = "\x1b[?1049l";
-
 const {showLogo, defaultColor, accentColor, appResize} = require('./styleFile')
-
-// const exitFullScreen = () => {
-// 	process.stdout.write(leaveAltScreenCommand);
-// };
 
 const App = () => {
 	const [status, setStatus] = useState("");
