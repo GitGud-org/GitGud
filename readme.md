@@ -58,4 +58,4 @@ $ GitGud
 -- When submitting a pull request, please clearly explain the feature you added or the bug you fixed.
 
 
-Thanks to [`Joseph Garrone`](#https://github.com/JosephGarrone) for giving us the NPM package name.
+Thanks to [`Joseph Garrone`](https://github.com/JosephGarrone) for giving us the NPM package name.
