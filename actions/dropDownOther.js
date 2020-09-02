@@ -3,11 +3,24 @@ const { useEffect, useState, useRef } = require("react");
 const { Text, Box, Newline } = require("ink");
 const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
+const importJsx = require("import-jsx");
+const TreeTab = importJsx('./TreeTab')
+const Stash = importJsx('./stash')
 
 const dropDown = ({ refreshTab }) => {
     // const [gitOther, setOther] = useState('')
+    const [currentDrop, setCurrentDrop] = useState('')
 
-    const list = [
+    const handleSelect = (item) => {
+        setCurrentDrop(item.value)
+        if (item.label === 'fullLogTree') {
+            TreeTab()
+        }
+        if(item.label === 'stashChanges') {
+            Stash()
+        }
+    }
+    const items = [
         {
             label: 'Access Full Log Tree',
             value: 'fullLogTree'
@@ -17,24 +30,27 @@ const dropDown = ({ refreshTab }) => {
             value: 'stashChanges'
         }
     ]
-
-    const handleSelect = (item) => {
-        if (item.label === 'Access Full Log Tree') {
-            let tree = execSync('git log --all --decorate --oneline --graph').toString()
+    switch(currentDrop) {
+        case 'fullLogTree':
             return (
                 <Box flexDirection='column'>
-                    <Box><Text> </Text></Box>
-                    <Box>
-                        <Text color='#f09e8c'>{tree}</Text>
-                    </Box>
-                    <Text color='gray'>   Press ESC to go back </Text>
+					<SelectInput items={items} isFocused={false} />
+					<TreeTab refreshTab={setCurrentDrop} />
+				</Box>
+            )
+        case 'stashChanges':
+            return (
+                <Box flexDirection='column'>
+                    <SelectInput items={items} isFocused={false} />
+                    <Stash refreshTab={setCurrentDrop} />
                 </Box>
             )
-        }
+        default:
+            return <SelectInput items={items} onSelect={handleSelect} />
     }
     return (
-        <Box flexDirection="column" marginLeft='3' >
-            <SelectInput items={list} onSelect={handleSelect} />
+        <Box flexDirection="column" marginLeft='109' >
+            <SelectInput items={items} onSelect={handleSelect} />
             <Newline />
             <Text color='gray'>Press ESC to go back</Text>
         </Box>

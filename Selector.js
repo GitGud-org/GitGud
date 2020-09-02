@@ -15,14 +15,11 @@ const Drop = importJsx('./actions/dropDownOther')
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
-// const Stash = importJsx('./components/Other')
 
 const Selector = ({defaultColor, accentColor}) => {
 	const [currentTab, setCurrentTab] = useState("");
 	let {isFocused} = useFocus();
 	const {disableFocus, enableFocus}  = useFocusManager();
-
-	// useEffect(() => disableFocus(), [])
 
 	useInput((input, key) => {
 		if (key.escape) {
@@ -30,12 +27,9 @@ const Selector = ({defaultColor, accentColor}) => {
 		}
 	});
 
-	// console.log('isFocused 1>>>', isFocused)
-
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value);
-		// console.log('isFocused 2>>>', isFocused)
 		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
@@ -50,7 +44,6 @@ const Selector = ({defaultColor, accentColor}) => {
 		}
 		if (item.value === 'stageSome') {
 			isFocused = true;
-			// console.log('isFocused 3>>>', isFocused)
 		}
 	};
 
@@ -79,10 +72,6 @@ const Selector = ({defaultColor, accentColor}) => {
 			label: "Delete Branch",
 			value: "deleteBranch",
 		},
-		// {
-		// 	label: "Access Full Log Tree",
-		// 	value: "logTree"
-		// },
 		{
 			label: 'Other',
 			value: 'other'
@@ -90,12 +79,6 @@ const Selector = ({defaultColor, accentColor}) => {
 	];
 
 	switch (currentTab) {
-		case 'logTree':
-			// return (
-			// 	<Box>
-			// 		<TreeTab />
-			// 	</Box>
-			// )
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
