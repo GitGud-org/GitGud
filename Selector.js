@@ -10,11 +10,12 @@ const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
 const stageFiles = require("./actions/stageFiles");
 const DeleteTab = importJsx("./actions/deleteBranch");
+const Drop = importJsx('./actions/dropDownOther')
 
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
-const Stash = importJsx('./components/Other')
+// const Stash = importJsx('./components/Other')
 
 const Selector = () => {
 	const [currentTab, setCurrentTab] = useState("");
@@ -66,10 +67,10 @@ const Selector = () => {
 			label: "Delete Branch",
 			value: "deleteBranch",
 		},
-		{
-			label: "Access Full Log Tree",
-			value: "logTree"
-		},
+		// {
+		// 	label: "Access Full Log Tree",
+		// 	value: "logTree"
+		// },
 		{
 			label: 'Other',
 			value: 'other'
@@ -78,11 +79,11 @@ const Selector = () => {
 
 	switch (currentTab) {
 		case 'logTree':
-			return (
-				<Box>
-					<TreeTab />
-				</Box>
-			)
+			// return (
+			// 	<Box>
+			// 		<TreeTab />
+			// 	</Box>
+			// )
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
@@ -101,24 +102,24 @@ const Selector = () => {
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
-					<StageSomeFiles refreshTab={setCurrentTab}/>
+					<StageSomeFiles refreshTab={setCurrentTab} />
 				</Box>
 			)
 
-    case 'deleteBranch':
+		case 'deleteBranch':
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} onSelect={handleSelect} />
 					<DeleteTab refreshTab={setCurrentTab} />
 				</Box>
 			)
-	case 'other':
-		return (
-			<Box>
-				<SelectInput items={items} onSelect={handleSelect} />
-				<Stash refreshTab={setCurrentTab} />
-			</Box>
-		)
+		case 'other':
+			return (
+				<Box flexDirection='column'>
+					<SelectInput items={items} onSelect={handleSelect} />
+					<Drop refreshTab={setCurrentTab} />
+				</Box>
+			)
 		default:
 			return <SelectInput items={items} onSelect={handleSelect} />;
 	}
