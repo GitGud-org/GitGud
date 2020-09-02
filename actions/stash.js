@@ -9,7 +9,7 @@ const { execSync, exec } = require('child_process')
 const stash = ({ refreshTab }) => {
 
     let output = execSync('git stash').toString()
-
+    refreshTab('')
     return (
         <Box flexDirection='column'>
             <Box><Text> </Text></Box>
