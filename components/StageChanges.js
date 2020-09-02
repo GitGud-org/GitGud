@@ -1,13 +1,13 @@
 const React = require("react");
-const { useEffect, useState, useRef } = require("react");
-const { Text, Box, Newline } = require("ink");
+const { useEffect, useState } = require("react");
+const { Text, Box, Newline, useFocus, useFocusManager } = require("ink");
 const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
+const StageChanges = ({refreshTab, accentColor, defaultColor}) => {
 //Stages/unstages changes 
-
-const StageChanges = ({refreshTab}) => {
 	const [gitStatus, setStatus] = useState('')
+	const {isFocused} = useFocus();
 
 	useEffect(() => {
 		let gitStatusOutput = execSync(
@@ -22,7 +22,9 @@ const StageChanges = ({refreshTab}) => {
 		).toString();
 
 		setStatus(gitStatusOutput)
+
 	})
+
 
 	const filesList = [{label:'STAGE/UNSTAGE (all files)', value: 'STAGE/UNSTAGE (all files)'}]
 
@@ -86,7 +88,7 @@ const StageChanges = ({refreshTab}) => {
 
 	return (
 		<Box flexDirection="column" marginLeft='3' >
-			<SelectInput items={filesList} onSelect={handleSelect} />
+			<SelectInput items={filesList} onSelect={handleSelect} defaultColor={defaultColor} accentColor={accentColor} />
 			<Newline />
 			<Text color='gray'>Press ESC to go back</Text>
 		</Box>

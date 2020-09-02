@@ -5,20 +5,7 @@ const SelectInput = require("ink-select-input").default;
 const { execSync, exec } = require("child_process");
 
 const dropDown = ({ refreshTab }) => {
-    const [gitOther, setOther] = useState('')
-
-    useEffect(() => {
-        let gitOutput = execSync(`git log`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`)
-                return
-            }
-            return stdout
-        }
-        ).toString()
-        setOther(gitOutput)
-    })
-
+    // const [gitOther, setOther] = useState('')
 
     const list = [
         {
@@ -32,7 +19,7 @@ const dropDown = ({ refreshTab }) => {
     ]
 
     const handleSelect = (item) => {
-        if (item.label === 'fullLogTree') {
+        if (item.label === 'Access Full Log Tree') {
             let tree = execSync('git log --all --decorate --oneline --graph').toString()
             return (
                 <Box flexDirection='column'>
