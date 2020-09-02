@@ -104,7 +104,7 @@ const Selector = ({defaultColor, accentColor}) => {
 		case 'deleteBranch':
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} isFocused={false} />
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
 					<DeleteTab refreshTab={setCurrentTab} />
 				</Box>
 			)
@@ -116,7 +116,7 @@ const Selector = ({defaultColor, accentColor}) => {
 				</Box>
 			)
 		default:
-			return <SelectInput items={items} onSelect={handleSelect} />;
+			return <SelectInput items={items} defaultColor={defaultColor} accentColor={accentColor} onSelect={handleSelect} />;
 	}
 };
 
