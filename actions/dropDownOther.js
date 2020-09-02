@@ -8,7 +8,6 @@ const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./stash')
 
 const dropDown = ({ refreshTab }) => {
-    // const [gitOther, setOther] = useState('')
     const [currentDrop, setCurrentDrop] = useState('')
 
     const handleSelect = (item) => {
@@ -48,13 +47,7 @@ const dropDown = ({ refreshTab }) => {
         default:
             return <SelectInput items={items} onSelect={handleSelect} />
     }
-    return (
-        <Box flexDirection="column" marginLeft='109' >
-            <SelectInput items={items} onSelect={handleSelect} />
-            <Newline />
-            <Text color='gray'>Press ESC to go back</Text>
-        </Box>
-    )
+    
 };
 
 module.exports = dropDown

@@ -112,7 +112,7 @@ const Selector = ({defaultColor, accentColor}) => {
 			return (
 				<Box flexDirection='column'>
 					<SelectInput items={items} isFocused={false} />
-					<Drop refreshTab={setCurrentTab} />
+					<Drop refreshTab={setCurrentTab}/>
 				</Box>
 			)
 		default:
