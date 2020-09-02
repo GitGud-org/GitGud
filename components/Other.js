@@ -9,20 +9,34 @@ const { execSync, exec } = require('child_process')
 const stash = ({refreshTab}) => {
     const [gitStash, setStash] = useState('')
 
-    useEffect(() => {
-        let StashGit = execSync(
-            'git stash',
-        (error, stdout, stderr) => {
-            if(error) {
-                console.error(`exec error: ${error}`)
-                return
-            }
-            return stdout
-        }
-        ).toString()
+    // let { refreshTab } = props
 
-        setStash(StashGit)
-    })
+    let output = execSync('git stash').toString()
+
+    // useEffect(() => {
+    //     let StashGit = execSync(
+    //         'git stash',
+    //     (error, stdout, stderr) => {
+    //         if(error) {
+    //             console.error(`exec error: ${error}`)
+    //             return
+    //         }
+    //         return stdout
+    //     }
+    //     ).toString()
+
+    //     setStash(StashGit)
+    // })
+    // const options = [{label: 'Access Full Log Tree', value: 'Access Full Log Tree'}]
+    return (
+        <Box flexDirection='column'>
+            <Box><Text> </Text></Box>
+            <Box>
+                <Text>{output}</Text>
+            </Box>
+        </Box>
+    )
+
 }
 
 module.exports = stash;

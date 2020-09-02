@@ -116,7 +116,7 @@ const Selector = () => {
 		return (
 			<Box>
 				<SelectInput items={items} onSelect={handleSelect} />
-				<Other refreshTab={setCurrentTab} />
+				<Stash refreshTab={setCurrentTab} />
 			</Box>
 		)
 		default:
