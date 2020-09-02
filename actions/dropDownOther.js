@@ -36,14 +36,14 @@ const dropDown = ({ refreshTab }) => {
             return (
                 <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} />
-                    <TreeTab refreshTab={setCurrentDrop} />
+                    <TreeTab refreshTab={refreshTab} />
                 </Box>
             )
         case 'stashChanges':
             return (
                 <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} />
-                    <Stash refreshTab={setCurrentDrop} />
+                    <Stash refreshTab={refreshTab} />
                 </Box>
             )
         default:
