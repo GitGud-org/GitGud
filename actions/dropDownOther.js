@@ -1,7 +1,7 @@
 const React = require("react");
 const { useEffect, useState, useRef } = require("react");
 const { Text, Box, Newline } = require("ink");
-const SelectInput = require("ink-select-input").default;
+const SelectInput = require("ink-select-input-horizontal").default;
 const { execSync, exec } = require("child_process");
 const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
@@ -9,7 +9,7 @@ const Stash = importJsx('./stash')
 
 //Creates the switch case for the 'Other' Tab. 
 
-const dropDown = ({ refreshTab }) => {
+const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
     const [currentDrop, setCurrentDrop] = useState('')
 
     const handleSelect = (item) => {
@@ -35,22 +35,22 @@ const dropDown = ({ refreshTab }) => {
         case 'fullLogTree':
             return (
                 <Box flexDirection='column'>
-                    <SelectInput items={items} isFocused={false} />
-                    <TreeTab refreshTab={setCurrentDrop} />
+                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
+                    <TreeTab refreshTab={refreshTab} />
                 </Box>
             )
         case 'stashChanges':
             return (
                 <Box flexDirection='column'>
-                    <SelectInput items={items} isFocused={false} />
-                    <Stash refreshTab={setCurrentDrop} />
+                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
+                    <Stash refreshTab={refreshTab} />
                 </Box>
             )
         default:
             return (
                 // Replace "marginLeft='109'" for optimized solution later down the line. 
                 <Box flexDirection="column" marginLeft='109' > 
-                    <SelectInput items={items} onSelect={handleSelect} />
+                    <SelectInput items={items} onSelect={handleSelect} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Newline />
                     <Text color='gray'>Press ESC to go back</Text>
                 </Box>
