@@ -1,6 +1,6 @@
 module.exports = {
 	// setting to show or not show GitGud logo at top of app
-	showLogo: false, // accepted values include [true, false]
+	showLogo: true, // accepted values include [true, false]
 
 	// setting for default text colors
 	defaultColor: 'white', // accepted values include ['red', 'blue', 'white', 'green', etc.]
