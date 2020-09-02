@@ -18,20 +18,21 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const enterAltScreenCommand = "\x1b[?1049h";
-const leaveAltScreenCommand = "\x1b[?1049l";
+// const enterAltScreenCommand = "\x1b[?1049h";
+// const leaveAltScreenCommand = "\x1b[?1049l";
 
 const {showLogo, defaultColor, accentColor} = require('./styleFile')
 
-const exitFullScreen = () => {
-	process.stdout.write(leaveAltScreenCommand);
-};
+// const exitFullScreen = () => {
+// 	process.stdout.write(leaveAltScreenCommand);
+// };
 
 const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
 	const [appWidth, setWidth] = useState(null);
+	const [appheight, setHeight] = useState("50")
 
 	const ref = useRef(null);
 
@@ -40,12 +41,14 @@ const App = () => {
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(gitBranchVisualPull());
+			setHeight(process.stdout.rows)
+			const { width, height } = measureElement(ref.current);
+			setWidth(width);
 		}, 1000);
 
-		exitFullScreen();
-		process.stdout.write(enterAltScreenCommand);
-		const { width, height } = measureElement(ref.current);
-		setWidth(width);
+		// exitFullScreen();
+		// process.stdout.write(enterAltScreenCommand);
+
 
 		return () => {
 			clearInterval(intervalStatusCheck);
@@ -56,7 +59,7 @@ const App = () => {
 	const visualProcessed = gitBranchVisualProcess(visual)
 
 	return (
-		<Box flexDirection="column">
+		<Box flexDirection="column" minHeight={appheight}>
 			{showLogo && <Logo />}
 			<Box
 				borderStyle="round"
@@ -125,6 +128,7 @@ const App = () => {
 				</Box>
 			</Box>
 			<Selector defaultColor={defaultColor} accentColor={accentColor} />
+			<Newline />
 		</Box>
 	);
 };
