@@ -4,9 +4,9 @@ const { Text, Box, Newline } = require('ink')
 const SelectInput = require('ink-select-input-horizontal').default
 const { execSync, exec } = require('child_process')
 
-//stash functionality
+//Stash functionality
 
-const stash = ({ refreshTab }) => {
+const Stash = ({ refreshTab }) => {
 
     let output = execSync('git stash').toString()
     refreshTab('')
@@ -20,4 +20,4 @@ const stash = ({ refreshTab }) => {
     )
 }
 
-module.exports = stash;
+module.exports = Stash;

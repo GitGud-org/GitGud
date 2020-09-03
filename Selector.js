@@ -4,17 +4,17 @@ const { Box, useInput, useFocus, useFocusManager  } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
-const TreeTab = importJsx('./actions/treeTab')
-const pushTab = require("./actions/pushTab");
+const TreeTab = importJsx('./components/TreeTab')
 const revertTab = require("./actions/revertStaged");
-const pullTab = require("./actions/pullBranch");
 const stageFiles = require("./actions/stageFiles");
-const DeleteTab = importJsx("./actions/deleteBranch");
-const Drop = importJsx('./actions/dropDownOther')
+const pushTab = require("./actions/pushTab");
+const pullTab = require("./actions/pullBranch");
 
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
+const Drop = importJsx('./components/dropDownOther')
+const DeleteTab = importJsx("./components/DeleteBranch");
 
 const Selector = ({defaultColor, accentColor}) => {
 	const [currentTab, setCurrentTab] = useState("");
