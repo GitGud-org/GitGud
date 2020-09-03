@@ -5,7 +5,7 @@ const SelectInput = require("ink-select-input-horizontal").default;
 const { execSync, exec } = require("child_process");
 const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
-const Stash = importJsx('./stash')
+const Stash = importJsx('./Stash')
 
 //Creates the switch case for the 'Other' Tab. 
 
@@ -14,12 +14,6 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
 
     const handleSelect = (item) => {
         setCurrentDrop(item.value)
-        if (item.label === 'fullLogTree') {
-            TreeTab() //Calls on ./actions/TreeTab for functionality
-        }
-        if (item.label === 'stashChanges') {
-            Stash() //Calls on ./actions/Stash for functionality
-        }
     }
     const items = [
         {
