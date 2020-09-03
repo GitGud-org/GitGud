@@ -10,6 +10,7 @@ const revertTab = require("./actions/revertStaged");
 const pullTab = require("./actions/pullBranch");
 const stageFiles = require("./actions/stageFiles");
 const DeleteTab = importJsx("./actions/deleteBranch");
+const Drop = importJsx('./actions/dropDownOther')
 
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
@@ -20,20 +21,15 @@ const Selector = ({defaultColor, accentColor}) => {
 	let {isFocused} = useFocus();
 	const {disableFocus, enableFocus}  = useFocusManager();
 
-	// useEffect(() => disableFocus(), [])
-
 	useInput((input, key) => {
 		if (key.escape) {
 			return setCurrentTab("");
 		}
 	});
 
-	// console.log('isFocused 1>>>', isFocused)
-
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value);
-		// console.log('isFocused 2>>>', isFocused)
 		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
@@ -48,7 +44,6 @@ const Selector = ({defaultColor, accentColor}) => {
 		}
 		if (item.value === 'stageSome') {
 			isFocused = true;
-			// console.log('isFocused 3>>>', isFocused)
 		}
 	};
 
@@ -78,18 +73,12 @@ const Selector = ({defaultColor, accentColor}) => {
 			value: "deleteBranch",
 		},
 		{
-			label: "Access Full Log Tree",
-			value: "logTree"
-		}
+			label: 'Other',
+			value: 'other'
+		},
 	];
 
 	switch (currentTab) {
-		case 'logTree':
-			return (
-				<Box>
-					<TreeTab />
-				</Box>
-			)
 		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
@@ -100,7 +89,7 @@ const Selector = ({defaultColor, accentColor}) => {
 		case "commitChanges":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} isFocused={false} />
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
 					<CommitAction refreshTab={setCurrentTab} />
 				</Box>
 			)
@@ -112,13 +101,20 @@ const Selector = ({defaultColor, accentColor}) => {
 				</Box>
 			)
 
-    case 'deleteBranch':
+		case 'deleteBranch':
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
 					<DeleteTab refreshTab={setCurrentTab} />
 				</Box>
-			);
+			)
+		case 'other':
+			return (
+				<Box flexDirection='column'>
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
+					<Drop refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor}/>
+				</Box>
+			)
 		default:
 			return <SelectInput items={items} defaultColor={defaultColor} accentColor={accentColor} onSelect={handleSelect} />;
 	}
