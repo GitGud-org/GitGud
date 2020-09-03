@@ -3,9 +3,9 @@ const { useState } = require("react");
 const { render, Box, Text, Newline } = require("ink");
 const { execSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
-
+const {defaultColor, accentColor} = require('../styleFile')
 //Uses git for-each-ref to display all available branches to checkout to
-//Also removes the astrix that displays the current branch you are on 
+//Also removes the astrix that displays the current branch you are on
 	//since it is not necessary here.
 
 const CheckoutBranch = (props) => {
@@ -19,7 +19,7 @@ const CheckoutBranch = (props) => {
 		.toString()
 		.split("\n");
 
-	const checkoutBranch = () => {
+	const checkoutBranch = (query) => {
 		if (branches.includes(query)) {
 			try {
 				//checks out to an existing local branch
@@ -32,27 +32,32 @@ const CheckoutBranch = (props) => {
 			refreshTab("");
 		}
 	};
+	let holder = ''
+		let func = (input) => {
+			holder = input
+		}
 	return (
 		<Box flexDirection="column">
 			<Box>
 				<Text> </Text>
 			</Box>
 			<Box>
-				<Text color="red"> Branches: </Text>
-				<Text>{branches.join("  ")}</Text>
+				<Text color={accentColor}> Branches: </Text>
+				<Text color={defaultColor}>{branches.join("  ")}</Text>
 			</Box>
 			<Box>
 				<Box marginRight={1}>
-					<Text color="red"> Checkout branch:</Text>
+					<Text color={accentColor}> Checkout branch:</Text>
 				</Box>
 				<TextInput
+					color={defaultColor}
 					value={query}
 					onChange={setQuery}
 					onSubmit={checkoutBranch}
 				/>
 			</Box>
 			<Box marginLeft={1}>
-				<Text color="gray">Press ESC to go back</Text>
+				<Text color="grey">Press ESC to go back</Text>
 			</Box>
 		</Box>
 	);
