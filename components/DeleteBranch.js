@@ -6,7 +6,7 @@ const TextInput = require("ink-text-input").default;
 
 const DeleteTab = (props) => {
     //Uses git branch and displays all local branches
-    //Takes in an input to for delete branch 
+    //Takes in an input to for delete branch
 
     const [del, setDelete] = useState('')
 
@@ -16,8 +16,10 @@ const DeleteTab = (props) => {
     let branches = branchList
 
     const handleSubmit = () => {
-        execSync('git branch -D ' + del + '')
-        refreshTab('')
+		try {
+			execSync('git branch -D ' + del + '')
+			refreshTab('')
+		} catch (error) {}
     }
     return (
         <Box flexDirection='column'>

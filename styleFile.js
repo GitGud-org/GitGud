@@ -8,4 +8,6 @@ module.exports = {
 	// setting for accent text and line colors
 	accentColor: 'red', // accepted values include ['red', 'blue', 'white', 'green', etc.]
 
+	// setting to determine whether app dynamically adjusts to screen resizing; setting to false may improve performance
+	appResize: true, // acepted values include [true, false]
 }
