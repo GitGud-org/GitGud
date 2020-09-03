@@ -6,6 +6,6 @@ module.exports = {
 	defaultColor: 'white', // accepted values include ['red', 'blue', 'white', 'green', etc.]
 
 	// setting for accent text and line colors
-	accentColor: 'green', // accepted values include ['red', 'blue', 'white', 'green', etc.]
+	accentColor: 'red', // accepted values include ['red', 'blue', 'white', 'green', etc.]
 
 }
