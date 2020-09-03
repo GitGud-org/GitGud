@@ -25,6 +25,7 @@ const App = () => {
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
 	const [appWidth, setWidth] = useState(null);
+	const [treeHeight, setTreeHeight] = useState(null)
 	const [appheight, setHeight] = useState("50")
 
 	const ref = useRef(null);
@@ -37,6 +38,7 @@ const App = () => {
 			if (appResize) {setHeight(process.stdout.rows)}
 			const { width, height } = measureElement(ref.current);
 			setWidth(width);
+			setTreeHeight(height)
 		}, 1000);
 		if (!appResize) {setHeight(process.stdout.rows)}
 
@@ -46,7 +48,7 @@ const App = () => {
 	}, []);
 
 	const statusProcessed = gitStatusProcess(status)
-	const visualProcessed = gitBranchVisualProcess(visual)
+	const visualProcessed = gitBranchVisualProcess(visual, treeHeight, appWidth)
 
 
 	return (
