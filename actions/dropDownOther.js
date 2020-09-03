@@ -4,10 +4,10 @@ const { Text, Box, Newline } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const { execSync, exec } = require("child_process");
 const importJsx = require("import-jsx");
-const TreeTab = importJsx('./TreeTab')
+const TreeTab = importJsx('./treeTab')
 const Stash = importJsx('./stash')
 
-//Creates the switch case for the 'Other' Tab. 
+//Creates the switch case for the 'Other' Tab.
 
 const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
     const [currentDrop, setCurrentDrop] = useState('')
@@ -48,8 +48,8 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
             )
         default:
             return (
-                // Replace "marginLeft='109'" for optimized solution later down the line. 
-                <Box flexDirection="column" marginLeft='109' > 
+                // Replace "marginLeft='109'" for optimized solution later down the line.
+                <Box flexDirection="column" marginLeft='109' >
                     <SelectInput items={items} onSelect={handleSelect} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Newline />
                     <Text color='gray'>Press ESC to go back</Text>

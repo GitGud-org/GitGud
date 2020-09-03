@@ -12,8 +12,10 @@ const CommitAction = (props) => {
 	let {refreshTab} = props
 
 	const handleSubmit = () => {
-		execSync('git commit -m "' + message +'"')
-		refreshTab('')
+		try {
+			execSync('git commit -m "' + message +'"')
+			refreshTab('')
+		} catch (error) {}
 	};
 	return (
 		<Box flexDirection="column">
