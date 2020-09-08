@@ -11,3 +11,16 @@ module.exports = {
 	// setting to determine whether app dynamically adjusts to screen resizing; setting to false may improve performance
 	appResize: true, // acepted values include [true, false]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//here for example
