@@ -1,35 +1,40 @@
 const React = require("react");
-const { useEffect, useState, useRef } = require("react");
-const { Box, useInput } = require("ink");
+const { useState, useEffect } = require("react");
+const { Box, useInput, useFocus, useFocusManager  } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
-const { propTypes } = require("ink-gradient");
 const importJsx = require("import-jsx");
 
-const pushTab = require("./actions/pushTab");
+const TreeTab = importJsx('./components/TreeTab')
 const revertTab = require("./actions/revertStaged");
+const stageFiles = require("./actions/stageFiles");
+const pushTab = require("./actions/pushTab");
 const pullTab = require("./actions/pullBranch");
-const stageFiles = require('./actions/stageFiles')
-const DeleteTab = importJsx('./actions/deleteBranch')
 
-const CheckoutBranch = importJsx("./actions/checkoutBranch");
-const CommitAction = importJsx("./actions/commit");
+const CheckoutBranch = importJsx("./components/CheckoutBranch");
+const CommitAction = importJsx("./components/Commit");
+const StageSomeFiles = importJsx('./components/StageChanges')
+const Drop = importJsx('./components/dropDownOther')
+const DeleteTab = importJsx("./components/DeleteBranch");
 
-const Selector = () => {
-	const [currentTab, setCurrentTab] = useState('');
+const Selector = ({defaultColor, accentColor}) => {
+	const [currentTab, setCurrentTab] = useState("");
+	let {isFocused} = useFocus();
+	const {disableFocus, enableFocus}  = useFocusManager();
 
 	useInput((input, key) => {
 		if (key.escape) {
-			return setCurrentTab('')
+			return setCurrentTab("");
 		}
-	})
+	});
+
 
 	const handleSelect = (item) => {
-		setCurrentTab(item.value)
+		setCurrentTab(item.value);
 		if (item.value === "pushStagedChanges") {
 			pushTab();
 		}
 		if (item.value === "stageAll") {
-			stageFiles()
+			stageFiles();
 		}
 		if (item.value === "revertStagedChanges") {
 			revertTab();
@@ -37,16 +42,15 @@ const Selector = () => {
 		if (item.value === "pullFromBranch") {
 			pullTab();
 		}
+		if (item.value === 'stageSome') {
+			isFocused = true;
+		}
 	};
 
 	const items = [
 		{
-			label: "Stage All",
-			value: "stageAll",
-		},
-		{
-			label: "Revert Staged Changes",
-			value: "revertStagedChanges",
+			label: "Stage Changes",
+			value: "stageSome",
 		},
 		{
 			label: "Commit Changes",
@@ -67,30 +71,52 @@ const Selector = () => {
 		{
 			label: "Delete Branch",
 			value: "deleteBranch",
-		}
+		},
+		{
+			label: 'Other',
+			value: 'other'
+		},
 	];
 
 	switch (currentTab) {
-		case 'checkoutBranch':
+		case "checkoutBranch":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} onSelect={handleSelect} />
-					<CheckoutBranch refreshTab={setCurrentTab}/>
-				</Box>)
-		case 'commitChanges':
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
+					<CheckoutBranch refreshTab={setCurrentTab} />
+				</Box>
+			);
+		case "commitChanges":
 			return (
 				<Box flexDirection="column">
-					<SelectInput items={items} onSelect={handleSelect} />
-					<CommitAction refreshTab={setCurrentTab}/>
-				</Box>)
-    case 'deleteBranch':
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
+					<CommitAction refreshTab={setCurrentTab} />
+				</Box>
+			)
+		case 'stageSome':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
+					<StageSomeFiles refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor} />
+				</Box>
+			)
+
+		case 'deleteBranch':
+			return (
+				<Box flexDirection="column">
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
+					<DeleteTab refreshTab={setCurrentTab} />
+				</Box>
+			)
+		case 'other':
 			return (
 				<Box flexDirection='column'>
-					<SelectInput items={items} onSelect={handleSelect} />
-					<DeleteTab refreshTab={setCurrentTab}/>
-				</Box>)
+					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
+					<Drop refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor}/>
+				</Box>
+			)
 		default:
-			return <SelectInput items={items} onSelect={handleSelect} />
+			return <SelectInput items={items} defaultColor={defaultColor} accentColor={accentColor} onSelect={handleSelect} />;
 	}
 };
 

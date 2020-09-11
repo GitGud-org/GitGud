@@ -3,62 +3,60 @@ const React = require("react");
 
 const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline, Spacer } = require("ink");
-const statusOutput = require("./gitStatusOutput");
-const Renderer = require("./components/divider");
-const gitBranchCall = require("./currentBranch");
+
+const Renderer = require("./components/Divider");
 const Gradient = require("ink-gradient");
 const BigText = require("ink-big-text");
 
-const branchVisual = require("./branchVisual");
-// const branchVisualText = require('./branchVisualText')
-
 const importJsx = require("import-jsx");
 const Selector = importJsx("./Selector.js");
+const Logo = importJsx("./components/Logo")
 
-const enterAltScreenCommand = "\x1b[?1049h";
-const leaveAltScreenCommand = "\x1b[?1049l";
+const gitBranchCall = require("./currentBranch");
+const gitStatusPull = require('./actions/gitStatusPull')
+const gitStatusProcess = require('./actions/gitStatusProcess')
+const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
+const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const exitFullScreen = () => {
-	process.stdout.write(leaveAltScreenCommand);
-};
+const {showLogo, defaultColor, accentColor, appResize} = require('./styleFile')
 
 const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
-	// const [text, setText] = useState('')
 	const [appWidth, setWidth] = useState(null);
+	const [treeHeight, setTreeHeight] = useState(null)
+	const [appheight, setHeight] = useState("50")
 
 	const ref = useRef(null);
 
 	useEffect(() => {
 		const intervalStatusCheck = setInterval(() => {
-			setStatus(statusOutput());
+			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
-			setVisual(branchVisual());
-			// setText(branchVisualText())
+			setVisual(gitBranchVisualPull());
+			if (appResize) {setHeight(process.stdout.rows)}
+			const { width, height } = measureElement(ref.current);
+			setWidth(width);
+			setTreeHeight(height)
 		}, 1000);
-
-		exitFullScreen();
-		process.stdout.write(enterAltScreenCommand);
-		const { width, height } = measureElement(ref.current);
-		setWidth(width);
+		if (!appResize) {setHeight(process.stdout.rows)}
 
 		return () => {
 			clearInterval(intervalStatusCheck);
 		};
 	}, []);
 
+	const statusProcessed = gitStatusProcess(status)
+	const visualProcessed = gitBranchVisualProcess(visual, treeHeight, appWidth)
+
+
 	return (
-		<Box flexDirection="column">
-			<Box justifyContent="center">
-				<Gradient name="morning">
-					<BigText text="GITGUD" />
-				</Gradient>
-			</Box>
+		<Box flexDirection="column" minHeight={appheight}>
+			{showLogo && <Logo />}
 			<Box
 				borderStyle="round"
-				borderColor="red"
+				borderColor={accentColor}
 				className="full-app"
 				height={20}
 				flexGrow={1}
@@ -69,64 +67,61 @@ const App = () => {
 					height="100%"
 					flexDirection="column"
 					ref={ref}
-					// flexGrow={1}
+				// flexGrow={1}
 				>
 					<Box className="changed-files" height="50%">
 						<Box height="100%">
-							<Text>
-								<Text color="red" bold underline>
+							<Box flexDirection="column" alignItems="flex-start">
+								<Text color={accentColor} bold underline>
 									Unstaged Changes
 								</Text>
-								<Newline />
-								{status.unstaged}
-							</Text>
+									{statusProcessed.unstaged.map(file => <Box alignItems="flex-start" key={file}><Text color={defaultColor}>{file}</Text></Box>)}
+							</Box>
 						</Box>
 					</Box>
-					<Text color="red">
+					<Text color={accentColor}>
 						<Newline />
 						<Renderer width={appWidth} />
 					</Text>
 
 					<Box className="stage-area" height="50%">
 						<Box height="100%">
-							<Text>
-								<Text color="red" bold underline>
+							<Box flexDirection="column" alignItems="flex-start">
+								<Text color={accentColor} bold underline>
 									Staged Changes
 								</Text>
-								<Newline />
-								{status.staged}
-							</Text>
+								{statusProcessed.staged.map(file => <Box alignItems="flex-start" key={file}><Text color={defaultColor}>{file}</Text></Box>)}
+							</Box>
 						</Box>
 					</Box>
 				</Box>
 				<Box
 					className="gitBranch"
 					borderStyle="round"
-					borderColor="red"
+					borderColor={accentColor}
 					className="left-box"
 					width="65%"
 					margin="-1"
 					flexDirection="column"
 				>
 					<Box flexDirection="row">
-						<Text color="red" bold underline>
+						<Text color={accentColor} bold underline>
 							Git Branch --{">"}
 						</Text>
-						<Text> {branch}</Text>
+						<Text color={defaultColor}> {branch}</Text>
 						<Spacer />
-						<Text>Newest to Oldest </Text>
+						<Text color={defaultColor}>Newest to Oldest </Text>
 					</Box>
 					<Box flexDirection="row">
-						{/* <Text color="green">{visual.astrix}</Text> */}
-						<Text color="white" bold>
-							{visual.sorted}
+						<Text color={defaultColor} bold>
+							{visualProcessed.sorted}
 						</Text>
 						<Text> </Text>
-						{/* <Text color='white'>{text.sorted}</Text>  */}
 					</Box>
 				</Box>
 			</Box>
-			<Selector />
+			<Selector defaultColor={defaultColor} accentColor={accentColor} />
+			<Newline />
 		</Box>
 	);
 };

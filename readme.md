@@ -8,6 +8,7 @@
 # GitGud
 
  ## **Introduction**
+
  GitGud allows you to easily visualize and fully utilize git throughout your projects. It is created using [Ink](https://github.com/vadimdemedes/ink) which provides the same component-based UI building experience that React offers, but in a Command Line Interface (CLI).
 
 
@@ -16,10 +17,12 @@
  - Have [npm](https://www.npmjs.com/get-npm) installed
 
 ---
+
 ## **Installation**
 ```
 $ npm install --global gitgud
 ```
+
 ---
 
 This will install the package globally
@@ -28,7 +31,8 @@ This will install the package globally
 $ GitGud
 ```
 - Navigate to any project that has a git directory in it and run the 'gitgud' command. This will load the gitgud UI to your terminal window
-- GitGud UI consists view of: Unstaged Changes, Staged Changes, Git Branch tree view and functionality buttons
+
+- The GitGud UI consists of: Unstaged Changes, Staged Changes, Git Branch tree view and functionality buttons
 - Navigate through the UI with either the 'tab' button or left/right arrow keys
 - Press 'enter/return' button to select/click an option
 - Throughout the app you can hit the 'esc'(escape) button to go back

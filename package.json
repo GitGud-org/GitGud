@@ -1,6 +1,6 @@
 {
 	"name": "gitgud",
-	"version": "0.0.0",
+	"version": "2.0.0",
 	"description": "A CLI git tool",
 	"license": "MIT",
 	"bin": "cli.js",
@@ -11,25 +11,29 @@
 	"keywords": [
 		"git",
 		"cli",
-		"terminal"
+		"terminal",
+		"terminal-app",
+		"console",
+		"console-application",
+		"ink"
 	],
 	"contributors": [
 		{
-      "name": "Robert Harkov",
-      "url": "https://whatever.com"
+			"name": "Robert Harkov",
+			"url": "https://whatever.com"
 		},
 		{
-      "name": "Yosef Herskovitz",
-      "url": "https://myresume.tech"
+			"name": "Yosef Herskovitz",
+			"url": "https://myresume.tech"
 		},
 		{
-      "name": "Joshua Pukin",
-      "url": "https://whatever.com"
+			"name": "Joshua Pukin",
+			"url": "https://whatever.com"
 		},
 		{
-      "name": "ANgela Ratto",
-      "url": "https://whatever.com"
-    }
+			"name": "Angela Ratto",
+			"url": "https://whatever.com"
+		}
 	],
 	"scripts": {
 		"test": "echo \"No test specified\""
@@ -41,7 +45,8 @@
 		"ink": "^3.0.4",
 		"ink-big-text": "^1.2.0",
 		"ink-gradient": "^2.0.0",
-		"ink-select-input-horizontal": "^4.1.0",
+		"ink-select-input": "^4.0.0",
+		"ink-select-input-horizontal": "^4.5.1",
 		"ink-text-input": "^4.0.0",
 		"meow": "^7.1.0",
 		"react": "^16.13.1",
