@@ -97,6 +97,10 @@ When you open the file it will look like this:
 * ### **`appResize`:**
    - This enables the app to be responsive, allowing users to resize their console windows without having to restart the app. This may decrease performance for some users.
 
+* ### **`showFlag`:**
+   - Allows user to chose whether or not to display git output tags by the staged/unstaged files.
+   - Set to `false` by default.
+   - see [here](https://git-scm.com/docs/git-status) for more info about git output tags
 ---
 
 ### **FAQs**
