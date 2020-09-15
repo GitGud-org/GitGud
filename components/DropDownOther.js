@@ -42,28 +42,28 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
     switch (currentDrop) {
         case 'fullLogTree':
             return (
-                <Box flexDirection='column'>
+                <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <TreeTab refreshTab={refreshTab} />
                 </Box>
             )
         case 'stashChanges':
             return (
-                <Box flexDirection='column'>
+                <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Stash refreshTab={refreshTab} />
                 </Box>
             )
         case 'undoStash': 
             return (
-                <Box flexDirection='column'>
+                <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <popStash refreshTab={refreshTab} />
                 </Box>
             )
         case 'undoMerge':
             return (
-                <Box flexDirection='column'>
+                <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <MergeRevert refreshTab={refreshTab} />
                 </Box>
