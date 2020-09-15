@@ -48,7 +48,7 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
         case 'undoMerge':
             return (
                 <Box flexDirection='column'>
-                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor} />
+                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <MergeRevert refreshTab={refreshTab} />
                 </Box>
             )
