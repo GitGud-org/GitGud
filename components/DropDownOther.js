@@ -6,6 +6,7 @@ const { execSync, exec } = require("child_process");
 const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./Stash')
+const MergeRevert = importJsx('./MergeRevert')
 
 //Creates the switch case for the 'Other' Tab.
 
@@ -23,6 +24,10 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
         {
             label: 'Stash Changes',
             value: 'stashChanges'
+        },
+        {
+            label: 'Undo Merge',
+            value: 'undoMerge'
         }
     ]
     switch (currentDrop) {
@@ -38,6 +43,13 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
                 <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Stash refreshTab={refreshTab} />
+                </Box>
+            )
+        case 'undoMerge':
+            return (
+                <Box flexDirection='column'>
+                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor} />
+                    <MergeRevert refreshTab={refreshTab} />
                 </Box>
             )
         default:
