@@ -8,8 +8,6 @@ const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./Stash')
 const MergeRevert = importJsx('./MergeRevert')
 
-const popStash = require('../actions/undoStash')
-
 //Creates the switch case for the 'Other' Tab.
 
 const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
@@ -17,9 +15,6 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
 
     const handleSelect = (item) => {
         setCurrentDrop(item.value)
-        if(item.value === 'undoStash') {
-            popStash()
-        }
     }
     const items = [
         {
@@ -42,28 +37,21 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
     switch (currentDrop) {
         case 'fullLogTree':
             return (
-                <Box flexDirection='column' marginLeft='109'>
+                <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <TreeTab refreshTab={refreshTab} />
                 </Box>
             )
         case 'stashChanges':
             return (
-                <Box flexDirection='column' marginLeft='109'>
+                <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Stash refreshTab={refreshTab} />
                 </Box>
             )
-        case 'undoStash': 
-            return (
-                <Box flexDirection='column' marginLeft='109'>
-                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
-                    <popStash refreshTab={refreshTab} />
-                </Box>
-            )
         case 'undoMerge':
             return (
-                <Box flexDirection='column' marginLeft='109'>
+                <Box flexDirection='column'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <MergeRevert refreshTab={refreshTab} />
                 </Box>
@@ -76,7 +64,7 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
                     <Newline />
                     <Text color='gray'>Press ESC to go back</Text>
                 </Box>
-            )
+            )//teste
     }
 };
 
