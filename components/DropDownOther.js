@@ -26,6 +26,10 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
             value: 'stashChanges'
         },
         {
+            label: 'Undo Stash',
+            value: 'undoStash'
+        },
+        {
             label: 'Undo Merge',
             value: 'undoMerge'
         }
