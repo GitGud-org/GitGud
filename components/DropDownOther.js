@@ -6,7 +6,7 @@ const { execSync, exec } = require("child_process");
 const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./Stash')
-const MergeRevert = importJsx('./MergeRevert')
+const CommitRevert = importJsx('./CommitRevert')
 
 const popStash = require('../actions/undoStash')
 
@@ -35,8 +35,8 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
             value: 'undoStash'
         },
         {
-            label: 'Undo Merge',
-            value: 'undoMerge'
+            label: 'Undo Commit',
+            value: 'undoCommit'
         }
     ]
     switch (currentDrop) {
@@ -61,11 +61,11 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
                     <popStash refreshTab={refreshTab} />
                 </Box>
             )
-        case 'undoMerge':
+        case 'undoCommit':
             return (
                 <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
-                    <MergeRevert refreshTab={refreshTab} />
+                    <CommitRevert refreshTab={refreshTab} />
                 </Box>
             )
         default:
