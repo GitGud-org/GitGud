@@ -4,7 +4,7 @@ const { Box, Text, NewLine } = require('ink')
 const { execSync, exec } =require("child_process")
 const TextInput = require("ink-text-input").default;
 
-const CommitRevert = (props) => {
+const MergeRevert = (props) => {
     const [commitId, setCommitId] = useState("");
 
     let { refreshTab } = props;
@@ -43,4 +43,4 @@ const CommitRevert = (props) => {
     )
 }
 
-module.exports = CommitRevert
+module.exports = MergeRevert
