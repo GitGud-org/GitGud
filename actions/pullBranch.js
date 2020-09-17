@@ -12,4 +12,3 @@ const pullTab = () => {
 }
 
 module.exports = pullTab
-//teset
