@@ -18,7 +18,7 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const {showLogo, defaultColor, accentColor, appResize, changeBold} = require('./styleFile')
+const {showLogo, defaultColor, accentColor, appResize, changeBold, changeBorder} = require('./styleFile')
 
 const App = () => {
 	const [status, setStatus] = useState("");
@@ -55,7 +55,7 @@ const App = () => {
 		<Box flexDirection="column" minHeight={appheight}>
 			{showLogo && <Logo />}
 			<Box
-				borderStyle="round"
+				borderStyle={changeBorder} //HERE IS HTE CURRENT BORDER TO CHANGE
 				borderColor={accentColor}
 				className="full-app"
 				height={20}
@@ -97,7 +97,7 @@ const App = () => {
 				</Box>
 				<Box
 					className="gitBranch"
-					borderStyle="round"
+					borderStyle={changeBorder} //ALSO HERE
 					borderColor={accentColor}
 					className="left-box"
 					width="65%"
