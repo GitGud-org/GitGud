@@ -10,6 +10,10 @@ module.exports = {
 
 	// setting to determine whether app dynamically adjusts to screen resizing; setting to false may improve performance
 	appResize: true, // acepted values include [true, false]
+
+	// setting to to determine whether or not app shows git flags by staged/unstaged files
+	showFlag: false, // acepted values include [true, false]
+
 }
 
 
