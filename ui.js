@@ -18,7 +18,7 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const {showLogo, defaultColor, accentColor, appResize} = require('./styleFile')
+const {showLogo, defaultColor, accentColor, appResize, changeBold} = require('./styleFile')
 
 const App = () => {
 	const [status, setStatus] = useState("");
@@ -113,7 +113,7 @@ const App = () => {
 						<Text color={defaultColor}>Newest to Oldest </Text>
 					</Box>
 					<Box flexDirection="row">
-						<Text color={defaultColor} bold>
+						<Text color={defaultColor} bold={changeBold}>
 							{visualProcessed.sorted}
 						</Text>
 						<Text> </Text>

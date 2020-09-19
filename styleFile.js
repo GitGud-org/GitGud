@@ -14,6 +14,8 @@ module.exports = {
 	// setting to to determine whether or not app shows git flags by staged/unstaged files
 	showFlag: false, // acepted values include [true, false]
 
+	// setting to change boldness of git tree
+	changeBold: true //accepted values include [true, false]
 }
 
 
