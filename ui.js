@@ -55,7 +55,7 @@ const App = () => {
 		<Box flexDirection="column" minHeight={appheight}>
 			{showLogo && <Logo />}
 			<Box
-				borderStyle={changeBorder} //HERE IS HTE CURRENT BORDER TO CHANGE
+				borderStyle={changeBorder} //HERE IS THE CURRENT BORDER TO CHANGE
 				borderColor={accentColor}
 				className="full-app"
 				height={20}
