@@ -48,18 +48,18 @@ $ GitGud
   - You also have the option to stage/unstage individual files by navigating through them with the up/down keys.
   - Press 'ESC' to exit out of stage changes menu.
 * ### **Commit Changes**
-  - It will promt you to enter a 'Commit Message' which **does not require** you to wrap input in quotation marks. After entering and submitting the commit message, it run the commit and bring you back to the main menu.
+  - It will prompt you to enter a 'Commit Message' which **does not require** you to wrap input in quotation marks. After entering and submitting the commit message, it run the commit and bring you back to the main menu.
   - Press 'ESC' to exit out of commit changes.
 * ### **Push Staged Changes**
   - This will push staged changes to the current branch you are on.
   - You can see what branch you are on on the top of the GUI.
 * ### **Checkout Branch**
-  - It will display list of all the branches in the project. The branches are not selectible, they are there to help you see which local branches are available to switch to.
+  - It will display list of all the branches in the project. The branches are not selectable, they are there to help you see which local branches are available to switch to.
   - You are prompted to enter a branch to Checkout. If you enter a branch that does not exist, it will create a new one.
   - If you have unstaged changes, an error will be shown and it will abort the checkout operation, telling you that you have unstaged changes and to commit or stash the changes before switching branches. You can press 'ESC' to go back and stash/commit the changes before you attempt to checkout again
 * ### **Delete Branch**
   - It will display list of branches which are not selectable, they are there to help you see which local branches are available.
-  - You are promted to enter a branch name, and if the branch exists it will delete/remove it and bring you back to main menu. If the branch does not exist then it will throw an error.
+  - You are prompted to enter a branch name, and if the branch exists it will delete/remove it and bring you back to main menu. If the branch does not exist then it will throw an error.
   - Press 'ESC' to exit out of delete branch
 * ### **Access Full Log Tree**
    - It will render the entire log tree overlaying the gitgud GUI.
