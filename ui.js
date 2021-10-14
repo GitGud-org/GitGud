@@ -5,8 +5,6 @@ const { useEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline, Spacer } = require("ink");
 
 const Renderer = require("./components/Divider");
-const Gradient = require("ink-gradient");
-const BigText = require("ink-big-text");
 
 const importJsx = require("import-jsx");
 const Selector = importJsx("./Selector.js");
@@ -18,7 +16,7 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const {showLogo, defaultColor, accentColor, appResize, changeBold, changeBorder} = require('./styleFile')
+const {showLogo, defaultColor, accentColor, appResize, changeBold, changeBorder, defaultTreeColor} = require('./styleFile')
 
 const App = () => {
 	const [status, setStatus] = useState("");
@@ -113,7 +111,7 @@ const App = () => {
 						<Text color={defaultColor}>Newest to Oldest </Text>
 					</Box>
 					<Box flexDirection="row">
-						<Text color={defaultColor} bold={changeBold}>
+						<Text color={defaultTreeColor} bold={changeBold}>
 							{visualProcessed.sorted}
 						</Text>
 						<Text> </Text>
