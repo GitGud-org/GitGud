@@ -101,6 +101,13 @@ When you open the file it will look like this:
    - Allows user to chose whether or not to display git output tags by the staged/unstaged files.
    - Set to `false` by default.
    - see [here](https://git-scm.com/docs/git-status) for more info about git output tags
+
+* ### **`defaultTreeColor`:**
+   - This is the color for the tree in the main screen.
+
+* ### **`fullProjectTreeColor`:**
+    - This is the color for the full project log tree.
+
 ---
 
 ### **FAQs**
