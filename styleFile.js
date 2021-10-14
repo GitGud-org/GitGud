@@ -18,18 +18,11 @@ module.exports = {
 	changeBold: true, // accepted values include [true, false]
 
 	// setting to change the border style
-	changeBorder: 'bold' // accepted values are ['single', 'double', 'round', 'bold']
+	changeBorder: 'bold', // accepted values are ['single', 'double', 'round', 'bold']
+
+	// setting for default tree text colors
+	defaultTreeColor: 'red', // accepted values include ['red', 'blue', 'white', 'green', etc.]
+
+	// setting for full project tree text colors
+	fullProjectTreeColor: 'red', // accepted values include ['red', 'blue', 'white', 'green', etc.]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//here for example presentation video
