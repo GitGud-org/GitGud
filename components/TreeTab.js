@@ -1,7 +1,7 @@
 const React = require("react");
-const { useState } = require("react");
-const { render, Box, Text, Newline } = require("ink")
+const { Box, Text } = require("ink")
 const { execSync } = require("child_process");
+const { fullProjectTreeColor } = require("../styleFile");
 
 const TreeTab = () => {
     //displays full git log tree under access full log tree
@@ -11,7 +11,7 @@ const TreeTab = () => {
         <Box flexDirection='column'>
             <Box><Text> </Text></Box>
             <Box>
-                <Text color='#f09e8c'>{largeTree}</Text>
+                <Text color={fullProjectTreeColor}>{largeTree}</Text>
             </Box>
             <Text color='gray'>   Press ESC to go back </Text>
         </Box>
