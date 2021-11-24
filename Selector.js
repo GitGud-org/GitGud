@@ -13,7 +13,7 @@ const pullTab = require("./actions/pullBranch");
 const CheckoutBranch = importJsx("./components/CheckoutBranch");
 const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
-const Drop = importJsx('./components/dropDownOther')
+const Drop = importJsx('./components/DropDownOther')
 const DeleteTab = importJsx("./components/DeleteBranch");
 
 const Selector = ({defaultColor, accentColor}) => {
