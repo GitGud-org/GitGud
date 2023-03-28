@@ -9,7 +9,7 @@
 
  ## **Introduction**
 
- GitGud allows you to easily visualize and fully utilize git throughout your projects. It is created using [Ink](https://github.com/vadimdemedes/ink) which provides the same component-based UI building experience that React offers, but in a Command Line Interface (CLI).
+GitGud is an open-source repository designed to provide beginners and experienced developers with a platform to learn and enhance their Git skills. The repository is built with the aim of providing an interactive learning experience for developers of all skill levels. Whether you're just getting started with Git or looking to improve your existing skills, GitGud provides an extensive set of resources and tools that can help you master Git. GitGud allows you to easily visualize and fully utilize git throughout your projects. It is created using [Ink](https://github.com/vadimdemedes/ink) which provides the same component-based UI building experience that React offers, but in a Command Line Interface (CLI).
 
 
  ## **Requirements**
