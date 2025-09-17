@@ -1,9 +1,11 @@
 const React = require("react");
+const importJsx = require("import-jsx");
 const { useState } = require("react");
-const { render, Box, Text, Newline } = require("ink");
+const { render, Box, Text, Newline, useInput } = require("ink");
 const { execSync } = require("child_process");
-const TextInput = require("ink-text-input").default;
+const AutoComplete = importJsx("./AutoComplete");
 
+const words = ["apple", "application", "banana", "band", "cat", "caterpillar"];
 const DeleteTab = (props) => {
 	//Uses git branch and displays all local branches
 	//Takes in an input to for delete branch
@@ -33,7 +35,7 @@ const DeleteTab = (props) => {
 			<Box>
 				<Box>
 					<Text color="red"> Delete Branch: </Text>
-					<TextInput value={del} onChange={setDelete} onSubmit={handleSubmit} />
+					<AutoComplete valueControl={{val: del, setValue: setDelete}} baseList={branches}  handleSubmit={handleSubmit} />
 				</Box>
 			</Box>
 			<Newline />
