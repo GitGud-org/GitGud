@@ -5,7 +5,6 @@ const { render, Box, Text, Newline, useInput } = require("ink");
 const { execSync } = require("child_process");
 const AutoComplete = importJsx("./AutoComplete");
 
-const words = ["apple", "application", "banana", "band", "cat", "caterpillar"];
 const DeleteTab = (props) => {
 	//Uses git branch and displays all local branches
 	//Takes in an input to for delete branch
