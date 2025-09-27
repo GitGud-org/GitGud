@@ -1,8 +1,9 @@
 const React = require("react");
+const importJsx = require("import-jsx");
 const { useState } = require("react");
-const { render, Box, Text, Newline } = require("ink");
+const { Box, Text } = require("ink");
 const { execSync } = require("child_process");
-const TextInput = require("ink-text-input").default;
+const AutoComplete = importJsx("./AutoComplete");
 const {defaultColor, accentColor} = require('../styleFile')
 //Uses git for-each-ref to display all available branches to checkout to
 //Also removes the astrix that displays the current branch you are on
@@ -14,10 +15,8 @@ const CheckoutBranch = (props) => {
 	let { refreshTab } = props;
 
 	let branches = execSync(
-		"git for-each-ref --format='%(refname:short)' refs/heads/"
-	)
-		.toString()
-		.split("\n");
+		"git for-each-ref --format=%(refname:short) refs/heads/"
+	).toString().split("\n");
 
 	const checkoutBranch = (query) => {
 		if (branches.includes(query)) {
@@ -43,18 +42,13 @@ const CheckoutBranch = (props) => {
 			</Box>
 			<Box>
 				<Text color={accentColor}> Branches: </Text>
-				<Text color={defaultColor}>{branches.join("  ")}</Text>
+				<Text color={defaultColor}>{branches.join(" | ")}</Text>
 			</Box>
 			<Box>
 				<Box marginRight={1}>
 					<Text color={accentColor}> Checkout branch:</Text>
+					<AutoComplete valueControl={{val: query, setValue: setQuery}} baseList={branches}  handleSubmit={checkoutBranch} />
 				</Box>
-				<TextInput
-					color={defaultColor}
-					value={query}
-					onChange={setQuery}
-					onSubmit={checkoutBranch}
-				/>
 			</Box>
 			<Box marginLeft={1}>
 				<Text color="grey">Press ESC to go back</Text>

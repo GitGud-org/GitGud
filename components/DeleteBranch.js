@@ -1,7 +1,7 @@
 const React = require("react");
 const importJsx = require("import-jsx");
 const { useState } = require("react");
-const { render, Box, Text, Newline, useInput } = require("ink");
+const { Box, Text, Newline } = require("ink");
 const { execSync } = require("child_process");
 const AutoComplete = importJsx("./AutoComplete");
 
@@ -29,7 +29,7 @@ const DeleteTab = (props) => {
 			</Box>
 			<Box>
 				<Text color="red"> Branches: </Text>
-				<Text>{branches.join(" ")}</Text>
+				<Text>{branches.join(" | ")}</Text>
 			</Box>
 			<Box>
 				<Box>
