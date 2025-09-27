@@ -3,7 +3,7 @@ const TextInput = require("ink-text-input").default;
 const { Box, Text, useInput } = require("ink");
 
 const AutoComplete = ({valueControl={val, setValue}, baseList, handleSubmit}) => {
-    const [suggestion, setSuggestion] = React.useState([]);
+    const [suggestion, setSuggestion] = React.useState('');
     const updateSuggestion = (input) => {
 		valueControl.setValue(input);
 		if (input.length > 0) {
