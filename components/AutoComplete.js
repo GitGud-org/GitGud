@@ -7,7 +7,7 @@ const AutoComplete = ({valueControl={val, setValue}, baseList, handleSubmit}) =>
     const updateSuggestion = (input) => {
 		valueControl.setValue(input);
 		if (input.length > 0) {
-		  const match = baseList.find(w => w.trim().startsWith(input.toLowerCase()));
+          const match = baseList.find(w => w.trim().toLowerCase().startsWith(input.toLowerCase()));
 		  setSuggestion(match || "");
 		} else {
 		  setSuggestion("");
