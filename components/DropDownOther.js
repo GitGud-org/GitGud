@@ -7,6 +7,7 @@ const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./Stash')
 const CommitRevert = importJsx('./CommitRevert')
+const SquashBranch = importJsx('./SquashBranch')
 
 const popStash = require('../actions/undoStash')
 
@@ -37,6 +38,10 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
         {
             label: 'Undo Commit',
             value: 'undoCommit'
+        },
+        {
+            label: 'Squash Branch Commits',
+            value: 'squashBranch'
         }
     ]
     switch (currentDrop) {
@@ -66,6 +71,13 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
                 <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <CommitRevert refreshTab={refreshTab} />
+                </Box>
+            )
+        case 'squashBranch':
+            return (
+                <Box flexDirection='column' marginLeft='109'>
+                    <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
+                    <SquashBranch refreshTab={refreshTab} />
                 </Box>
             )
         default:
