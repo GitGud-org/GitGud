@@ -41,7 +41,7 @@ function saveStyle(key, value) {
 	try {
 		overrides = readOverrides();
 	} catch (error) {
-		if (error.code !== "ENOENT") throw error;
+		if (error.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
 		overrides = {};
 	}
 	overrides[key] = value;

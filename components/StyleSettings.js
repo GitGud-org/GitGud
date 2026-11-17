@@ -1,14 +1,23 @@
 const React = require("react");
-const { Box, Text } = require("ink");
+const { Box, Text, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const { fields, saveStyle } = require("../stylePreferences");
 
 const showValue = value => typeof value === "boolean" ? (value ? "On" : "Off") : value;
 
-const StyleSettings = ({ style, onStyleChange }) => {
+const StyleSettings = ({ style, onStyleChange, onBack }) => {
 	const [field, setField] = React.useState(null);
 	const [status, setStatus] = React.useState("");
 	const { defaultColor, accentColor } = style;
+	useInput((_, key) => {
+		if (!key.escape) return;
+		if (field) {
+			setField(null);
+			setStatus("");
+		} else {
+			onBack();
+		}
+	});
 	const items = field
 		? field.options.map((value, index) => ({ label: showValue(value), value: index }))
 		: fields.map(setting => ({ label: `${setting.label} (${showValue(style[setting.key])})`, value: setting.key }));

@@ -1,6 +1,4 @@
-const {showFlag} = require('../styleFile')
-
-const gitStatusProcess = (gitStatusOutput, displayFlags = showFlag) => {
+const gitStatusProcess = (gitStatusOutput, displayFlags) => {
 	let gitStatusOutputSorted = {
 		staged: [],
 		unstaged: [],

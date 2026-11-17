@@ -10,6 +10,11 @@ const CommitAction = ({ refreshTab }) => {
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
 
+	const updateMessage = value => {
+		setMessage(value);
+		setError("");
+	};
+
 	const handleSubmit = () => {
 		try {
 			execFileSync("git", ["commit", "-m", message], {
@@ -26,7 +31,7 @@ const CommitAction = ({ refreshTab }) => {
 			<Box><Text> </Text></Box>
 			<Box marginRight={1}>
 				<Text color='red'>   Commit Message: </Text>
-				<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
+				<TextInput value={message} onChange={updateMessage} onSubmit={handleSubmit} />
 			</Box>
 			{error ? <Text color="red">{error}</Text> : null}
 			<Newline />
