@@ -1,31 +1,49 @@
 const React = require("react");
 const { useState } = require("react");
 const { Text, Box, Newline, useInput } = require("ink");
+const { git, gitError } = require("../actions/git");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
-const Stash = importJsx('./Stash')
 const CommitRevert = importJsx('./CommitRevert')
 const StyleSettings = importJsx("./StyleSettings");
 const SquashBranch = importJsx("./SquashBranch");
-
-const popStash = require('../actions/undoStash')
 
 //Creates the switch case for the 'Other' Tab.
 
 const dropDown = ({ refreshTab, style, onStyleChange }) => {
     const { accentColor, defaultColor, gitTreeColor } = style;
     const [currentDrop, setCurrentDrop] = useState('')
+    const [result, setResult] = useState(null);
+    const backToMenu = () => setCurrentDrop("");
+
+    const stash = (operation) => {
+        try {
+            const output = git(["stash", operation]).trim();
+            setResult({ message: output });
+        } catch (error) {
+            setResult({ message: gitError(error), failed: true });
+        }
+    };
 
     useInput((_, key) => {
-        if (key.escape) refreshTab("");
+        if (currentDrop === "undoStash" && key.return) {
+            stash("pop");
+            backToMenu();
+            return;
+        }
+        if (!key.escape) return;
+        if (currentDrop) backToMenu();
+        else refreshTab("");
     }, { isActive: currentDrop !== "styleSettings" });
 
-    const handleSelect = (item) => {
-        setCurrentDrop(item.value)
-        if(item.value === 'undoStash') {
-            popStash()
+    const handleSelect = ({ value }) => {
+        setResult(null);
+        if (value === "stashChanges") {
+            stash("push");
+            return;
         }
+        setCurrentDrop(value);
     }
     const items = [
         {
@@ -48,7 +66,7 @@ const dropDown = ({ refreshTab, style, onStyleChange }) => {
         { label: "Squash Branch", value: "squashBranch" }
     ]
     if (currentDrop === "styleSettings") {
-        return <StyleSettings style={style} onStyleChange={onStyleChange} onBack={() => setCurrentDrop("")} />;
+        return <StyleSettings style={style} onStyleChange={onStyleChange} onBack={backToMenu} />;
     }
     if (currentDrop === "squashBranch") {
         return <SquashBranch defaultColor={defaultColor} accentColor={accentColor} />;
@@ -59,16 +77,17 @@ const dropDown = ({ refreshTab, style, onStyleChange }) => {
         case 'fullLogTree':
             content = <TreeTab gitTreeColor={gitTreeColor} />;
             break;
-        case 'stashChanges':
-            content = <Stash refreshTab={refreshTab} />;
-            break;
         case 'undoCommit':
-            content = <CommitRevert refreshTab={refreshTab} />;
+            content = <CommitRevert />;
+            break;
+        case "undoStash":
+            content = <Text>Apply the latest stash and drop it on success? Enter to confirm · Esc to cancel</Text>;
             break;
         default:
             content = (
                 <>
                     <Newline />
+                    {result ? <Text color={result.failed ? "red" : defaultColor}>{result.message}</Text> : null}
                     <Text color='gray'>Press ESC to go back</Text>
                 </>
             );

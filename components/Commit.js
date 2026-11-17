@@ -1,7 +1,7 @@
 const React = require("react");
 const { useState } = require("react");
 const { Box, Text, Newline } = require("ink");
-const { execFileSync } = require("child_process");
+const { git, gitError } = require("../actions/git");
 const TextInput = require("ink-text-input").default;
 
 //Commit changes tab -- takes in a message to commit on the current branch
@@ -17,13 +17,10 @@ const CommitAction = ({ refreshTab }) => {
 
 	const handleSubmit = () => {
 		try {
-			execFileSync("git", ["commit", "-m", message], {
-				encoding: "utf8",
-				stdio: ["ignore", "pipe", "pipe"]
-			});
+			git(["commit", "-m", message]);
 			refreshTab("");
 		} catch (error) {
-			setError([error.stderr, error.stdout].filter(Boolean).join("\n").trim() || error.message);
+			setError(gitError(error));
 		}
 	};
 	return (

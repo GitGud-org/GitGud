@@ -45,12 +45,10 @@ function saveStyle(key, value) {
 		overrides = {};
 	}
 	overrides[key] = value;
-	if (!fs.existsSync(directory)) {
-		try {
-			fs.mkdirSync(directory);
-		} catch (error) {
-			if (error.code !== "EEXIST") throw error;
-		}
+	try {
+		fs.mkdirSync(directory);
+	} catch (error) {
+		if (error.code !== "EEXIST") throw error;
 	}
 	const temporaryDirectory = fs.mkdtempSync(path.join(directory, ".style-"));
 	const temporaryFile = path.join(temporaryDirectory, "style.json");

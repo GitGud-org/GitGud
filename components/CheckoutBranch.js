@@ -2,7 +2,7 @@ const React = require("react");
 const importJsx = require("import-jsx");
 const { useState } = require("react");
 const { Box, Text } = require("ink");
-const { execFileSync } = require("child_process");
+const { git, gitError } = require("../actions/git");
 const localBranches = require("../actions/localBranches");
 const AutoComplete = importJsx("./AutoComplete");
 
@@ -20,19 +20,13 @@ const CheckoutBranch = ({ refreshTab, defaultColor, accentColor }) => {
 		if (!query) return;
 		try {
 			const currentBranches = localBranches();
-			const matches = currentBranches.includes(query) ? [query] :
-				currentBranches.filter(branch => branch.toLowerCase() === query.toLowerCase());
-			if (matches.length > 1) {
-				setError("Several branches match. Enter the branch name with its exact capitalization.");
-				return;
-			}
-			const args = matches.length
-				? ["checkout", matches[0], "--"]
+			const args = currentBranches.includes(query)
+				? ["checkout", query, "--"]
 				: ["checkout", "-b", query];
-			execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+			git(args);
 			refreshTab("");
 		} catch (error) {
-			setError((error.stderr || error.message).trim());
+			setError(gitError(error));
 		}
 	};
 	return (

@@ -60,12 +60,11 @@ $ GitGud
   - If you have unstaged changes, an error will be shown and it will abort the checkout operation, telling you that you have unstaged changes and to commit or stash the changes before switching branches. You can press 'ESC' to go back and stash/commit the changes before you attempt to checkout again
 * ### **Delete Branch**
   - It will display list of branches which are not selectable, they are there to help you see which local branches are available.
-  - You are prompted to enter a branch name, and if the branch exists it will delete/remove it and bring you back to main menu. If the branch does not exist then it will throw an error.
+  - Enter a branch name to delete it. Git checks that the branch is merged into its upstream or the current branch before deleting it.
   - Type the start of the branch name and press Tab to complete it.
   - Press 'ESC' to exit out of delete branch
 * ### **Access Full Log Tree**
-   - It will render the entire log tree overlaying the gitgud GUI.
-   - Press 'ESC' to exit out of log tree
+   - Browse the commit graph across all branches. Press Up or Down to browse pages and Esc to return to **Other**.
 * ### **Squash Branch**
    - Open **Other → Squash Branch** with a clean working tree. Choose a local base branch to keep the shared history, or choose **Entire history** to create a single root commit.
    - Review the number of commits, type a commit message, and press Enter to confirm. The squash preserves the files at the current tip and rewrites the local branch. It skips commit hooks and records the previous tip in the branch reflog.

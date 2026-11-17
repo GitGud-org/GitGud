@@ -4,6 +4,7 @@ const SelectInput = require("ink-select-input-horizontal").default;
 const TextInput = require("ink-text-input").default;
 const localBranches = require("../actions/localBranches");
 const { currentBranchRef, planSquash, squashBranch } = require("../actions/squashBranch");
+const { gitError } = require("../actions/git");
 
 const SquashBranch = ({ defaultColor, accentColor }) => {
 	const [plan, setPlan] = React.useState(null);
@@ -35,7 +36,7 @@ const SquashBranch = ({ defaultColor, accentColor }) => {
 			setCommit(squashBranch(plan, message));
 			setError("");
 		} catch (error) {
-			setError((error.stderr || error.message).trim());
+			setError(gitError(error));
 		}
 	};
 
