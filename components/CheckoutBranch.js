@@ -9,13 +9,25 @@ const AutoComplete = importJsx("./AutoComplete");
 const CheckoutBranch = ({ refreshTab, defaultColor, accentColor }) => {
 	const [query, setQuery] = useState("");
 	const [error, setError] = useState("");
-	const branches = localBranches();
+	const [branches] = useState(localBranches);
+
+	const updateQuery = value => {
+		setQuery(value);
+		setError("");
+	};
 
 	const checkoutBranch = (query) => {
 		if (!query) return;
 		try {
-			const args = branches.includes(query)
-				? ["checkout", query, "--"]
+			const currentBranches = localBranches();
+			const matches = currentBranches.includes(query) ? [query] :
+				currentBranches.filter(branch => branch.toLowerCase() === query.toLowerCase());
+			if (matches.length > 1) {
+				setError("Several branches match. Enter the branch name with its exact capitalization.");
+				return;
+			}
+			const args = matches.length
+				? ["checkout", matches[0], "--"]
 				: ["checkout", "-b", query];
 			execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 			refreshTab("");
@@ -35,7 +47,7 @@ const CheckoutBranch = ({ refreshTab, defaultColor, accentColor }) => {
 			<Box>
 				<Box marginRight={1}>
 					<Text color={accentColor}> Checkout branch:</Text>
-					<AutoComplete value={query} onChange={setQuery} branches={branches} onSubmit={checkoutBranch} />
+					<AutoComplete value={query} onChange={updateQuery} branches={branches} onSubmit={checkoutBranch} />
 				</Box>
 			</Box>
 			<Box marginLeft={1}>

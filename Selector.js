@@ -1,10 +1,9 @@
 const React = require("react");
-const { useState, useEffect } = require("react");
-const { Box, useInput, useFocus, useFocusManager  } = require("ink");
+const { useState } = require("react");
+const { Box, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
-const TreeTab = importJsx('./components/TreeTab')
 const revertTab = require("./actions/revertStaged");
 const stageFiles = require("./actions/stageFiles");
 const pushTab = require("./actions/pushTab");
@@ -19,14 +18,11 @@ const DeleteTab = importJsx("./components/DeleteBranch");
 const Selector = ({ style, onStyleChange }) => {
 	const { defaultColor, accentColor } = style;
 	const [currentTab, setCurrentTab] = useState("");
-	let {isFocused} = useFocus();
-	const {disableFocus, enableFocus}  = useFocusManager();
-
-	useInput((input, key) => {
+	useInput((_, key) => {
 		if (key.escape) {
 			return setCurrentTab("");
 		}
-	});
+	}, { isActive: currentTab !== "other" });
 
 
 	const handleSelect = (item) => {
@@ -42,9 +38,6 @@ const Selector = ({ style, onStyleChange }) => {
 		}
 		if (item.value === "pullFromBranch") {
 			pullTab();
-		}
-		if (item.value === 'stageSome') {
-			isFocused = true;
 		}
 	};
 

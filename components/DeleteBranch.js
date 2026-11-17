@@ -9,7 +9,12 @@ const AutoComplete = importJsx("./AutoComplete");
 const DeleteTab = ({ refreshTab, defaultColor, accentColor }) => {
 	const [branch, setBranch] = useState("");
 	const [error, setError] = useState("");
-	const branches = localBranches();
+	const [branches] = useState(localBranches);
+
+	const updateBranch = value => {
+		setBranch(value);
+		setError("");
+	};
 
 	const handleSubmit = (branch) => {
 		try {
@@ -34,7 +39,7 @@ const DeleteTab = ({ refreshTab, defaultColor, accentColor }) => {
 			<Box>
 				<Box>
 					<Text color={accentColor}> Delete Branch: </Text>
-					<AutoComplete value={branch} onChange={setBranch} branches={branches} onSubmit={handleSubmit} />
+					<AutoComplete value={branch} onChange={updateBranch} branches={branches} onSubmit={handleSubmit} />
 				</Box>
 			</Box>
 			<Newline />

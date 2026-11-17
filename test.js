@@ -27,6 +27,17 @@ const backspace = '\x7f';
 const enter = '\r';
 const esc = '\x1b';
 
+async function waitForFrame(lastFrame, expected, absent) {
+  const deadline = Date.now() + 5000;
+  let frame;
+  do {
+    frame = (lastFrame() || '').replace(/\s+/g, ' ');
+    if (expected.test(frame) && (!absent || !absent.test(frame))) return;
+    await wait(10);
+  } while (Date.now() < deadline);
+  assert.fail(`Expected ${expected}${absent ? ` without ${absent}` : ''} in: ${frame}`);
+}
+
 function removeDirectory(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const target = path.join(directory, entry.name);
@@ -38,6 +49,10 @@ function removeDirectory(directory) {
 
 async function main() {
   const repo = path.join(temp, 'repo');
+  const preferences = path.join(temp, '.gitgud');
+  fs.mkdirSync(preferences);
+  fs.writeFileSync(path.join(preferences, 'style.json'), '{invalid');
+  assert.strictEqual(loadStyle().showLogo, true);
   fs.mkdirSync(repo);
   process.chdir(repo);
   git('init', '-q');
@@ -47,27 +62,29 @@ async function main() {
   assert.strictEqual(graph(), '');
   const ui = render(React.createElement(App));
   const { stdin, lastFrame } = ui;
-  const key = async value => { stdin.write(value); await wait(45); };
+  const key = async value => {
+    stdin.write(value);
+    await new Promise(resolve => setImmediate(resolve));
+  };
   const move = async (count, arrow = right) => {
-    for (let i = 0; i < count; i++) await key(arrow);
+    for (let step = 0; step < count; step++) await key(arrow);
   };
-  const has = pattern => {
-    const frame = lastFrame().replace(/\s+/g, ' ');
-    assert(pattern.test(frame), `Expected ${pattern} in: ${frame}`);
-  };
+  const has = (pattern, absent) => waitForFrame(lastFrame, pattern, absent);
   try {
-    await wait(2150);
-    has(/Git Branch.*main/);
+    await has(/Git Branch.*main/);
     await move(1);
     await key(enter);
-    has(/Commit Message/);
+    await has(/Commit Message/);
     await key('first attempt');
     await key(enter);
-    has(/nothing to commit/);
+    await has(/nothing to commit/);
+    await key(backspace);
+    await has(/Commit Message.*first attemp/, /nothing to commit/);
 
     fs.writeFileSync('example.txt', 'initial content');
     git('add', 'example.txt');
-    for (let i = 0; i < 'first attempt'.length; i++) await key(backspace);
+    const remainingMessage = 'first attemp';
+    for (let offset = 0; offset < remainingMessage.length; offset++) await key(backspace);
     const message = 'initial "quoted" $literal';
     await key(message);
     await key(enter);
@@ -80,15 +97,39 @@ async function main() {
     git('branch', 'delete/me');
     await move(4);
     await key(enter);
-    has(/Checkout branch/);
+    await has(/Checkout branch/);
     await key('feature/C');
     await key('\t');
     await key(enter);
     assert.strictEqual(git('branch', '--show-current'), 'Feature/Case');
 
+    git('checkout', '-q', 'main');
+    await move(4);
+    await key(enter);
+    await key('invalid name');
+    await key(enter);
+    await has(/not a valid branch name/);
+    await key(backspace);
+    await has(/Checkout branch:invalid nam/, /not a valid branch name/);
+    await key(esc);
+    await move(4);
+    await key(enter);
+    await key('feature/case');
+    await key(enter);
+    assert.strictEqual(git('branch', '--show-current'), 'Feature/Case');
+    assert.strictEqual(git('branch', '--list', 'feature/case'), '');
+
     await move(5);
     await key(enter);
-    has(/Delete Branch:/);
+    await has(/Delete Branch:/);
+    await key('missing');
+    await key(enter);
+    await has(/not found/);
+    await key(backspace);
+    await has(/Delete Branch: missin(?:\s|$)/, /not found/);
+    await key(esc);
+    await move(5);
+    await key(enter);
     await key('delete/');
     await key('\t');
     await key(backspace);
@@ -98,14 +139,22 @@ async function main() {
 
     await move(6);
     await key(enter);
+    await key(enter);
+    await has(/initial "quoted" \$literal.*Press ESC to go back/);
+    await key(esc);
+    await move(6);
+    await key(enter);
     await move(4, down);
     await key(enter);
-    has(/Style Settings/);
+    await has(/Show logo \(On\)/);
     await key(enter);
-    has(/Show logo/);
+    await has(/Show logo.*On.*Off/);
+    await key(esc);
+    await has(/Show logo \(On\)/);
+    await key(enter);
     await move(1, down);
     await key(enter);
-    has(/Show logo saved/);
+    await has(/Show logo saved/);
     assert.strictEqual(loadStyle().showLogo, false);
     await move(7, down);
     await key(enter);
@@ -114,18 +163,20 @@ async function main() {
     assert.strictEqual(loadStyle().changeBorder, 'round');
     assert.strictEqual(loadStyle().showLogo, false);
     await key(esc);
+    await has(/Access Full Log Tree.*Style Settings.*Squash Branch/, /Show logo/);
+    await key(esc);
     await move(6);
     await key(enter);
     await move(5, down);
     await key(enter);
-    has(/Choose the base branch/);
+    await has(/Choose the base branch/);
     await key(enter);
-    has(/At least two commits/);
+    await has(/At least two commits/);
     await key(esc);
 
-    for (let i = 0; i < 2; i++) {
-      fs.appendFileSync('example.txt', '\n' + i);
-      git('commit', '-qam', 'feature ' + i);
+    for (let change = 0; change < 2; change++) {
+      fs.appendFileSync('example.txt', '\n' + change);
+      git('commit', '-qam', 'feature ' + change);
     }
     const oldTip = git('rev-parse', 'HEAD');
     const tree = git('rev-parse', 'HEAD^{tree}');
@@ -135,12 +186,12 @@ async function main() {
     await key(enter);
     await move(1, down);
     await key(enter);
-    has(/Squash 2 commits.*shared with main/);
+    await has(/Squash 2 commits.*shared with main/);
     await key(enter);
-    has(/Enter a commit message/);
+    await has(/Enter a commit message/);
     await key('squashed feature');
     await key(enter);
-    has(/Squashed 2 commits/);
+    await has(/Squashed 2 commits/);
     assert.strictEqual(git('log', '-1', '--format=%s'), 'squashed feature');
     assert.strictEqual(git('rev-parse', 'HEAD^'), base);
     assert.strictEqual(git('rev-parse', 'HEAD^{tree}'), tree);
