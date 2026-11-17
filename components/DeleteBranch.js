@@ -17,6 +17,7 @@ const DeleteTab = ({ refreshTab, defaultColor, accentColor }) => {
 	};
 
 	const handleSubmit = (branch) => {
+		if (!branch.trim()) return;
 		try {
 			git(["branch", "-d", "--", branch]);
 			refreshTab("");

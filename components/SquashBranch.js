@@ -27,7 +27,7 @@ const SquashBranch = ({ defaultColor, accentColor }) => {
 			setPlan(planSquash(value === "root" ? "" : value.slice(5)));
 			setError("");
 		} catch (error) {
-			setError(error.message);
+			setError(gitError(error));
 		}
 	};
 

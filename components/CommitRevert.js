@@ -8,7 +8,7 @@ const CommitRevert = () => {
 	const [result, setResult] = React.useState(null);
 	const [latestCommit] = React.useState(() => {
 		try {
-			return git(["log", "--all", "-1", "--format=%h"]).trim();
+			return git(["log", "-1", "--format=%h", "HEAD"]).trim();
 		} catch (error) {
 			return "";
 		}

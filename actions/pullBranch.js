@@ -1,14 +1,8 @@
-const {execSync}=require("child_process")
-const {stat} = require("fs")
-const gitBranchCall = require('../currentBranch')
+const { git } = require("./git");
+const currentBranch = require("../currentBranch");
 
-const pullTab = () => {
-    let branch = gitBranchCall()
-    let pull = execSync(
-        //pulls the most recent commit/push from the branch you are currently on
-        'git pull origin ' + branch + ''
-    )
-
-}
-
-module.exports = pullTab
+module.exports = () => {
+	const branch = currentBranch();
+	if (!branch) throw new Error("Check out a branch before you pull.");
+	return git(["pull", "--", "origin", branch]);
+};

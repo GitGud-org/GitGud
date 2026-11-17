@@ -1,4 +1,4 @@
-const { execFileSync } = require("child_process");
+const { execFileSync, spawn } = require("child_process");
 
 function git(args, options) {
 	return execFileSync("git", args, {
@@ -6,6 +6,10 @@ function git(args, options) {
 		stdio: ["ignore", "pipe", "pipe"],
 		...options
 	});
+}
+
+function streamGit(args) {
+	return spawn("git", args, { stdio: ["ignore", "pipe", "pipe"] });
 }
 
 function gitWithTerminal(args) {
@@ -37,4 +41,4 @@ function gitError(error) {
 	return [error.stderr, error.stdout].filter(Boolean).join("\n").trim() || error.message;
 }
 
-module.exports = { git, gitWithTerminal, gitError };
+module.exports = { git, streamGit, gitWithTerminal, gitError };
