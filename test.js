@@ -11,7 +11,6 @@ process.env.GIT_CONFIG_NOSYSTEM = '1';
 process.env.LC_ALL = 'C';
 const React = require('react');
 const { render } = require('ink-testing-library');
-const { flushPassiveEffects } = require('ink/build/reconciler').default;
 const importJsx = require('import-jsx');
 const homedir = os.homedir;
 os.homedir = () => temp;
@@ -64,10 +63,10 @@ async function main() {
   const ui = render(React.createElement(App));
   const { stdin, lastFrame } = ui;
   const key = async value => {
-    // Ink installs its input listeners in passive effects.
-    flushPassiveEffects();
+    // Give React's scheduled input effects a turn before sending the next key.
+    await new Promise(resolve => setImmediate(resolve));
+    await new Promise(resolve => setImmediate(resolve));
     stdin.write(value);
-    flushPassiveEffects();
   };
   const move = async (count, arrow = right) => {
     for (let step = 0; step < count; step++) await key(arrow);
@@ -117,10 +116,20 @@ async function main() {
     await key(esc);
     await move(4);
     await key(enter);
-    await key('feature/case');
+    await key('Feature/Case');
     await key(enter);
     assert.strictEqual(git('branch', '--show-current'), 'Feature/Case');
-    assert.strictEqual(git('branch', '--list', 'feature/case'), '');
+    fs.writeFileSync(path.join(temp, 'gitgud-case-probe'), '');
+    if (!fs.existsSync(path.join(temp, 'GITGUD-CASE-PROBE')) ||
+        git('rev-parse', '--show-ref-format') === 'reftable') {
+      await move(4);
+      await key(enter);
+      await key('feature/case');
+      await key(enter);
+      assert.strictEqual(git('branch', '--show-current'), 'feature/case');
+      git('checkout', '-q', 'Feature/Case');
+      git('branch', '-d', 'feature/case');
+    }
 
     await move(5);
     await key(enter);
@@ -140,11 +149,74 @@ async function main() {
     await key(enter);
     assert.strictEqual(git('branch', '--list', 'delete/me'), '');
 
+    git('checkout', '-qb', 'unmerged');
+    git('commit', '--allow-empty', '-qm', 'unmerged tip');
+    git('checkout', '-q', 'Feature/Case');
+    await move(5);
+    await key(enter);
+    await key('unmerged');
+    await key(enter);
+    await has(/not fully merged/);
+    assert.strictEqual(git('branch', '--list', 'unmerged'), 'unmerged');
+    await key(esc);
+    git('branch', '-D', 'unmerged');
+
+    await move(6);
+    await key(enter);
+    await move(2, down);
+    await key(enter);
+    await has(/Apply the latest stash/);
+    await key(esc);
+    await has(/Undo Stash/, /Apply the latest stash/);
+    await key(enter);
+    await key(enter);
+    await has(/No stash entries found/);
+    fs.appendFileSync('example.txt', '\nstashed change');
+    await key('\x1b[A');
+    await key(enter);
+    await has(/Saved working directory/);
+    await key(down);
+    await key(enter);
+    await key(enter);
+    await has(/Dropped refs\/stash/);
+    assert(fs.readFileSync('example.txt', 'utf8').includes('stashed change'));
+    git('checkout', '--', 'example.txt');
+
+    git('checkout', '-qb', 'stash-conflict');
+    fs.writeFileSync('example.txt', 'stashed version');
+    git('stash', 'push');
+    fs.writeFileSync('example.txt', 'committed version');
+    git('commit', '-qam', 'stash conflict base');
+    await key(enter);
+    await key(enter);
+    await has(/CONFLICT.*stash entry is kept/i);
+    assert(git('stash', 'list').includes('stash-conflict'));
+    git('restore', '--source=HEAD', '--staged', '--worktree', '--', 'example.txt');
+    git('stash', 'drop');
+    git('checkout', '-q', 'Feature/Case');
+    git('branch', '-D', 'stash-conflict');
+    await key(esc);
+
+    git('checkout', '-qb', 'long-log');
+    for (let commit = 1; commit <= 16; commit++) {
+      git('commit', '--allow-empty', '-qm', 'log entry ' + commit);
+    }
+    assert.strictEqual(graph(3).split('\n').length, 3);
     await move(6);
     await key(enter);
     await key(enter);
-    await has(/initial "quoted" \$literal.*Press ESC to go back/);
+    await has(/log entry 16.*Page 1/);
+    await key(down);
+    await has(/initial "quoted" \$literal.*Page 2/);
+    await key(down);
+    await has(/End of history/);
+    await key('\x1b[A');
+    await has(/log entry 16.*Page 1/);
     await key(esc);
+    await has(/Access Full Log Tree.*Style Settings.*Squash Branch/, /Up\/Down to browse/);
+    await key(esc);
+    git('checkout', '-q', 'Feature/Case');
+    git('branch', '-D', 'long-log');
     await move(6);
     await key(enter);
     await move(4, down);
@@ -175,6 +247,7 @@ async function main() {
     await has(/Choose the base branch/);
     await key(enter);
     await has(/At least two commits/);
+    await key(esc);
     await key(esc);
 
     for (let change = 0; change < 2; change++) {

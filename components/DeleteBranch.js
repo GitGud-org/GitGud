@@ -2,7 +2,7 @@ const React = require("react");
 const importJsx = require("import-jsx");
 const { useState } = require("react");
 const { Box, Text, Newline } = require("ink");
-const { execFileSync } = require("child_process");
+const { git, gitError } = require("../actions/git");
 const localBranches = require("../actions/localBranches");
 const AutoComplete = importJsx("./AutoComplete");
 
@@ -18,13 +18,10 @@ const DeleteTab = ({ refreshTab, defaultColor, accentColor }) => {
 
 	const handleSubmit = (branch) => {
 		try {
-			execFileSync("git", ["branch", "-D", "--", branch], {
-				encoding: "utf8",
-				stdio: ["ignore", "pipe", "pipe"]
-			});
+			git(["branch", "-d", "--", branch]);
 			refreshTab("");
 		} catch (error) {
-			setError((error.stderr || error.message).trim());
+			setError(gitError(error));
 		}
 	};
 	return (

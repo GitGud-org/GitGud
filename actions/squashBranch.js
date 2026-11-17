@@ -1,9 +1,7 @@
-const { execFileSync } = require("child_process");
 const { existsSync } = require("fs");
+const { git: runGit, gitWithTerminal } = require("./git");
 
-function git(...args) {
-	return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
-}
+const git = (...args) => runGit(args).trim();
 
 function currentBranchRef() {
 	try {
@@ -57,8 +55,9 @@ function squashBranch(plan, message) {
 	}
 	const args = ["commit-tree", plan.head + "^{tree}", "-m", message];
 	if (plan.base) args.push("-p", plan.base);
-	if (git("config", "--type=bool", "--default=false", "--get", "commit.gpgSign") === "true") args.push("-S");
-	const commit = git(...args);
+	const signing = git("config", "--type=bool", "--default=false", "--get", "commit.gpgSign") === "true";
+	if (signing) args.push("-S");
+	const commit = (signing ? gitWithTerminal(args) : runGit(args)).trim();
 	git("update-ref", "--create-reflog", "-m", "gitgud: squash branch", plan.branch, commit, plan.head);
 	return commit;
 }

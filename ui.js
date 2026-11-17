@@ -35,11 +35,11 @@ const App = () => {
 	useLayoutEffect(() => {
 		const intervalStatusCheck = setInterval(() => {
 			if (!ref.current) return;
+			const { width, height } = measureElement(ref.current);
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
-			setVisual(gitBranchVisualPull());
+			setVisual(gitBranchVisualPull(Math.max(0, height - 3)));
 			if (appResize) {setHeight(process.stdout.rows)}
-			const { width, height } = measureElement(ref.current);
 			setWidth(width);
 			setTreeHeight(height)
 		}, 1000);

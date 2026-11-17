@@ -1,10 +1,11 @@
-const { execFileSync } = require("child_process");
+const { git } = require("./git");
 
-module.exports = function gitBranchVisualPull() {
+module.exports = function gitBranchVisualPull(maxCommits = 20) {
 	try {
-		return execFileSync("git", [
-			"log", "--pretty=format:%s", "--graph", "--decorate", "--ignore-missing", "HEAD"
-		], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+		return git([
+			"log", "--format=%<(240,trunc)%s", "--graph",
+			"--max-count=" + maxCommits, "--ignore-missing", "HEAD"
+		]).replace(/[ \t]+$/gm, "").trimEnd();
 	} catch (error) {
 		return "";
 	}
