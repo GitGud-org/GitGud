@@ -94,8 +94,21 @@ async function main() {
     assert.strictEqual(graph(), "* " + message);
     const base = git('rev-parse', 'HEAD');
 
+    const filename = 'space [file].txt';
+    fs.writeFileSync(filename, 'test');
+    await key(enter);
+    await has(/space \[file\]\.txt/);
+    await key(down);
+    await key(enter);
+    assert.strictEqual(git('diff', '--cached', '--name-only'), filename);
+    await key(enter);
+    assert.strictEqual(git('diff', '--cached', '--name-only'), '');
+    fs.unlinkSync(filename);
+    await key(esc);
+
     git('branch', 'branch/team');
     git('branch', 'Feature/Case');
+    git('branch', 'main-hotfix');
     git('branch', 'delete/me');
     await move(4);
     await key(enter);
@@ -131,9 +144,19 @@ async function main() {
       git('branch', '-d', 'feature/case');
     }
 
+    await move(4);
+    await key(enter);
+    await key('main');
+    await key('\t');
+    await key(enter);
+    assert.strictEqual(git('branch', '--show-current'), 'main-hotfix');
+    git('checkout', '-q', 'Feature/Case');
+    git('branch', '-d', 'main-hotfix');
+
     await move(5);
     await key(enter);
     await has(/Delete Branch:/);
+    await key(enter);
     await key('missing');
     await key(enter);
     await has(/not found/);
@@ -202,11 +225,18 @@ async function main() {
       git('commit', '--allow-empty', '-qm', 'log entry ' + commit);
     }
     assert.strictEqual(graph(3).split('\n').length, 3);
+    git('checkout', '-qb', 'log-side', 'long-log~8');
+    git('commit', '--allow-empty', '-qm', 'side entry');
+    git('checkout', '-q', 'long-log');
+    git('merge', '--no-ff', '-qm', 'merge log branches', 'log-side');
+    const continuedLine = git('log', '--all', '--graph', '--decorate', '--format=%h%d %<(240,trunc)%s')
+      .split('\n')[14].trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     await move(6);
     await key(enter);
     await key(enter);
     await has(/log entry 16.*Page 1/);
     await key(down);
+    await has(new RegExp(continuedLine + '.*Page 2'));
     await has(/initial "quoted" \$literal.*Page 2/);
     await key(down);
     await has(/End of history/);
@@ -214,8 +244,13 @@ async function main() {
     await has(/log entry 16.*Page 1/);
     await key(esc);
     await has(/Access Full Log Tree.*Style Settings.*Squash Branch/, /Up\/Down to browse/);
-    await key(esc);
     git('checkout', '-q', 'Feature/Case');
+    await move(3, down);
+    await key(enter);
+    await has(new RegExp('Latest Commit Id: ' + git('rev-parse', '--short', 'HEAD')));
+    await key(esc);
+    await key(esc);
+    git('branch', '-D', 'log-side');
     git('branch', '-D', 'long-log');
     await move(6);
     await key(enter);

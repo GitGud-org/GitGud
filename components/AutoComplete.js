@@ -3,9 +3,11 @@ const TextInput = require("ink-text-input").default;
 const { Box, Text, useInput } = require("ink");
 
 const AutoComplete = ({ value, onChange, branches, onSubmit }) => {
-	const suggestion = value && !branches.includes(value)
-		? branches.find(branch => branch.startsWith(value)) ||
-			branches.find(branch => branch.toLowerCase().startsWith(value.toLowerCase()))
+	const exact = branches.includes(value);
+	const suggestion = value
+		? branches.find(branch => branch !== value && branch.startsWith(value)) ||
+			branches.find(branch => (!exact || branch.length > value.length) &&
+				branch.toLowerCase().startsWith(value.toLowerCase()))
 		: undefined;
 	const [inputVersion, setInputVersion] = React.useState(0);
 

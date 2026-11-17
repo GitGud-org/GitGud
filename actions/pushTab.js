@@ -1,14 +1,8 @@
-const {execSync}=require("child_process")
-const {stat} = require("fs")
-const gitBranchCall = require('../currentBranch')
+const { git } = require("./git");
+const currentBranch = require("../currentBranch");
 
-const pushTab = () => {
-    let branch = gitBranchCall()
-    let push = execSync(
-        //pushes staged files to whatever branch that you are on
-        'git push -u origin ' + branch + ''
-    )
-
-}
-
-module.exports = pushTab
+module.exports = () => {
+	const branch = currentBranch();
+	if (!branch) throw new Error("Check out a branch before you push.");
+	return git(["push", "-u", "--", "origin", branch]);
+};

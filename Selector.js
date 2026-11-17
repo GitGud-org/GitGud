@@ -1,6 +1,6 @@
 const React = require("react");
 const { useState } = require("react");
-const { Box, useInput } = require("ink");
+const { Box, Text, useInput } = require("ink");
 const SelectInput = require("ink-select-input-horizontal").default;
 const importJsx = require("import-jsx");
 
@@ -14,12 +14,21 @@ const CommitAction = importJsx("./components/Commit");
 const StageSomeFiles = importJsx('./components/StageChanges')
 const Drop = importJsx('./components/DropDownOther')
 const DeleteTab = importJsx("./components/DeleteBranch");
+const { gitError } = require("./actions/git");
+const immediateActions = {
+	pushStagedChanges: pushTab,
+	stageAll: stageFiles,
+	revertStagedChanges: revertTab,
+	pullFromBranch: pullTab
+};
 
-const Selector = ({ style, onStyleChange }) => {
+const Selector = ({ style, onStyleChange, repositoryStatus }) => {
 	const { defaultColor, accentColor } = style;
 	const [currentTab, setCurrentTab] = useState("");
+	const [result, setResult] = useState(null);
 	useInput((_, key) => {
 		if (key.escape) {
+			setResult(null);
 			return setCurrentTab("");
 		}
 	}, { isActive: currentTab !== "other" });
@@ -27,17 +36,15 @@ const Selector = ({ style, onStyleChange }) => {
 
 	const handleSelect = (item) => {
 		setCurrentTab(item.value);
-		if (item.value === "pushStagedChanges") {
-			pushTab();
-		}
-		if (item.value === "stageAll") {
-			stageFiles();
-		}
-		if (item.value === "revertStagedChanges") {
-			revertTab();
-		}
-		if (item.value === "pullFromBranch") {
-			pullTab();
+		setResult(null);
+		const action = immediateActions[item.value];
+		if (action) {
+			try {
+				const message = action().trim();
+				if (message) setResult({ message });
+			} catch (error) {
+				setResult({ message: gitError(error), failed: true });
+			}
 		}
 	};
 
@@ -91,7 +98,7 @@ const Selector = ({ style, onStyleChange }) => {
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
-					<StageSomeFiles refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor} />
+					<StageSomeFiles repositoryStatus={repositoryStatus} defaultColor={defaultColor} accentColor={accentColor} />
 				</Box>
 			)
 
@@ -110,7 +117,12 @@ const Selector = ({ style, onStyleChange }) => {
 				</Box>
 			)
 		default:
-			return <SelectInput items={items} defaultColor={defaultColor} accentColor={accentColor} onSelect={handleSelect} />;
+			return (
+				<Box key="main" flexDirection="column">
+					<SelectInput items={items} defaultColor={defaultColor} accentColor={accentColor} onSelect={handleSelect} />
+					{result ? <Text color={result.failed ? "red" : defaultColor}>{result.message}</Text> : null}
+				</Box>
+			);
 	}
 };
 

@@ -19,6 +19,7 @@ const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
 const { loadStyle } = require("./stylePreferences");
+const { gitError } = require("./actions/git");
 
 const App = () => {
 	const [style, setStyle] = useState(loadStyle);
@@ -26,6 +27,7 @@ const App = () => {
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
+	const [statusError, setStatusError] = useState("");
 	const [appWidth, setWidth] = useState(null);
 	const [treeHeight, setTreeHeight] = useState(null)
 	const [appheight, setHeight] = useState("50")
@@ -36,12 +38,18 @@ const App = () => {
 		const intervalStatusCheck = setInterval(() => {
 			if (!ref.current) return;
 			const { width, height } = measureElement(ref.current);
-			setStatus(gitStatusPull());
-			setBranch(gitBranchCall());
-			setVisual(gitBranchVisualPull(Math.max(0, height - 3)));
+			const visibleRows = Math.max(0, height - 3);
+			try {
+				setStatus(gitStatusPull());
+				setBranch(gitBranchCall());
+				setVisual(gitBranchVisualPull(visibleRows));
+				setStatusError("");
+			} catch (error) {
+				setStatusError(gitError(error));
+			}
 			if (appResize) {setHeight(process.stdout.rows)}
 			setWidth(width);
-			setTreeHeight(height)
+			setTreeHeight(visibleRows)
 		}, 1000);
 		if (!appResize) {setHeight(process.stdout.rows)}
 
@@ -123,7 +131,8 @@ const App = () => {
 					</Box>
 				</Box>
 			</Box>
-			<Selector style={style} onStyleChange={setStyle} />
+			{statusError ? <Text color="red">{statusError}</Text> : null}
+			<Selector style={style} onStyleChange={setStyle} repositoryStatus={status} />
 			<Newline />
 		</Box>
 	);
