@@ -11,6 +11,7 @@ process.env.GIT_CONFIG_NOSYSTEM = '1';
 process.env.LC_ALL = 'C';
 const React = require('react');
 const { render } = require('ink-testing-library');
+const { flushPassiveEffects } = require('ink/build/reconciler').default;
 const importJsx = require('import-jsx');
 const homedir = os.homedir;
 os.homedir = () => temp;
@@ -63,8 +64,10 @@ async function main() {
   const ui = render(React.createElement(App));
   const { stdin, lastFrame } = ui;
   const key = async value => {
+    // Ink installs its input listeners in passive effects.
+    flushPassiveEffects();
     stdin.write(value);
-    await new Promise(resolve => setImmediate(resolve));
+    flushPassiveEffects();
   };
   const move = async (count, arrow = right) => {
     for (let step = 0; step < count; step++) await key(arrow);

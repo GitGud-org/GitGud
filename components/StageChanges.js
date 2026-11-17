@@ -1,7 +1,6 @@
 const React = require("react");
 const { useEffect, useState } = require("react");
 const { Text, Box, Newline, useFocus, useFocusManager } = require("ink");
-// const SelectInput = require("ink-select-input").default;
 const SelectInput = require("ink-select-input-horizontal").default;
 const { execSync, exec } = require("child_process");
 
