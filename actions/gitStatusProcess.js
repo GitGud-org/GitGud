@@ -1,6 +1,6 @@
 const {showFlag} = require('../styleFile')
 
-const gitStatusProcess = (gitStatusOutput) => {
+const gitStatusProcess = (gitStatusOutput, displayFlags = showFlag) => {
 	let gitStatusOutputSorted = {
 		staged: [],
 		unstaged: [],
@@ -14,7 +14,7 @@ const gitStatusProcess = (gitStatusOutput) => {
 		const tag2 = line.slice(1,2)
 		const tags = line.slice(0,2)
 		let displayTags = ''
-		if (showFlag === true) displayTags = `(${tags})`
+		if (displayFlags) displayTags = `(${tags})`
 
 		if (tag1 !== ' ' && tag1 !== '?' && line.length) {
 			gitStatusOutputSorted.staged.push(`- ${line.slice(3)} ${displayTags}`)

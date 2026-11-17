@@ -1,23 +1,11 @@
-const { execSync } = require('child_process')
+const { execFileSync } = require("child_process");
 
-const gitBranchVisualPull = () => {
-	let gitBranchVisualPull = ''
+module.exports = function gitBranchVisualPull() {
 	try {
-
-		gitBranchVisual = execSync(
-			//runs the branch visual command
-			//useful git snippets to maybe implement later down the line;
-			//git shortlog
-			//git log --oneline -(to be used for bottom of git branch)
-			// 'git log --all --decorate --oneline --graph',
-			//temporarily added the %s back in
-			'git log --pretty=format:"%s" --graph --decorate'
-			).toString()
-
-		} catch (error) {
-			return ''
-		}
-		return gitBranchVisual
-}
-
-module.exports = gitBranchVisualPull
+		return execFileSync("git", [
+			"log", "--pretty=format:%s", "--graph", "--decorate", "--ignore-missing", "HEAD"
+		], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+	} catch (error) {
+		return "";
+	}
+};

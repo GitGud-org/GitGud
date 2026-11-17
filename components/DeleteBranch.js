@@ -2,25 +2,25 @@ const React = require("react");
 const importJsx = require("import-jsx");
 const { useState } = require("react");
 const { Box, Text, Newline } = require("ink");
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
+const localBranches = require("../actions/localBranches");
 const AutoComplete = importJsx("./AutoComplete");
 
-const DeleteTab = (props) => {
-	//Uses git branch and displays all local branches
-	//Takes in an input to for delete branch
+const DeleteTab = ({ refreshTab, defaultColor, accentColor }) => {
+	const [branch, setBranch] = useState("");
+	const [error, setError] = useState("");
+	const branches = localBranches();
 
-	const [del, setDelete] = useState("");
-
-	let { refreshTab } = props;
-
-	let branchList = execSync("git branch").toString().split("\n");
-	let branches = branchList;
-
-	const handleSubmit = () => {
+	const handleSubmit = (branch) => {
 		try {
-			execSync("git branch -D " + del + "");
+			execFileSync("git", ["branch", "-D", "--", branch], {
+				encoding: "utf8",
+				stdio: ["ignore", "pipe", "pipe"]
+			});
 			refreshTab("");
-		} catch (error) {}
+		} catch (error) {
+			setError((error.stderr || error.message).trim());
+		}
 	};
 	return (
 		<Box flexDirection="column">
@@ -28,17 +28,18 @@ const DeleteTab = (props) => {
 				<Text> </Text>
 			</Box>
 			<Box>
-				<Text color="red"> Branches: </Text>
-				<Text>{branches.join(" | ")}</Text>
+				<Text color={accentColor}> Branches: </Text>
+				<Text color={defaultColor}>{branches.join(" | ")}</Text>
 			</Box>
 			<Box>
 				<Box>
-					<Text color="red"> Delete Branch: </Text>
-					<AutoComplete valueControl={{val: del, setValue: setDelete}} baseList={branches}  handleSubmit={handleSubmit} />
+					<Text color={accentColor}> Delete Branch: </Text>
+					<AutoComplete value={branch} onChange={setBranch} branches={branches} onSubmit={handleSubmit} />
 				</Box>
 			</Box>
 			<Newline />
-			<Text color="gray"> Press ESC to go back </Text>
+			<Text color="gray">Tab to complete · Esc to go back</Text>
+			{error ? <Text color="red">{error}</Text> : null}
 		</Box>
 	);
 };

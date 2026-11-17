@@ -1,21 +1,25 @@
 const React = require("react");
 const { useState } = require("react");
-const { Box, Text, useInput, Newline } = require("ink");
-const { execSync } = require("child_process");
+const { Box, Text, Newline } = require("ink");
+const { execFileSync } = require("child_process");
 const TextInput = require("ink-text-input").default;
 
 //Commit changes tab -- takes in a message to commit on the current branch
 
-const CommitAction = (props) => {
+const CommitAction = ({ refreshTab }) => {
 	const [message, setMessage] = useState("");
-
-	let {refreshTab} = props
+	const [error, setError] = useState("");
 
 	const handleSubmit = () => {
 		try {
-			execSync('git commit -m "' + message +'"')
-			refreshTab('')
-		} catch (error) {}
+			execFileSync("git", ["commit", "-m", message], {
+				encoding: "utf8",
+				stdio: ["ignore", "pipe", "pipe"]
+			});
+			refreshTab("");
+		} catch (error) {
+			setError([error.stderr, error.stdout].filter(Boolean).join("\n").trim() || error.message);
+		}
 	};
 	return (
 		<Box flexDirection="column">
@@ -24,6 +28,7 @@ const CommitAction = (props) => {
 				<Text color='red'>   Commit Message: </Text>
 				<TextInput value={message} onChange={setMessage} onSubmit={handleSubmit} />
 			</Box>
+			{error ? <Text color="red">{error}</Text> : null}
 			<Newline />
 			<Text color='gray'>   Press ESC to go back </Text>
 		</Box>

@@ -1,7 +1,7 @@
 "use strict";
 const React = require("react");
 
-const { useEffect, useState, useRef } = require("react");
+const { useLayoutEffect, useState, useRef } = require("react");
 const { Text, Box, measureElement, Newline, Spacer } = require("ink");
 
 const Renderer = require("./components/Divider");
@@ -18,9 +18,11 @@ const gitStatusProcess = require('./actions/gitStatusProcess')
 const gitBranchVisualPull = require('./actions/gitBranchVisualPull')
 const gitBranchVisualProcess = require('./actions/gitBranchVisualProcess')
 
-const {showLogo, defaultColor, accentColor, gitTreeColor, appResize, changeBold, changeBorder} = require('./styleFile')
+const { loadStyle } = require("./stylePreferences");
 
 const App = () => {
+	const [style, setStyle] = useState(loadStyle);
+	const { showLogo, defaultColor, accentColor, gitTreeColor, appResize, showFlag, changeBold, changeBorder } = style;
 	const [status, setStatus] = useState("");
 	const [branch, setBranch] = useState("");
 	const [visual, setVisual] = useState("");
@@ -30,8 +32,9 @@ const App = () => {
 
 	const ref = useRef(null);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const intervalStatusCheck = setInterval(() => {
+			if (!ref.current) return;
 			setStatus(gitStatusPull());
 			setBranch(gitBranchCall());
 			setVisual(gitBranchVisualPull());
@@ -45,9 +48,9 @@ const App = () => {
 		return () => {
 			clearInterval(intervalStatusCheck);
 		};
-	}, []);
+	}, [appResize]);
 
-	const statusProcessed = gitStatusProcess(status)
+	const statusProcessed = gitStatusProcess(status, showFlag)
 	const visualProcessed = gitBranchVisualProcess(visual, treeHeight, appWidth)
 
 
@@ -120,7 +123,7 @@ const App = () => {
 					</Box>
 				</Box>
 			</Box>
-			<Selector defaultColor={defaultColor} accentColor={accentColor} />
+			<Selector style={style} onStyleChange={setStyle} />
 			<Newline />
 		</Box>
 	);
