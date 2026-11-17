@@ -16,7 +16,8 @@ const StageSomeFiles = importJsx('./components/StageChanges')
 const Drop = importJsx('./components/DropDownOther')
 const DeleteTab = importJsx("./components/DeleteBranch");
 
-const Selector = ({defaultColor, accentColor}) => {
+const Selector = ({ style, onStyleChange }) => {
+	const { defaultColor, accentColor } = style;
 	const [currentTab, setCurrentTab] = useState("");
 	let {isFocused} = useFocus();
 	const {disableFocus, enableFocus}  = useFocusManager();
@@ -83,7 +84,7 @@ const Selector = ({defaultColor, accentColor}) => {
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor} />
-					<CheckoutBranch refreshTab={setCurrentTab} />
+					<CheckoutBranch refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor} />
 				</Box>
 			);
 		case "commitChanges":
@@ -105,14 +106,14 @@ const Selector = ({defaultColor, accentColor}) => {
 			return (
 				<Box flexDirection="column">
 					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
-					<DeleteTab refreshTab={setCurrentTab} />
+					<DeleteTab refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor} />
 				</Box>
 			)
 		case 'other':
 			return (
 				<Box flexDirection='column'>
 					<SelectInput items={items} isFocused={false} defaultColor={defaultColor} accentColor={accentColor}/>
-					<Drop refreshTab={setCurrentTab} defaultColor={defaultColor} accentColor={accentColor}/>
+					<Drop refreshTab={setCurrentTab} style={style} onStyleChange={onStyleChange} />
 				</Box>
 			)
 		default:

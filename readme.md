@@ -56,37 +56,26 @@ $ GitGud
 * ### **Checkout Branch**
   - It will display list of all the branches in the project. The branches are not selectable, they are there to help you see which local branches are available to switch to.
   - You are prompted to enter a branch to Checkout. If you enter a branch that does not exist, it will create a new one.
+  - Type the start of a local branch name and press Tab to complete it.
   - If you have unstaged changes, an error will be shown and it will abort the checkout operation, telling you that you have unstaged changes and to commit or stash the changes before switching branches. You can press 'ESC' to go back and stash/commit the changes before you attempt to checkout again
 * ### **Delete Branch**
   - It will display list of branches which are not selectable, they are there to help you see which local branches are available.
   - You are prompted to enter a branch name, and if the branch exists it will delete/remove it and bring you back to main menu. If the branch does not exist then it will throw an error.
+  - Type the start of the branch name and press Tab to complete it.
   - Press 'ESC' to exit out of delete branch
 * ### **Access Full Log Tree**
    - It will render the entire log tree overlaying the gitgud GUI.
    - Press 'ESC' to exit out of log tree
+* ### **Squash Branch**
+   - Open **Other → Squash Branch** with a clean working tree. Choose a local base branch to keep the shared history, or choose **Entire history** to create a single root commit.
+   - Review the number of commits, type a commit message, and press Enter to confirm. The squash preserves the files at the current tip and rewrites the local branch. It skips commit hooks and records the previous tip in the branch reflog.
 
 ---
 ## **Styling**
-Gitgud allows users to customize both the look and feel of the app by editing the 'stylefile.'
-
-To access the 'stylefile' of a globally installed GitGud, you will first need to find out where NPM is saving your globally installed files. To do so, run the following command:
-```
-npm root -g
-```
-This will return the location of your globally installed NPM packages.
-
-On Mac you should see something like this: */usr/local/lib/node_modules*
-
-On Windows, you may get this: *C:\Users\YOU\AppData\Roaming\npm\node_modules
-
-Navigate to where your global packages are stored, open the gitgud folder, and then open the styleFile in an editor (the command: `nano styleFile.js` will open it in most mac/linux systems).
-
-When you open the file it will look like this:
-
-<img width="1000" alt="styleFile" src="media/styleFile.png">
+Open **Other → Style Settings**, choose a setting, and press Enter to apply a value. Changes take effect immediately and are saved in `~/.gitgud/style.json`. Existing `styleFile.js` settings provide defaults for any options you leave untouched.
 
 * ### **`showLogo`:**
-   - By default this is set to `false`, but if you want to have the GitGud logo on top of your GUI you can change this to `true`.
+   - Controls whether the GitGud logo appears at the top of the interface. It is on by default.
 
 * ### **`defaultColor`:**
    - This is the color for the main text blocks throughout the app.
@@ -104,6 +93,10 @@ When you open the file it will look like this:
    - Allows user to chose whether or not to display git output tags by the staged/unstaged files.
    - Set to `false` by default.
    - see [here](https://git-scm.com/docs/git-status) for more info about git output tags
+* ### **`changeBold`:**
+   - Controls whether the branch graph uses bold text.
+* ### **`changeBorder`:**
+   - Sets the panel border style.
 ---
 
 ### **FAQs**

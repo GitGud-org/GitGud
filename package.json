@@ -1,6 +1,6 @@
 {
 	"name": "gitgud",
-	"version": "2.1.0",
+	"version": "2.3.0",
 	"description": "A CLI git tool",
 	"license": "MIT",
 	"bin": "cli.js",
@@ -36,7 +36,7 @@
 		}
 	],
 	"scripts": {
-		"test": "echo \"No test specified\""
+		"test": "node test.js"
 	},
 	"dependencies": {
 		"@types/react": "^16.9.48",

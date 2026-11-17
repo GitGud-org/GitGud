@@ -7,12 +7,15 @@ const importJsx = require("import-jsx");
 const TreeTab = importJsx('./TreeTab')
 const Stash = importJsx('./Stash')
 const CommitRevert = importJsx('./CommitRevert')
+const StyleSettings = importJsx("./StyleSettings");
+const SquashBranch = importJsx("./SquashBranch");
 
 const popStash = require('../actions/undoStash')
 
 //Creates the switch case for the 'Other' Tab.
 
-const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
+const dropDown = ({ refreshTab, style, onStyleChange }) => {
+    const { accentColor, defaultColor, gitTreeColor } = style;
     const [currentDrop, setCurrentDrop] = useState('')
 
     const handleSelect = (item) => {
@@ -37,14 +40,20 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
         {
             label: 'Undo Commit',
             value: 'undoCommit'
-        }
+        },
+        { label: "Style Settings", value: "styleSettings" },
+        { label: "Squash Branch", value: "squashBranch" }
     ]
     switch (currentDrop) {
+        case "styleSettings":
+            return <StyleSettings style={style} onStyleChange={onStyleChange} />;
+        case "squashBranch":
+            return <SquashBranch defaultColor={defaultColor} accentColor={accentColor} />;
         case 'fullLogTree':
             return (
                 <Box flexDirection='column' marginLeft='109'>
                     <SelectInput items={items} isFocused={false} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
-                    <TreeTab refreshTab={refreshTab} />
+                    <TreeTab gitTreeColor={gitTreeColor} />
                 </Box>
             )
         case 'stashChanges':
@@ -70,8 +79,7 @@ const dropDown = ({ refreshTab, accentColor, defaultColor }) => {
             )
         default:
             return (
-                // Replace "marginLeft='109'" for optimized solution later down the line.
-                <Box flexDirection="column" marginLeft='109' >
+                <Box flexDirection="column" marginLeft={1}>
                     <SelectInput items={items} onSelect={handleSelect} displayDirection='column' defaultColor={defaultColor} accentColor={accentColor}/>
                     <Newline />
                     <Text color='gray'>Press ESC to go back</Text>
